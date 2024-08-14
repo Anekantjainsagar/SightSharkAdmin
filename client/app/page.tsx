@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import LoginNav from "@/app/Components/Login/LoginNav";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { useRouter } from "next/navigation";
 
 const App = () => {
+  const history = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -82,7 +84,12 @@ const App = () => {
               </div>
               <button className="text-red-600 text-sm">Recover Password</button>
             </div>
-            <button className="w-full py-3 rounded-md my-5 border border-white hover:border-transparent hover:bg-white hover:text-black transition-all">
+            <button
+              onClick={() => {
+                history.push("/overview");
+              }}
+              className="w-full py-3 rounded-md my-5 border border-white hover:border-transparent hover:bg-white hover:text-black transition-all"
+            >
               Log In
             </button>
           </div>
