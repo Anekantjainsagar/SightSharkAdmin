@@ -1,59 +1,37 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import LoginNav from "@/app/Components/Login/LoginNav";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { BACKEND_URI } from "@/app/utils/url";
+import Cookies from "js-cookie";
+import Context from "./Context/Context";
 
 const App = () => {
   const history = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState({ password: "", email: "" });
+  const { checkToken } = useContext(Context);
 
   return (
     <div className="bg-main w-full flex items-start justify-between h-[100vh]">
+      <Toaster />
       <div className="w-7/12 p-[2vw] flex flex-col items-center justify-between h-full">
         <LoginNav />
         <div className="text-white flex flex-col items-center w-7/12 px-5">
           <h1 className="text-5xl font-semibold">Welcome Back</h1>
           <p className="text-xl my-2">Login into your account</p>
-          <div className="gap-x-4 my-8 flex items-center">
-            <button className="bg-white flex items-center text-black px-4 py-1 rounded-md">
-              <Image
-                src={
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png"
-                }
-                alt="google"
-                width={1000}
-                height={1000}
-                className="w-[2vw]"
-              />
-              <p className="ml-2">Google</p>
-            </button>
-            <button className="bg-white flex items-center text-black px-4 py-1 rounded-md">
-              <Image
-                src={
-                  "https://source.roboflow.com/52wBQvr2J7StQoLIQ4WNRmQlEMR2/CqBUuBrjRZmnAf0ZINFw/original.jpg"
-                }
-                alt="google"
-                width={1000}
-                height={1000}
-                className="w-[2vw]"
-              />
-              <p className="ml-2">Facebook</p>
-            </button>
-          </div>
-          <div className="w-full flex items-center justify-between">
-            <div className="h-[1px] bg-white w-full"></div>
-            <p className="whitespace-nowrap px-5">Or continue with</p>
-            <div className="h-[1px] bg-white w-full"></div>
-          </div>
           <div className="w-11/12 mt-3">
             <input
               type="email"
               name="email"
               className="text-black text-lg w-full px-5 py-3 outline-none rounded-md my-5"
               placeholder="Email"
+              value={user?.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
             <div className="w-full relative">
               <input
@@ -61,6 +39,8 @@ const App = () => {
                 name="Password"
                 className="text-black text-lg w-full px-5 py-3 outline-none rounded-md"
                 placeholder="Password"
+                value={user?.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
               <div
                 className="absolute top-1/2 -translate-y-1/2 text-black/60 right-5 text-2xl cursor-pointer"
@@ -86,7 +66,20 @@ const App = () => {
             </div>
             <button
               onClick={() => {
-                history.push("/overview");
+                if (!user?.email || !user?.password) {
+                  toast.error("Please enter the details");
+                } else {
+                  axios
+                    .post(`${BACKEND_URI}/login/login`, { ...user })
+                    .then((res) => {
+                      Cookies.set("token", res.data);
+                      history.push("/overview");
+                      checkToken();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
               }}
               className="w-full py-3 rounded-md my-5 border border-white hover:border-transparent hover:bg-white hover:text-black transition-all"
             >

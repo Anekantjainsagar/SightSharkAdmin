@@ -38,3 +38,37 @@
 .mainPageBg {
   background: radial-gradient(#212687, #030636, #000);
 }
+
+.small-scroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.small-scroller::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+.small-scroller::-webkit-scrollbar-thumb {
+  background: rgb(143, 143, 143);
+  border-radius: 10px;
+}
+
+.agencyBlockGrid {
+  grid-template-columns: 2% 12% 9% 9% 19% 13% 10% 14% 12%;
+}
+
+.status-active {
+  background-color: rgba(55, 162, 4, 0.3);
+  color: #37a204;
+}
+
+.status-offline {
+  background-color: rgba(255, 32, 32, 0.3);
+  color: #ff2020;
+}
+
+.status-hold {
+  background-color: rgba(233, 197, 91, 0.3);
+  color: #e9c55b;
+}

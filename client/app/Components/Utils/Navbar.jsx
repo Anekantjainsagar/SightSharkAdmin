@@ -1,12 +1,15 @@
+import Context from "@/app/Context/Context";
 import Image from "next/image";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { FaSortDown } from "react-icons/fa";
 
 const Navbar = () => {
+  const { userData } = useContext(Context);
+
   return (
-    <div className="text-white py-4 px-10 flex items-center justify-between w-full">
+    <div className="text-white py-4 flex items-center justify-between w-full">
       <div>
-        <h3 className="text-3xl font-semibold">Hello, Anekant</h3>
+        <h3 className="text-3xl font-semibold">Hello {userData?.name},</h3>
         <p className="text-sm">Here’s your overview of the agencies</p>
       </div>
       <div className="flex items-center">
