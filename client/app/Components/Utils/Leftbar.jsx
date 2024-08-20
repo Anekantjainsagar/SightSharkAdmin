@@ -62,7 +62,7 @@ const Leftbar = () => {
               <div
                 key={i}
                 className={`flex items-center py-2 rounded-xl cursor-pointer px-4 mb-2 ${
-                  pathname == e?.route
+                  pathname.includes(e?.route)
                     ? "radialGradient border border-gray-200/10"
                     : "text-gray-400"
                 }`}
@@ -83,7 +83,7 @@ const Leftbar = () => {
               <div
                 key={i}
                 className={`flex items-center py-2 rounded-xl cursor-pointer px-4 mb-2 ${
-                  pathname == e?.route
+                  pathname.includes(e?.route)
                     ? "radialGradient border border-gray-200/10"
                     : "text-gray-400"
                 }`}

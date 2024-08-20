@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AgencyDetailsBlock from "@/app/Components/Utils/AgencyDetails";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AddAgency from "@/app/Components/Agencies/AddAgency";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 const Overview = () => {
   const [addAgency, setAddAgency] = useState(false);

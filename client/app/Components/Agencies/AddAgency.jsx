@@ -24,6 +24,41 @@ const customStyles = {
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 3;
   const [page, setPage] = useState(1);
+  const [data, setData] = useState({
+    name: "",
+    profile: "",
+    website: "",
+    location: "",
+    warrenty: "",
+    deployment: "",
+    license: "",
+    keyContact: {
+      name: "",
+      profile: "",
+      designation: "",
+      email: "",
+      phone: "",
+    },
+    dataSources: [],
+  });
+  const fileInputRef = React.useRef(null);
+  const fileInputRefAgent = React.useRef(null);
+
+  // Function to handle file selection
+  const handleFileChangeProfile = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log("Selected file:", file.name);
+    }
+  };
+
+  const handleFileChangeAgent = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log("Selected file:", file.name);
+    }
+  };
+
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -77,11 +112,25 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             <div className="px-[8vw] w-full">
               <div className="flex items-center justify-center mb-6">
                 <div className="relative">
-                  <div className="absolute bg-newPurple text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full">
+                  {" "}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChangeProfile}
+                  />
+                  <div
+                    onClick={() => {
+                      fileInputRef.current.click();
+                    }}
+                    className="absolute bg-newPurple text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
+                  >
                     +
                   </div>
                   <Image
-                    src={"/agency/temp_logo.png"}
+                    src={
+                      data?.profile ? data?.profile : "/agency/temp_logo.png"
+                    }
                     alt="Agency Img"
                     width={1000}
                     height={1000}
@@ -96,6 +145,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="name"
+                    value={data?.name}
+                    onChange={(e) => {
+                      setData({ ...data, name: e.target.value });
+                    }}
                     type="text"
                     placeholder="Enter Agency Name"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -107,6 +160,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="website"
+                    value={data?.website}
+                    onChange={(e) => {
+                      setData({ ...data, website: e.target.value });
+                    }}
                     type="text"
                     placeholder="Enter Website"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -118,6 +175,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="location"
+                    value={data?.location}
+                    onChange={(e) => {
+                      setData({ ...data, location: e.target.value });
+                    }}
                     type="text"
                     placeholder="Enter Location"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -129,6 +190,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="warrenty"
+                    value={data?.warrenty}
+                    onChange={(e) => {
+                      setData({ ...data, warrenty: e.target.value });
+                    }}
                     type="text"
                     placeholder="Enter Warrenty Period"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -140,6 +205,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="deployment"
+                    value={data?.deployment}
+                    onChange={(e) => {
+                      setData({ ...data, deployment: e.target.value });
+                    }}
                     type="date"
                     placeholder="Enter deployment Period"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -151,6 +220,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="license"
+                    value={data?.license}
+                    onChange={(e) => {
+                      setData({ ...data, license: e.target.value });
+                    }}
                     type="text"
                     placeholder="Enter License Limit"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -162,11 +235,26 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             <div className="px-[8vw] w-full">
               <div className="flex items-center justify-center mb-6">
                 <div className="relative">
-                  <div className="absolute bg-newPurple text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full">
+                  <input
+                    type="file"
+                    ref={fileInputRefAgent}
+                    style={{ display: "none" }}
+                    onChange={handleFileChangeAgent}
+                  />
+                  <div
+                    onClick={() => {
+                      fileInputRefAgent.current.click();
+                    }}
+                    className="absolute bg-newPurple text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
+                  >
                     +
                   </div>
                   <Image
-                    src={"/agency/temp_logo.png"}
+                    src={
+                      data?.keyContact?.profile
+                        ? data?.keyContact?.profile
+                        : "/agency/temp_logo.png"
+                    }
                     alt="Agency Img"
                     width={1000}
                     height={1000}
@@ -181,6 +269,16 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="namekey"
+                    value={data?.keyContact?.name}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          name: e.target.value,
+                        },
+                      });
+                    }}
                     type="text"
                     placeholder="Enter Name"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -192,6 +290,16 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="designation"
+                    value={data?.keyContact?.designation}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          designation: e.target.value,
+                        },
+                      });
+                    }}
                     type="text"
                     placeholder="Enter Designation"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -203,6 +311,16 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="email"
+                    value={data?.keyContact?.email}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          email: e.target.value,
+                        },
+                      });
+                    }}
                     type="email"
                     placeholder="Enter Email Address"
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
@@ -214,6 +332,16 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="phone"
+                    value={data?.keyContact?.phone}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          phone: e.target.value,
+                        },
+                      });
+                    }}
                     type="number"
                     placeholder="Enter Phone no."
                     className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"

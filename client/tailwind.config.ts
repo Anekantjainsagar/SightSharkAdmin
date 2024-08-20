@@ -13,6 +13,8 @@ const config: Config = {
         gradientMain: "#030636",
         btnBlue: "#2A66FF",
         newPurple: "#605EFD",
+        newGrey: "#CACACA",
+        mainBlue: "#006FFF",
       },
       backgroundImage: {
         "radial-gradient":
