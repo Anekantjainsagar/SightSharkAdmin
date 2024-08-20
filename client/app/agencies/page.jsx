@@ -1,14 +1,18 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AgencyDetailsBlock from "@/app/Components/Utils/AgencyDetails";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import AddAgency from "@/app/Components/Agencies/AddAgency";
 
 const Overview = () => {
+  const [addAgency, setAddAgency] = useState(false);
+
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
+      <AddAgency showSubscribe={addAgency} setShowSubscribe={setAddAgency} />
       <div className="gradient-line-vertical"></div>
       <div className="w-[87%] px-10 mainPageBg h-full">
         <Navbar />
@@ -21,7 +25,12 @@ const Overview = () => {
               </span>
             </h3>
             <div className="flex items-center">
-              <button className="bg-newPurple px-5 py-0.5 rounded-md ml-4">
+              <button
+                onClick={() => {
+                  setAddAgency(!addAgency);
+                }}
+                className="bg-newPurple px-5 py-0.5 rounded-md ml-4"
+              >
                 + Add Agency
               </button>
               <button className="bg-[#1C2826] text-[#7DBE9E] px-5 py-0.5 rounded-md ml-4">

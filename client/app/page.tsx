@@ -66,20 +66,20 @@ const App = () => {
             </div>
             <button
               onClick={() => {
-                if (!user?.email || !user?.password) {
-                  toast.error("Please enter the details");
-                } else {
-                  axios
-                    .post(`${BACKEND_URI}/login/login`, { ...user })
-                    .then((res) => {
-                      Cookies.set("token", res.data);
-                      history.push("/overview");
-                      checkToken();
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                }
+                // if (!user?.email || !user?.password) {
+                //   toast.error("Please enter the details");
+                // } else {
+                //   axios
+                //     .post(`${BACKEND_URI}/login/login`, { ...user })
+                //     .then((res) => {
+                //       Cookies.set("token", res.data);
+                history.push("/overview");
+                //       checkToken();
+                //     })
+                //     .catch((err) => {
+                //       console.log(err);
+                //     });
+                // }
               }}
               className="w-full py-3 rounded-md my-5 border border-white hover:border-transparent hover:bg-white hover:text-black transition-all"
             >
