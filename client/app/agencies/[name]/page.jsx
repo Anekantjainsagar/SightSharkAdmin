@@ -24,32 +24,32 @@ const Overview = () => {
                 <div className="grid grid-cols-4 gap-y-2 mt-2">
                   {[
                     {
-                      img: "/agency/data-sources/facebook.png",
+                      img: "/Agency/data-sources/facebook.png",
                       title: "Meta Ads",
                     },
                     {
-                      img: "/agency/data-sources/facebook.png",
+                      img: "/Agency/data-sources/facebook.png",
                       title: "Meta Insights",
                     },
                     {
-                      img: "/agency/data-sources/google analytics.png",
+                      img: "/Agency/data-sources/google analytics.png",
                       title: "Google Analytics",
                     },
                     {
-                      img: "/agency/data-sources/hubspot.png",
+                      img: "/Agency/data-sources/hubspot.png",
                       title: "HubSpot",
                     },
-                    { img: "/agency/data-sources/amazon.png", title: "Amazon" },
+                    { img: "/Agency/data-sources/amazon.png", title: "Amazon" },
                     {
-                      img: "/agency/data-sources/shopify.png",
+                      img: "/Agency/data-sources/shopify.png",
                       title: "Shopify",
                     },
                     {
-                      img: "/agency/data-sources/google ads.png",
+                      img: "/Agency/data-sources/google ads.png",
                       title: "Google Ads",
                     },
                     {
-                      img: "/agency/data-sources/linkedin.png",
+                      img: "/Agency/data-sources/linkedin.png",
                       title: "Linkedin",
                     },
                   ].map((e, i) => {
@@ -77,14 +77,14 @@ const Overview = () => {
                 <div className="grid grid-cols-4 gap-x-4 mt-2">
                   {[
                     {
-                      img: "/agency/individual/templates/1 (2).png",
+                      img: "/Agency/individual/templates/1 (2).png",
                     },
                     {
-                      img: "/agency/individual/templates/1 (1).png",
+                      img: "/Agency/individual/templates/1 (1).png",
                     },
-                    { img: "/agency/individual/templates/1 (4).png" },
+                    { img: "/Agency/individual/templates/1 (4).png" },
                     {
-                      img: "/agency/individual/templates/1 (3).png",
+                      img: "/Agency/individual/templates/1 (3).png",
                     },
                   ].map((e, i) => {
                     return (

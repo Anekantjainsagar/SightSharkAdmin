@@ -16,27 +16,27 @@ const AgencyDetails = () => {
       <div className="w-full">
         {[
           {
-            img: "/agency/individual/icons/status.png",
+            img: "/Agency/individual/icons/status.png",
             title: "Status",
             value: "Active",
           },
           {
-            img: "/agency/individual/icons/website.png",
+            img: "/Agency/individual/icons/website.png",
             title: "Website",
             value: "www.prowiz.io",
           },
           {
-            img: "/agency/individual/icons/location.png",
+            img: "/Agency/individual/icons/location.png",
             title: "Location",
             value: "Chandigarh, India",
           },
           {
-            img: "/agency/individual/icons/deployment.png",
+            img: "/Agency/individual/icons/deployment.png",
             title: "Deployment Date",
             value: "15th August, 2024",
           },
           {
-            img: "/agency/individual/icons/warrenty.png",
+            img: "/Agency/individual/icons/warrenty.png",
             title: "Warrenty Period",
             value: "6 Months",
           },
@@ -75,22 +75,22 @@ const AgencyDetails = () => {
       </h5>
       {[
         {
-          img: "/agency/individual/icons/status.png",
+          img: "/Agency/individual/icons/status.png",
           title: "Name",
           value: "Varun Sethi",
         },
         {
-          img: "/agency/individual/icons/website.png",
+          img: "/Agency/individual/icons/website.png",
           title: "Designation",
           value: "Co-Founder",
         },
         {
-          img: "/agency/individual/icons/location.png",
+          img: "/Agency/individual/icons/location.png",
           title: "Email Address",
           value: "varun@prowiz.io",
         },
         {
-          img: "/agency/individual/icons/deployment.png",
+          img: "/Agency/individual/icons/deployment.png",
           title: "Phone Number",
           value: "+91 1234567890",
         },

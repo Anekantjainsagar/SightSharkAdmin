@@ -236,7 +236,7 @@ const Overview = () => {
                       src={
                         data?.keyContact?.profile
                           ? data?.keyContact?.profile
-                          : "/agency/individual/agent.png"
+                          : "/Agency/individual/agent.png"
                       }
                       alt="Agency Img"
                       width={1000}

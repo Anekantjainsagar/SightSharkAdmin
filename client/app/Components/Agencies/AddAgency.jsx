@@ -129,7 +129,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </div>
                   <Image
                     src={
-                      data?.profile ? data?.profile : "/agency/temp_logo.png"
+                      data?.profile ? data?.profile : "/Agency/temp_logo.png"
                     }
                     alt="Agency Img"
                     width={1000}
@@ -253,7 +253,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     src={
                       data?.keyContact?.profile
                         ? data?.keyContact?.profile
-                        : "/agency/temp_logo.png"
+                        : "/Agency/temp_logo.png"
                     }
                     alt="Agency Img"
                     width={1000}
@@ -352,23 +352,23 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           ) : (
             <div className="px-[8vw] w-full grid grid-cols-3 gap-3">
               {[
-                { img: "/agency/data-sources/facebook.png", title: "Meta Ads" },
+                { img: "/Agency/data-sources/facebook.png", title: "Meta Ads" },
                 {
-                  img: "/agency/data-sources/facebook.png",
+                  img: "/Agency/data-sources/facebook.png",
                   title: "Meta Insights",
                 },
                 {
-                  img: "/agency/data-sources/google analytics.png",
+                  img: "/Agency/data-sources/google analytics.png",
                   title: "Google Analytics",
                 },
-                { img: "/agency/data-sources/hubspot.png", title: "HubSpot" },
-                { img: "/agency/data-sources/amazon.png", title: "Amazon" },
-                { img: "/agency/data-sources/shopify.png", title: "Shopify" },
+                { img: "/Agency/data-sources/hubspot.png", title: "HubSpot" },
+                { img: "/Agency/data-sources/amazon.png", title: "Amazon" },
+                { img: "/Agency/data-sources/shopify.png", title: "Shopify" },
                 {
-                  img: "/agency/data-sources/google ads.png",
+                  img: "/Agency/data-sources/google ads.png",
                   title: "Google Ads",
                 },
-                { img: "/agency/data-sources/linkedin.png", title: "Linkedin" },
+                { img: "/Agency/data-sources/linkedin.png", title: "Linkedin" },
               ].map((e, i) => {
                 return (
                   <div

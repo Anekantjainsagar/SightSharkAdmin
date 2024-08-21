@@ -19,7 +19,7 @@ const AgencyDetailsBlock = () => {
       </div>
       <div className="flex items-center justify-center">
         <Image
-          src={"/agency/logo.png"}
+          src={"/Agency/logo.png"}
           width={1000}
           height={1000}
           className="w-2/12 rounded-full mr-2"
@@ -31,7 +31,7 @@ const AgencyDetailsBlock = () => {
       </div>{" "}
       <div className="flex items-center justify-center">
         <Image
-          src={"/agency/contact.png"}
+          src={"/Agency/contact.png"}
           width={1000}
           height={1000}
           className="w-2/12 rounded-full mr-2"
