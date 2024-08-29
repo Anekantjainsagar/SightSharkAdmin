@@ -348,13 +348,13 @@ const Overview = () => {
                   Delete
                 </button>
                 <button
-                  className={`bg-yellow-600 font-semibold px-7 py-2 rounded-md ml-4`}
+                  className={`bg-gray-800 font-semibold px-7 py-2 rounded-md ml-4`}
                   onClick={() => {}}
                 >
-                  Discard
+                  Cancel
                 </button>
                 <button
-                  className={`bg-newPurple font-semibold px-7 py-2 rounded-md ml-4`}
+                  className={`bg-green-600 font-semibold px-7 py-2 rounded-md ml-4`}
                   onClick={() => {}}
                 >
                   Save
