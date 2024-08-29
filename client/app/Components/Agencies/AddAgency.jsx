@@ -21,6 +21,117 @@ const customStyles = {
   },
 };
 
+const connectorsData = [
+  {
+    title: "Amazon Selling Partner",
+    img: "/Agency/connectors/Amazon Selling Partner.svg",
+  },
+  {
+    title: "Bamboo HR",
+    img: "/Agency/connectors/BambooHR.svg",
+  },
+  {
+    title: "Facebook Ads",
+    img: "/Agency/connectors/Facebook Ads.svg",
+  },
+  {
+    title: "Facebook Insights",
+    img: "/Agency/connectors/Facebook Insights.svg",
+  },
+  {
+    title: "Google Ads Manager",
+    img: "/Agency/connectors/Google Ads Manager.svg",
+  },
+  {
+    title: "Google Ads",
+    img: "/Agency/connectors/Google Ads.svg",
+  },
+  {
+    title: "Google Analytics",
+    img: "/Agency/connectors/Google Analytics 4.svg",
+  },
+  {
+    title: "Google DV360",
+    img: "/Agency/connectors/Google DV360.svg",
+  },
+  {
+    title: "Google My Business",
+    img: "/Agency/connectors/Google My Business.svg",
+  },
+  {
+    title: "Google Search Console",
+    img: "/Agency/connectors/Google Search Console.svg",
+  },
+  {
+    title: "Google Sheets",
+    img: "/Agency/connectors/Google Sheets.svg",
+  },
+  {
+    title: "HubSpot",
+    img: "/Agency/connectors/HubSpot.svg",
+  },
+  {
+    title: "Instagram Ads",
+    img: "/Agency/connectors/Instagram Ads.svg",
+  },
+  {
+    title: "Instagram Insights",
+    img: "/Agency/connectors/Instagram Insights.svg",
+  },
+  {
+    title: "JSON",
+    img: "/Agency/connectors/JSON.svg",
+  },
+  {
+    title: "Klaviyo",
+    img: "/Agency/connectors/Klaviyo.svg",
+  },
+  {
+    title: "LinkedIn",
+    img: "/Agency/connectors/LinkedIn.svg",
+  },
+  {
+    title: "Outbrain",
+    img: "/Agency/connectors/Outbrain.svg",
+  },
+  {
+    title: "PayPal",
+    img: "/Agency/connectors/PayPal.svg",
+  },
+  {
+    title: "Shopify",
+    img: "/Agency/connectors/Shopify.svg",
+  },
+  {
+    title: "Stripe",
+    img: "/Agency/connectors/Stripe.svg",
+  },
+  {
+    title: "Taboola",
+    img: "/Agency/connectors/Taboola.svg",
+  },
+  {
+    title: "TikTok",
+    img: "/Agency/connectors/TikTok.svg",
+  },
+  {
+    title: "X Ads",
+    img: "/Agency/connectors/X Ads.svg",
+  },
+  {
+    title: "Xero",
+    img: "/Agency/connectors/Xero.svg",
+  },
+  {
+    title: "Klaviyo",
+    img: "/Agency/connectors/Klaviyo.svg",
+  },
+  {
+    title: "YouTube",
+    img: "/Agency/connectors/YouTube.svg",
+  },
+];
+
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 3;
   const [page, setPage] = useState(1);
@@ -108,7 +219,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
               <p>Data Sources</p>
             </div>
           </div>
-          <div className="h-[35vh]">
+          <div className="h-[40vh]">
             {page === 1 ? (
               <div className="px-[8vw] w-full">
                 <div className="flex items-center justify-center mb-6">
@@ -152,7 +263,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Agency Name"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -167,7 +278,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Website"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -182,7 +293,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Location"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -197,7 +308,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Warrenty Period"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -212,7 +323,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="date"
                       placeholder="Enter deployment Period"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -227,7 +338,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter License Limit"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                 </div>
@@ -282,7 +393,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Name"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -303,7 +414,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Designation"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -324,7 +435,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="email"
                       placeholder="Enter Email Address"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -345,38 +456,14 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="number"
                       placeholder="Enter Phone no."
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-1 rounded-md"
+                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                     />
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="px-[8vw] w-full grid grid-cols-3 gap-3">
-                {[
-                  {
-                    img: "/Agency/data-sources/facebook.png",
-                    title: "Meta Ads",
-                  },
-                  {
-                    img: "/Agency/data-sources/facebook.png",
-                    title: "Meta Insights",
-                  },
-                  {
-                    img: "/Agency/data-sources/google analytics.png",
-                    title: "Google Analytics",
-                  },
-                  { img: "/Agency/data-sources/hubspot.png", title: "HubSpot" },
-                  { img: "/Agency/data-sources/amazon.png", title: "Amazon" },
-                  { img: "/Agency/data-sources/shopify.png", title: "Shopify" },
-                  {
-                    img: "/Agency/data-sources/google ads.png",
-                    title: "Google Ads",
-                  },
-                  {
-                    img: "/Agency/data-sources/linkedin.png",
-                    title: "Linkedin",
-                  },
-                ].map((e, i) => {
+              <div className="px-[4vw] h-[40vh] pb-5 overflow-y-auto small-scroller w-full grid grid-cols-3 gap-3">
+                {connectorsData.map((e, i) => {
                   return (
                     <div
                       key={i}
@@ -388,9 +475,12 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                           alt={e?.img?.src}
                           width={1000}
                           height={1000}
-                          className="w-[3vw] mr-2"
+                          className="w-[3vw] mr-2 p-1.5 aspect-squre object-contain"
                         />
-                        <label htmlFor={e?.title} className="text-base">
+                        <label
+                          htmlFor={e?.title}
+                          className="text-base cursor-pointer"
+                        >
                           {e?.title}
                         </label>
                       </div>

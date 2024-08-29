@@ -4,7 +4,7 @@ import { PieChart } from "react-minimal-pie-chart";
 
 const AgencyDetails = () => {
   return (
-    <div className="border border-gray-200/30 py-5 px-5 w-[30%] rounded-lg flex flex-col items-center justify-center">
+    <div className="border border-gray-200/30 py-4 px-5 w-[30%] rounded-lg flex flex-col items-center justify-center">
       <Image
         width={1000}
         height={1000}
@@ -12,7 +12,7 @@ const AgencyDetails = () => {
         alt="Agency logo"
         className="w-[5vw] rounded-full"
       />
-      <h3 className="text-2xl mt-2 font-semibold">Prowiz Analytics</h3>
+      <h3 className="mainLogoSize font-semibold">Prowiz Analytics</h3>
       <div className="w-full">
         {[
           {
@@ -44,7 +44,7 @@ const AgencyDetails = () => {
           return (
             <div
               key={i}
-              className="w-full flex items-center justify-between my-2.5"
+              className="w-full flex items-center justify-between my-2"
             >
               <div className="flex items-center">
                 <Image
@@ -54,12 +54,12 @@ const AgencyDetails = () => {
                   height={1000}
                   className="w-[1.5vw]"
                 />
-                <h6 className="text-newGrey ml-2">{e?.title}</h6>
+                <h6 className="text-newGrey mainText14 ml-2">{e?.title}</h6>
               </div>
               <div
                 className={`${
                   e?.title == "Status" ? "text-[#5E8E3E]" : "text-[#597BC3]"
-                } flex items-center`}
+                } flex items-center mainText14`}
               >
                 {e?.title == "Status" && (
                   <div className="w-[10px] mr-2 h-[10px] rounded-full bg-[#5E8E3E]"></div>
@@ -70,7 +70,7 @@ const AgencyDetails = () => {
           );
         })}
       </div>{" "}
-      <h5 className="text-mainBlue w-full text-xl mt-4 mb-1 font-medium">
+      <h5 className="text-mainBlue w-full mainText18 mt-4 mb-1 font-medium">
         Key Contact Info:
       </h5>
       {[
@@ -100,12 +100,14 @@ const AgencyDetails = () => {
             key={i}
             className="w-full flex items-center justify-between my-1.5"
           >
-            <h6 className="text-newGrey ml-2">{e?.title}</h6>
-            <p className={`text-[#597BC3] flex items-center`}>{e?.value}</p>
+            <h6 className="text-newGrey ml-2 mainText14">{e?.title}</h6>
+            <p className={`text-[#597BC3] flex items-center mainText14`}>
+              {e?.value}
+            </p>
           </div>
         );
       })}{" "}
-      <h5 className="text-mainBlue w-full text-xl mt-4 mb-1 font-medium">
+      <h5 className="text-mainBlue w-full mainText18 mt-4 mb-1 font-medium">
         License Limit:
       </h5>
       <div className="w-6/12 mx-auto relative">

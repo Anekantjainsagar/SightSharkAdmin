@@ -29,20 +29,20 @@ const Overview = () => {
                 onClick={() => {
                   setAddAgency(!addAgency);
                 }}
-                className="bg-newPurple px-5 py-1 rounded-md ml-4 mainText14"
+                className="bg-newPurple px-5 py-2 rounded-md ml-4 mainText14"
               >
                 + Add Agency
               </button>
-              <button className="bg-[#1C2826] text-[#7DBE9E] px-5 py-1 rounded-md ml-4 mainText14">
+              <button className="bg-[#1C2826] text-[#7DBE9E] px-5 py-2 rounded-md ml-4 mainText14">
                 Export as CSV
               </button>
-              <button className="bg-[#2A2E31] mainText14 px-5 py-1 rounded-md ml-4">
+              <button className="bg-[#2A2E31] mainText14 px-5 py-2 rounded-md ml-4">
                 Sort By
               </button>
             </div>
           </div>
           <div className="grid mt-8 pb-3 px-5 agencyBlockGrid">
-            <div className="flex items-center justify-start">
+            <div className="flex items-center justify-center">
               <input
                 type="checkbox"
                 className="cursor-pointer w-4 h-4 !bg-main rounded-xl border border-gray-600"
@@ -53,7 +53,6 @@ const Overview = () => {
               "Status",
               "Key Contact",
               "Email",
-              "Phone",
               "Deployment Date",
               "License Usage",
               "Actions",
@@ -68,7 +67,7 @@ const Overview = () => {
               );
             })}
           </div>
-          <div className="py-2 h-[72vh] px-3">
+          <div className="py-2 h-[70vh] px-3">
             <div className="overflow-y-auto small-scroller h-[95%]">
               <AgencyDetailsBlock />
               <AgencyDetailsBlock />

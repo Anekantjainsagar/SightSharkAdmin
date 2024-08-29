@@ -3,15 +3,14 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { BiPencil } from "react-icons/bi";
-import { IoCall } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 
 const AgencyDetailsBlock = () => {
   const history = useRouter();
 
   return (
-    <div className="py-2.5 px-2 border-gray-200/30 border-y grid items-center agencyBlockGrid cursor-pointer hover:text-white text-white/70 mainText14">
-      <div className="flex items-center justify-start">
+    <div className="py-3 px-2 border-gray-200/30 border-y grid items-center agencyBlockGrid cursor-pointer hover:text-white text-white/70 mainText14">
+      <div className="flex items-center justify-center">
         <input
           type="checkbox"
           className="cursor-pointer w-4 h-4 !bg-main rounded-xl border border-gray-600"
@@ -43,10 +42,6 @@ const AgencyDetailsBlock = () => {
         <p className="break-words w-fit text-center">
           alpha.solutions@example.com
         </p>
-      </div>
-      <div className="flex items-center justify-center flex-wrap">
-        <IoCall className="mr-2 text-xl" />
-        <p className="break-words w-fit text-center">111-222-3333</p>
       </div>
       <p className="text-center">13-08-2024</p>
       <div className="flex items-center justify-center">

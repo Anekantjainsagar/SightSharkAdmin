@@ -14,13 +14,13 @@ const Overview = () => {
       <div className="gradient-line-vertical"></div>
       <div className="w-[87%] px-10 mainPageBg h-full">
         <Navbar />
-        <div className="flex items-start justify-between mt-3 text-white bg-main p-3">
+        <div className="flex h-[85vh] items-start justify-between mt-3 text-white bg-main p-3">
           <AgencyDetails />
-          <div className="w-[69%]">
+          <div className="w-[69%] h-[82vh]">
             <AgencyDetailsTopbar />
-            <div className="border border-gray-200/30 w-full rounded-lg px-6 py-4">
+            <div className="border border-gray-200/30 h-[77.4vh] w-full rounded-lg px-6 py-4">
               <div>
-                <h4 className="text-xl">Data Sources :</h4>
+                <h4 className="mainText18">Data Sources :</h4>
                 <div className="grid grid-cols-4 gap-y-2 mt-2">
                   {[
                     {
@@ -65,7 +65,9 @@ const Overview = () => {
                           height={1000}
                           className="w-[2.5vw] mr-2"
                         />
-                        <label htmlFor={e?.title}>{e?.title}</label>
+                        <label htmlFor={e?.title} className="mainText14">
+                          {e?.title}
+                        </label>
                       </div>
                     );
                   })}
@@ -73,7 +75,7 @@ const Overview = () => {
               </div>{" "}
               <div className="gradient-line my-6"></div>
               <div>
-                <h4 className="text-xl">Templates :</h4>
+                <h4 className="mainText18">Templates :</h4>
                 <div className="grid grid-cols-4 gap-x-4 mt-2">
                   {[
                     {
@@ -103,10 +105,10 @@ const Overview = () => {
               <div className="gradient-line my-6"></div>
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl">Recent Activity</h3>
-                  <p className="text-newGrey flex items-center">
+                  <h3 className="mainText18">Recent Activity</h3>
+                  <p className="text-newGrey mainText14 flex items-center">
                     View All{" "}
-                    <HiOutlineArrowNarrowRight className="text-xl ml-2" />
+                    <HiOutlineArrowNarrowRight className="text-base ml-2" />
                   </p>
                 </div>
               </div>

@@ -24,8 +24,8 @@ const App = () => {
         <LoginNav />
         <div className="text-white flex flex-col items-center w-7/12 px-5">
           <h1 className="text-[36px] font-semibold">Welcome Back</h1>
-          <p className="mainText18 my-1">Login into your account</p>
-          <div className="w-11/12 mt-3">
+          <p className="mainText18">Login into your account</p>
+          <div className="w-11/12 mt-4">
             <input
               type="email"
               name="email"
@@ -34,7 +34,7 @@ const App = () => {
               value={user?.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
-            <div className="w-full relative">
+            <div className="w-full relative mt-1">
               <input
                 type={showPassword ? "text" : "password"}
                 name="Password"
@@ -52,18 +52,20 @@ const App = () => {
                 {showPassword ? <LuEye /> : <LuEyeOff />}
               </div>
             </div>
-            <div className="mt-2.5 flex items-center justify-between">
-              <div className="text-sm flex items-center">
+            <div className="my-5 flex items-center justify-between">
+              <div className="text-base flex items-center">
                 <input
                   type="checkbox"
                   id="remember"
-                  className="mr-1 cursor-pointer text-lg"
+                  className="mr-2 cursor-pointer text-lg"
                 />
                 <label htmlFor="remember" className="cursor-pointer">
                   Remember Me
                 </label>
               </div>
-              <button className="text-red-600 text-sm">Recover Password</button>
+              <button className="text-red-600 text-base">
+                Recover Password
+              </button>
             </div>
             <button
               onClick={() => {
@@ -82,11 +84,11 @@ const App = () => {
                 //     });
                 // }
               }}
-              className="w-full py-3 bg-gradient-to-b from-[#605EFD] to-[#393897] rounded-[10px] my-5 mainText18"
+              className="w-full py-3 bg-gradient-to-b from-[#605EFD] to-[#393897] rounded-[10px] mainText18"
             >
               Log In
             </button>
-            <div className="flex items-center justify-between w-full my-7">
+            <div className="flex items-center justify-between w-full my-10">
               <div className="line w-full h-[1px] bg-white/70"></div>
               <span className="px-2 whitespace-nowrap">Or continue with</span>
               <div className="line w-full h-[1px] bg-white/70"></div>

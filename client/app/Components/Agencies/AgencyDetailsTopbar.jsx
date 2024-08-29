@@ -6,7 +6,7 @@ const AgencyDetailsTopbar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="mb-3">
+    <div className="h-[5vh] flex items-start">
       {[
         { title: "About", route: "/agencies/alpha-solutions" },
         {
