@@ -114,7 +114,7 @@ const App = () => {
               </button>
             </div>
             <p className="mainText18 text-center my-4">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <span className="text-btnBlue">Sign up!</span>
             </p>
           </div>
