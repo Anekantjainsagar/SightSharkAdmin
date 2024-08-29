@@ -9,6 +9,7 @@ import axios from "axios";
 import { BACKEND_URI } from "@/app/utils/url";
 import Cookies from "js-cookie";
 import Context from "./Context/Context";
+import Image from "next/image";
 
 const App = () => {
   const history = useRouter();
@@ -22,13 +23,13 @@ const App = () => {
       <div className="w-7/12 p-[2vw] flex flex-col items-center justify-between h-full">
         <LoginNav />
         <div className="text-white flex flex-col items-center w-7/12 px-5">
-          <h1 className="text-5xl font-semibold">Welcome Back</h1>
-          <p className="text-xl my-2">Login into your account</p>
+          <h1 className="text-[36px] font-semibold">Welcome Back</h1>
+          <p className="mainText18 my-1">Login into your account</p>
           <div className="w-11/12 mt-3">
             <input
               type="email"
               name="email"
-              className="text-black text-lg w-full px-5 py-3 outline-none rounded-md my-5"
+              className="text-white bg-[#04095180]/50 border border-[#0110F1]/60 text-lg w-full px-5 py-3 outline-none rounded-[10px] my-5"
               placeholder="Email"
               value={user?.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -37,13 +38,13 @@ const App = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="Password"
-                className="text-black text-lg w-full px-5 py-3 outline-none rounded-md"
+                className="text-white bg-[#04095180]/50 border border-[#0110F1]/60 text-lg w-full px-5 py-3 outline-none rounded-[10px]"
                 placeholder="Password"
                 value={user?.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
               <div
-                className="absolute top-1/2 -translate-y-1/2 text-black/60 right-5 text-2xl cursor-pointer"
+                className="absolute top-1/2 -translate-y-1/2 text-white right-5 text-2xl cursor-pointer"
                 onClick={(e) => {
                   setShowPassword(!showPassword);
                 }}
@@ -81,10 +82,41 @@ const App = () => {
                 //     });
                 // }
               }}
-              className="w-full py-3 rounded-md my-5 border border-white hover:border-transparent hover:bg-white hover:text-black transition-all"
+              className="w-full py-3 bg-gradient-to-b from-[#605EFD] to-[#393897] rounded-[10px] my-5 mainText18"
             >
               Log In
             </button>
+            <div className="flex items-center justify-between w-full my-7">
+              <div className="line w-full h-[1px] bg-white/70"></div>
+              <span className="px-2 whitespace-nowrap">Or continue with</span>
+              <div className="line w-full h-[1px] bg-white/70"></div>
+            </div>
+            <div className="items-stretch grid grid-cols-2 gap-x-4">
+              <button className="w-full bg-[#121136] rounded-[10px] flex items-center justify-center h-[5vh]">
+                <Image
+                  src="/google.svg"
+                  width={1000}
+                  height={1000}
+                  alt="Google icon"
+                  className="w-[2vw] mr-2"
+                />
+                <p>Sign in with Google</p>
+              </button>
+              <button className="w-full bg-[#121136] rounded-[10px] flex items-center justify-center h-[5vh]">
+                <Image
+                  src="/facebook.svg"
+                  width={1000}
+                  height={1000}
+                  alt="Google icon"
+                  className="w-[1.5vw] mr-3"
+                />
+                <p>Sign in with Facebook</p>
+              </button>
+            </div>
+            <p className="mainText18 text-center my-4">
+              Don't have an account?{" "}
+              <span className="text-btnBlue">Sign up!</span>
+            </p>
           </div>
         </div>
         <div></div>

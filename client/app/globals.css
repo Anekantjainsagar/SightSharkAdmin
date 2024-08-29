@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+.mainLogoSize {
+  @apply text-[24px];
+}
+
+.bigFont {
+  @apply text-[42px];
+}
+
+.maintext14 {
+  @apply text-[14px];
+}
+
+.mainText18 {
+  @apply text-[18px];
+}
+
+.mainText20 {
+  @apply text-[20px];
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

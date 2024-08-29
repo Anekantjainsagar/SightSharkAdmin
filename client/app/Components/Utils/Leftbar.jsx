@@ -14,29 +14,29 @@ const Leftbar = () => {
   let mainRoutes = [
     {
       title: "Overview",
-      icon: <CiGrid41 className="text-3xl" />,
+      icon: <CiGrid41 className="text-2xl" />,
       route: "/overview",
     },
     {
       title: "Agencies",
-      icon: <IoNewspaperOutline className="text-3xl" />,
+      icon: <IoNewspaperOutline className="text-2xl" />,
       route: "/agencies",
     },
     {
       title: "Users",
-      icon: <CiWallet className="text-3xl" />,
+      icon: <CiWallet className="text-2xl" />,
       route: "/users",
     },
   ];
   let settingRoutes = [
     {
       title: "Settings",
-      icon: <CiSettings className="text-3xl" />,
+      icon: <CiSettings className="text-2xl" />,
       route: "/settings",
     },
     {
       title: "Help",
-      icon: <IoIosHelpCircleOutline className="text-3xl" />,
+      icon: <IoIosHelpCircleOutline className="text-2xl" />,
       route: "/help",
     },
   ];
@@ -52,16 +52,16 @@ const Leftbar = () => {
             height={1000}
             className="w-[2vw]"
           />
-          <h1 className="text-3xl font-bold ml-3">sightshark</h1>
+          <h1 className="mainLogoSize font-bold ml-3">sightshark</h1>
         </div>
         <div className="gradient-line my-8"></div>
         <div className="">
-          <p className="text-gray-400 mb-3 text-sm">MAIN</p>
+          <p className="text-gray-400 mb-3 text-[12px]">MAIN</p>
           {mainRoutes?.map((e, i) => {
             return (
               <div
                 key={i}
-                className={`flex items-center py-2 rounded-xl cursor-pointer px-4 mb-2 ${
+                className={`flex items-center py-2 rounded-xl cursor-pointer px-4 mb-2 mainText14 ${
                   pathname.includes(e?.route)
                     ? "radialGradient border border-gray-200/10"
                     : "text-gray-400"
@@ -70,25 +70,25 @@ const Leftbar = () => {
                   history.push(e?.route);
                 }}
               >
-                {e?.icon} <p className="ml-4 text-lg">{e?.title}</p>
+                {e?.icon} <p className="ml-4">{e?.title}</p>
               </div>
             );
           })}
         </div>
         <div className="gradient-line my-8"></div>{" "}
         <div className="">
-          <p className="text-gray-400 mb-3 text-sm">SETTINGS</p>
+          <p className="text-gray-400 mb-3 text-[12px]">SETTINGS</p>
           {settingRoutes?.map((e, i) => {
             return (
               <div
                 key={i}
-                className={`flex items-center py-2 rounded-xl cursor-pointer px-4 mb-2 ${
+                className={`flex items-center py-2 rounded-xl cursor-pointer px-4 mb-2 mainText14 ${
                   pathname.includes(e?.route)
                     ? "radialGradient border border-gray-200/10"
                     : "text-gray-400"
                 }`}
               >
-                {e?.icon} <p className="ml-4 text-lg">{e?.title}</p>
+                {e?.icon} <p className="ml-4">{e?.title}</p>
               </div>
             );
           })}
@@ -101,8 +101,8 @@ const Leftbar = () => {
           history.push("/");
         }}
       >
-        <AiOutlineLogout className="text-xl" />{" "}
-        <p className="ml-4 text-lg">Logout</p>
+        <AiOutlineLogout className="mainText14" />{" "}
+        <p className="ml-4 mainText14">Logout</p>
       </div>
     </div>
   );

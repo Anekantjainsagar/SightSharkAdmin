@@ -3,7 +3,7 @@ import React from "react";
 
 const LoginNav = () => {
   return (
-    <div className="flex items-center text-white text-3xl font-bold w-full">
+    <div className="flex items-center text-white mainLogoSize font-bold w-full">
       <Image
         src={"/logo.png"}
         alt="Main logo"

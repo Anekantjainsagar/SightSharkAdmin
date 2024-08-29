@@ -10,7 +10,7 @@ const AgencyDetailsBlock = () => {
   const history = useRouter();
 
   return (
-    <div className="py-2.5 px-2 border-gray-200/30 border-y grid items-center agencyBlockGrid cursor-pointer hover:text-white text-white/70">
+    <div className="py-2.5 px-2 border-gray-200/30 border-y grid items-center agencyBlockGrid cursor-pointer hover:text-white text-white/70 mainText14">
       <div className="flex items-center justify-start">
         <input
           type="checkbox"
@@ -62,10 +62,10 @@ const AgencyDetailsBlock = () => {
           onClick={() => {
             history.push("/agencies/alpha-solutions");
           }}
-          className="bg-[#3836FF4D]/30 text-[#3836FF] p-1.5 text-4xl rounded-full cursor-pointer"
+          className="bg-[#3836FF4D]/30 text-[#3836FF] p-1.5 text-3xl rounded-full cursor-pointer"
         />
-        <BiPencil className="bg-[#2457DA26]/20 text-[#2457DA] p-1.5 text-4xl rounded-full cursor-pointer" />
-        <AiOutlineDelete className="bg-[#FF202026]/20 text-[#FF2020] p-1.5 text-4xl rounded-full cursor-pointer" />
+        <BiPencil className="bg-[#2457DA26]/20 text-[#2457DA] p-1.5 text-3xl rounded-full cursor-pointer" />
+        <AiOutlineDelete className="bg-[#FF202026]/20 text-[#FF2020] p-1.5 text-3xl rounded-full cursor-pointer" />
       </div>
     </div>
   );

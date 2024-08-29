@@ -41,10 +41,10 @@ const RightSide = () => {
         className="absolute left-1/2 -translate-x-1/2 bottom-5 w-10/12"
       />
       <div className="p-[2vw] glass rounded-xl">
-        <button className="bg-btnBlue text-white px-5 py-2 text-xl rounded-md">
+        <button className="bg-btnBlue text-white px-5 py-2 text-[14px] rounded-md">
           👍 Data Sources
         </button>
-        <p className="text-white text-2xl mt-5">
+        <p className="text-white text-[20px] mt-5">
           Today, we create innovative solutions to the challenges that consumers
           face in both their everyday lives and events.
         </p>

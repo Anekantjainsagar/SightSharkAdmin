@@ -18,7 +18,7 @@ const Overview = () => {
         <Navbar />
         <div className="bg-main border mt-3 border-gray-200/30 text-white py-5 w-full rounded-lg">
           <div className="flex items-center justify-between px-5">
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-lg font-semibold">
               Agencies{" "}
               <span className="bg-newPurple text-base px-2.5 ml-3 py-0.5 rounded-md">
                 25
@@ -29,14 +29,14 @@ const Overview = () => {
                 onClick={() => {
                   setAddAgency(!addAgency);
                 }}
-                className="bg-newPurple px-5 py-0.5 rounded-md ml-4"
+                className="bg-newPurple px-5 py-1 rounded-md ml-4 mainText14"
               >
                 + Add Agency
               </button>
-              <button className="bg-[#1C2826] text-[#7DBE9E] px-5 py-0.5 rounded-md ml-4">
+              <button className="bg-[#1C2826] text-[#7DBE9E] px-5 py-1 rounded-md ml-4 mainText14">
                 Export as CSV
               </button>
-              <button className="bg-[#2A2E31] px-5 py-0.5 rounded-md ml-4">
+              <button className="bg-[#2A2E31] mainText14 px-5 py-1 rounded-md ml-4">
                 Sort By
               </button>
             </div>
@@ -61,7 +61,7 @@ const Overview = () => {
               return (
                 <h5
                   key={i}
-                  className="font-semibold tracking-wider text-center"
+                  className="font-semibold text-base tracking-wider text-center"
                 >
                   {e}
                 </h5>
@@ -87,19 +87,19 @@ const Overview = () => {
               <AgencyDetailsBlock />
             </div>
             <div className="h-[8%] px-2 flex items-center justify-between">
-              <p className="flex items-center">
+              <p className="flex items-center mainText14">
                 Showing 11 Entries{" "}
                 <HiOutlineArrowNarrowRight className="ml-2 text-lg" />
               </p>
               <div className="flex items-center">
-                <button className="ml-4 cursor-pointer">Prev</button>
+                <button className="ml-4 cursor-pointer mainText14">Prev</button>
                 <span className="ml-4 px-2 py-0.5 rounded-md cursor-pointer bg-newPurple">
                   1
                 </span>
                 <span className="ml-4 px-2 py-0.5 rounded-md cursor-pointer">
                   2
                 </span>
-                <button className="text-newPurple ml-4 cursor-pointer">
+                <button className="text-newPurple ml-4 cursor-pointer mainText14">
                   Next
                 </button>
               </div>
