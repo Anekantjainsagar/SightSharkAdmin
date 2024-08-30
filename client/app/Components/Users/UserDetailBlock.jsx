@@ -24,7 +24,7 @@ const UserDetailBlock = () => {
           className="w-[10%] rounded-full mr-2"
         />
         <div className="ml-2">
-          <h5 className="text-base">Alpha solutions</h5>
+          <h5 className="text-base">John Doe</h5>
           <p className="text-gray-400">johndoe@gmail.com</p>
         </div>
       </div>{" "}
