@@ -93,6 +93,10 @@ input[type="number"] {
   grid-template-columns: 4% 12% 10% 10% 22% 12% 18% 12%;
 }
 
+.userBlockGrid {
+  grid-template-columns: 5% 25% 10% 15% 15% 20% 10%;
+}
+
 .status-active {
   background-color: rgba(55, 162, 4, 0.3);
   color: #37a204;

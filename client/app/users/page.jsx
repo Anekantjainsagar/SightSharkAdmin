@@ -5,6 +5,7 @@ import Navbar from "@/app/Components/Utils/Navbar";
 import AgencyDetailsBlock from "@/app/Components/Utils/AgencyDetails";
 import AddAgency from "@/app/Components/Agencies/AddAgency";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import UserDetailBlock from "@/app/Components/Users/UserDetailBlock";
 
 const Users = () => {
   const [addAgency, setAddAgency] = useState(false);
@@ -38,43 +39,42 @@ const Users = () => {
               </button>
             </div>
           </div>
-          <div className="grid mt-8 pb-3 px-5 agencyBlockGrid">
+          <div className="grid mt-8 pb-3 px-5 userBlockGrid">
             <div className="flex items-center justify-center">
               <input
                 type="checkbox"
                 className="cursor-pointer w-4 h-4 !bg-main rounded-xl border border-gray-600"
               />
             </div>
-            {["Name", "Access", "Status", "Joined", "Last Online"].map(
-              (e, i) => {
-                return (
-                  <h5
-                    key={i}
-                    className="font-semibold text-base tracking-wider text-center"
-                  >
-                    {e}
-                  </h5>
-                );
-              }
-            )}
+            {[
+              "Name",
+              "Access",
+              "Status",
+              "Joined",
+              "Last Online",
+              "Actions",
+            ].map((e, i) => {
+              return (
+                <h5
+                  key={i}
+                  className="font-semibold text-base tracking-wider text-center"
+                >
+                  {e}
+                </h5>
+              );
+            })}
           </div>
           <div className="py-2 h-[70vh] px-3">
             <div className="overflow-y-auto small-scroller h-[95%]">
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
-              <AgencyDetailsBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
+              <UserDetailBlock />
             </div>
             <div className="h-[8%] px-2 flex items-center justify-between">
               <p className="flex items-center mainText14">

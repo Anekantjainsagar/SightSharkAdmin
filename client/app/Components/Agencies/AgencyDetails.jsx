@@ -37,7 +37,7 @@ const AgencyDetails = () => {
           },
           {
             img: "/Agency/individual/icons/warrenty.png",
-            title: "Warrenty Period",
+            title: "Warranty Period",
             value: "6 Months",
           },
         ].map((e, i) => {

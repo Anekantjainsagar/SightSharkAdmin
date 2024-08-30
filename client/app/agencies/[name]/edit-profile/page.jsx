@@ -136,7 +136,7 @@ const Overview = () => {
                     </div>
                     <div className="flex flex-col">
                       <label htmlFor="warrenty" className="mb-1.5">
-                        Warrenty Period
+                        Warranty Period
                       </label>
                       <input
                         id="warrenty"
@@ -145,7 +145,7 @@ const Overview = () => {
                           setData({ ...data, warrenty: e.target.value });
                         }}
                         type="text"
-                        placeholder="Enter Warrenty Period"
+                        placeholder="Enter Warranty Period"
                         className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
                       />
                     </div>

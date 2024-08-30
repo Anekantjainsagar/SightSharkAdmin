@@ -70,7 +70,7 @@ const Leftbar = () => {
     {
       title: "Settings",
       icon: <CiSettings className="text-2xl" />,
-      // route: "/settings",
+      route: "/settings",
       temp_icon: [
         <svg
           class="w-full h-full"

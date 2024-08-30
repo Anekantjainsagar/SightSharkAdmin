@@ -9,7 +9,7 @@ const AgencyDetailsBlock = () => {
   const history = useRouter();
 
   return (
-    <div className="py-3 px-2 border-gray-200/30 border-y grid items-center agencyBlockGrid cursor-pointer hover:text-white text-white/70 mainText14">
+    <div className="py-3 px-2 border-gray-200/30 border-y grid items-center userBlockGrid cursor-pointer hover:text-white text-white/70 mainText14">
       <div className="flex items-center justify-center">
         <input
           type="checkbox"
