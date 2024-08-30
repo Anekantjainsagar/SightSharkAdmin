@@ -22,6 +22,7 @@ const UserDetailBlock = () => {
           width={1000}
           height={1000}
           className="w-[10%] rounded-full mr-2"
+          alt="Logo"
         />
         <div className="ml-2">
           <h5 className="text-base">John Doe</h5>

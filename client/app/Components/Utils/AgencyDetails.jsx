@@ -21,6 +21,7 @@ const AgencyDetailsBlock = () => {
           src={"/Agency/logo.png"}
           width={1000}
           height={1000}
+          alt="Logo"
           className="w-2/12 rounded-full mr-2"
         />
         <h5>Alpha solutions</h5>
@@ -33,6 +34,7 @@ const AgencyDetailsBlock = () => {
           src={"/Agency/contact.png"}
           width={1000}
           height={1000}
+          alt="Contact"
           className="w-2/12 rounded-full mr-2"
         />
         <p>Anna</p>
