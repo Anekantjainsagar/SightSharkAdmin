@@ -21,6 +21,7 @@ const Leftbar = () => {
           height="24"
           viewBox="0 0 24 24"
           fill="none"
+          key={1}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -54,6 +55,7 @@ const Leftbar = () => {
         </svg>,
         <svg
           width="24"
+          key={1}
           height="24"
           viewBox="0 0 24 24"
           fill="none"
@@ -101,6 +103,7 @@ const Leftbar = () => {
       temp_icon: [
         <svg
           width="18"
+          key={1}
           height="22"
           viewBox="0 0 18 22"
           fill="none"
@@ -117,6 +120,7 @@ const Leftbar = () => {
         <svg
           width="18"
           height="22"
+          key={1}
           viewBox="0 0 18 22"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -142,6 +146,7 @@ const Leftbar = () => {
           height="20"
           viewBox="0 0 22 20"
           fill="none"
+          key={1}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -154,6 +159,7 @@ const Leftbar = () => {
         </svg>,
         <svg
           width="22"
+          key={1}
           height="20"
           viewBox="0 0 22 20"
           fill="none"
@@ -180,6 +186,7 @@ const Leftbar = () => {
         <svg
           width="24"
           height="24"
+          key={1}
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -204,6 +211,7 @@ const Leftbar = () => {
           height="24"
           viewBox="0 0 24 24"
           fill="none"
+          key={1}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -233,6 +241,7 @@ const Leftbar = () => {
           height="24"
           viewBox="0 0 24 24"
           fill="none"
+          key={1}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -246,6 +255,7 @@ const Leftbar = () => {
         <svg
           width="24"
           height="24"
+          key={1}
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -164,6 +164,7 @@ const Overview = () => {
                             className={`w-[40px] h-[40px] rounded-lg flex items-center justify-center cursor-pointer ${
                               page == e ? "bg-newBlue" : "text-[#85888E]"
                             }`}
+                            key={i}
                           >
                             {e}
                           </div>
@@ -177,6 +178,7 @@ const Overview = () => {
                         ?.map((e, i) => {
                           return (
                             <div
+                              key={i}
                               className={`w-[40px] h-[40px] rounded-lg flex items-center justify-center cursor-pointer ${
                                 page == e ? "bg-newBlue" : "text-[#85888E]"
                               }`}
