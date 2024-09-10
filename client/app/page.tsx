@@ -109,7 +109,7 @@ const App = () => {
                   src="/facebook.svg"
                   width={1000}
                   height={1000}
-                  alt="Google icon"
+                  alt="Facebook icon"
                   className="w-[1.5vw] mr-3"
                 />
                 <p>Sign in with Facebook</p>

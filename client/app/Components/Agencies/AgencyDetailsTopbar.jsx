@@ -19,9 +19,9 @@ const AgencyDetailsTopbar = () => {
             key={i}
             className={`${
               pathname == e?.route
-                ? "bg-newPurple"
-                : "bg-transparent text-newPurple"
-            } font-semibold px-7 py-2 rounded-md mr-2`}
+                ? "bg-newBlue"
+                : "bg-transparent text-[#B2B4BA]"
+            } py-2 px-5 rounded-2xl mr-4`}
             onClick={() => {
               history.push(e?.route);
             }}

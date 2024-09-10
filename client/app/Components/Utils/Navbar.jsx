@@ -10,18 +10,18 @@ const Navbar = () => {
     <div className="text-white py-4 flex items-center justify-between w-full">
       <div>
         <h3 className="bigFont font-semibold">Hello {userData?.name},</h3>
-        <p className="maintext14">Here’s your overview of the agencies</p>
+        <p className="text-base text-[#85888E]">
+          Here’s your overview of the agencies
+        </p>
       </div>
-      <div className="flex items-center">
-        <div className="relative flex items-center">
-          <FaSearch className="absolute left-3 z-40 text-gray-200/40" />{" "}
-          {/* Search Icon */}
-          <input
-            type="search"
-            placeholder="Search your query"
-            className="outline-none mainText14 border border-gray-200/40 bg-transparent px-4 glass py-1.5 rounded-lg pl-10" // Add padding to the left for the icon
-          />
-        </div>
+      <div className="relative flex items-center w-[500px]">
+        <FaSearch className="absolute left-4 z-40 text-white" />{" "}
+        {/* Search Icon */}
+        <input
+          type="search"
+          placeholder="Search"
+          className="outline-none text-base border border-gray-200/20 bg-transparent px-6 glass py-3 rounded-lg pl-12 w-full" // Add padding to the left for the icon
+        />
       </div>
     </div>
   );

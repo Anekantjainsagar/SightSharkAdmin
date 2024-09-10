@@ -6,116 +6,193 @@ import Image from "next/image";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
+import { FaPlus } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
-const Overview = () => {
+const Overview = ({ params }) => {
+  const history = useRouter();
+  const { name } = params;
+
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
-      <div className="gradient-line-vertical"></div>
-      <div className="w-[87%] px-10 mainPageBg h-full">
-        <Navbar />
-        <div className="flex h-[85vh] items-start justify-between mt-3 text-white bg-main p-3">
-          <AgencyDetails />
-          <div className="w-[69%] h-[82vh]">
-            <AgencyDetailsTopbar />
-            <div className="border border-gray-200/30 h-[77.4vh] w-full rounded-lg px-6 py-4">
-              <div>
-                <h4 className="mainText18">Data Sources :</h4>
-                <div className="grid grid-cols-4 gap-y-2 mt-2">
-                  {[
-                    {
-                      img: "/Agency/data-sources/facebook.png",
-                      title: "Meta Ads",
-                    },
-                    {
-                      img: "/Agency/data-sources/facebook.png",
-                      title: "Meta Insights",
-                    },
-                    {
-                      img: "/Agency/data-sources/google analytics.png",
-                      title: "Google Analytics",
-                    },
-                    {
-                      img: "/Agency/data-sources/hubspot.png",
-                      title: "HubSpot",
-                    },
-                    { img: "/Agency/data-sources/amazon.png", title: "Amazon" },
-                    {
-                      img: "/Agency/data-sources/shopify.png",
-                      title: "Shopify",
-                    },
-                    {
-                      img: "/Agency/data-sources/google ads.png",
-                      title: "Google Ads",
-                    },
-                    {
-                      img: "/Agency/data-sources/linkedin.png",
-                      title: "Linkedin",
-                    },
-                  ].map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-center px-2 py-1 rounded-full"
-                      >
-                        <Image
-                          src={e?.img}
-                          alt={e?.img?.src}
-                          width={1000}
-                          height={1000}
-                          className="w-[2.5vw] mr-2"
-                        />
-                        <label htmlFor={e?.title} className="mainText14">
-                          {e?.title}
-                        </label>
-                      </div>
-                    );
-                  })}
+      <div className="w-[87%] bg-main h-full relative">
+        <div className="bg-newBubbleColor/5 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
+        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
+        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-20 absolute bottom-0 rounded-full"></div>
+        <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
+          <Navbar />
+          <div className="text-white w-full rounded-lg flex items-start justify-between">
+            <AgencyDetails />
+            <div className="w-[69%] h-[82vh]">
+              <AgencyDetailsTopbar />
+              <div className="border border-gray-500/30 h-[83vh] w-full rounded-lg p-4">
+                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20">
+                  <div className="flex items-center justify-between w-full">
+                    <h4 className="mainText20">Data Sources </h4>
+                    <button
+                      onClick={() => {}}
+                      className="bg-newBlue px-5 py-3 rounded-xl flex items-center gap-x-2 text-base"
+                    >
+                      <FaPlus className="text-sm" /> Add Source
+                    </button>
+                  </div>{" "}
+                  <div className="gradient-line my-4"></div>
+                  <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-4">
+                    {[
+                      {
+                        img: "/Agency/logo/facebook.svg",
+                        title: "Meta Ads",
+                      },
+                      {
+                        img: "/Agency/logo/facebook.svg",
+                        title: "Meta Insights",
+                      },
+                      {
+                        img: "/Agency/logo/google analytics.svg",
+                        title: "Google Analytics",
+                      },
+                      {
+                        img: "/Agency/logo/hubspot.svg",
+                        title: "HubSpot",
+                      },
+                      {
+                        img: "/Agency/logo/amazon.svg",
+                        title: "Amazon",
+                      },
+                      {
+                        img: "/Agency/logo/shopify.svg",
+                        title: "Shopify",
+                      },
+                      {
+                        img: "/Agency/logo/google ads.svg",
+                        title: "Google Ads",
+                      },
+                      {
+                        img: "/Agency/logo/linkedin.svg",
+                        title: "Linkedin",
+                      },
+                    ].map((e, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="flex items-center px-2 py-1 rounded-full"
+                        >
+                          {" "}
+                          <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-8 aspect-square p-1.5 mr-3">
+                            <Image
+                              src={e?.img}
+                              alt={e?.img?.src}
+                              width={1000}
+                              height={1000}
+                              className="object-contain"
+                            />
+                          </div>
+                          <label htmlFor={e?.title} className="mainText14">
+                            {e?.title}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>{" "}
-              <div className="gradient-line my-6"></div>
-              <div>
-                <h4 className="mainText18">Templates :</h4>
-                <div className="grid grid-cols-4 gap-x-4 mt-2">
-                  {[
-                    {
-                      img: "/Agency/individual/templates/1 (2).png",
-                    },
-                    {
-                      img: "/Agency/individual/templates/1 (1).png",
-                    },
-                    { img: "/Agency/individual/templates/1 (4).png" },
-                    {
-                      img: "/Agency/individual/templates/1 (3).png",
-                    },
-                  ].map((e, i) => {
-                    return (
-                      <div key={i}>
-                        <Image
-                          src={e?.img}
-                          alt={e?.img?.src}
-                          width={1000}
-                          height={1000}
-                        />
-                      </div>
-                    );
-                  })}
+                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20 my-4">
+                  <div className="flex items-center justify-between w-full">
+                    <h4 className="mainText20">Templates </h4>
+                    <button
+                      onClick={() => {}}
+                      className="bg-newBlue px-5 py-3 rounded-xl flex items-center gap-x-2 text-base"
+                    >
+                      <FaPlus className="text-sm" /> Add Template
+                    </button>
+                  </div>{" "}
+                  <div className="gradient-line my-4"></div>
+                  <div className="grid grid-cols-5 gap-x-4 mt-2">
+                    {[
+                      {
+                        img: "/Agency/individual/templates/1 (2).png",
+                      },
+                      {
+                        img: "/Agency/individual/templates/1 (1).png",
+                      },
+                      { img: "/Agency/individual/templates/1 (4).png" },
+                      {
+                        img: "/Agency/individual/templates/1 (3).png",
+                      },
+                      {
+                        img: "/Agency/individual/templates/1 (2).png",
+                      },
+                    ].map((e, i) => {
+                      return (
+                        <div key={i}>
+                          <Image
+                            src={e?.img}
+                            alt={e?.img?.src}
+                            width={1000}
+                            height={1000}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>{" "}
-              <div className="gradient-line my-6"></div>
-              <div>
-                <div className="flex items-center justify-between">
-                  <h3 className="mainText18">Recent Activity</h3>
-                  <p className="text-newGrey mainText14 flex items-center">
-                    View All{" "}
-                    <HiOutlineArrowNarrowRight className="text-base ml-2" />
-                  </p>
+                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20 my-4 h-[29vh]">
+                  <div className="flex items-center justify-between w-full">
+                    <h4 className="mainText20">Recent Activity </h4>
+                    <p
+                      className="text-white text-base flex items-center cursor-pointer"
+                      onClick={() =>
+                        history.push(`/agencies/${name}/recent-activities`)
+                      }
+                    >
+                      View All
+                      <HiOutlineArrowNarrowRight className="text-base ml-2" />
+                    </p>
+                  </div>
+                  <div className="gradient-line my-4"></div>
+                  <div>
+                    <div>
+                      <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/20">
+                        14 August 2024
+                      </span>
+                      <div className="mt-4">
+                        {[1, 2, 3]?.map((e, i) => {
+                          return (
+                            <div
+                              key={i}
+                              className={`flex items-center justify-between mb-4`}
+                            >
+                              <div className="flex items-center gap-x-3 ml-12">
+                                <Circle />
+                                <h6 className="mainText14">
+                                  <span className="font-semibold">
+                                    ProWiz Analytics
+                                  </span>{" "}
+                                  - Assigned “SightShark” Google Ads, Meta Ads
+                                  and LinkedIn Ads data sources
+                                </h6>
+                              </div>
+                              <p className="mainText14">02:30 PM</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const Circle = () => {
+  return (
+    <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
+      <div className="bg-[#FF8A00] w-full h-full rounded-full"></div>
     </div>
   );
 };

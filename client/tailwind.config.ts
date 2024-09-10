@@ -9,12 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        main: "#030021",
+        main: "#091022",
         gradientMain: "#030636",
         btnBlue: "#2A66FF",
         newPurple: "#605EFD",
         newGrey: "#CACACA",
         mainBlue: "#006FFF",
+        newBlue: "#0155FB",
+        newBubbleColor: "#1664FF",
+        textGrey: "#CECFD2",
       },
       backgroundImage: {
         "radial-gradient":
