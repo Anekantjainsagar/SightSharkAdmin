@@ -24,7 +24,7 @@ const Overview = ({ params }) => {
           <Navbar />
           <div className="text-white w-full rounded-lg flex items-start justify-between">
             <AgencyDetails />
-            <div className="w-[69%] h-[82vh]">
+            <div className="w-[69%]">
               <AgencyDetailsTopbar />
               <div className="border border-gray-500/30 h-[83vh] w-full rounded-lg p-4">
                 <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20">

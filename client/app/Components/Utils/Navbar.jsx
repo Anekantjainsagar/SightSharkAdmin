@@ -1,5 +1,5 @@
+"use client";
 import Context from "@/app/Context/Context";
-import Image from "next/image";
 import React, { useContext, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 
