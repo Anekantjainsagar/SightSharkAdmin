@@ -5,8 +5,7 @@ import Image from "next/image";
 const RightSide = () => {
   return (
     <div className="w-5/12 relative p-[3vw] flex flex-col items-center justify-between bg-gradient-to-br from-gradientMain/50 from-[50%] to-black/50 h-full">
-      {" "}
-      <div className="w-10/12 flex items-center justify-center">
+      <div className="w-11/12 flex items-center justify-center">
         <IconCloud
           iconSlugs={[
             "amazon",
@@ -34,17 +33,14 @@ const RightSide = () => {
         />
       </div>
       <Image
-        src="/design_elements/blue_ellipse.png"
-        alt="Blue ellipse"
+        src="/login bg.png"
+        alt="Login bg"
         width={1000}
         height={1000}
-        className="absolute left-1/2 -translate-x-1/2 bottom-5 w-10/12"
+        className="absolute top-0 left-0 object-cover w-full h-full"
       />
-      <div className="p-[2vw] glass rounded-xl">
-        <button className="bg-btnBlue text-white px-5 py-2 text-[14px] rounded-md">
-          👍 Data Sources
-        </button>
-        <p className="text-white text-[20px] mt-5">
+      <div className="p-[1.5vw] glass rounded-xl text-[26px]">
+        <p className="text-white">
           Today, we create innovative solutions to the challenges that consumers
           face in both their everyday lives and events.
         </p>

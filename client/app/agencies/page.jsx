@@ -80,26 +80,26 @@ const Overview = () => {
             </div>
             <div className="mt-5 border border-gray-200/20 rounded-2xl">
               <div className="grid bg-[#030021]/40 py-4 px-7 agencyBlockGrid items-center rounded-2xl">
-                <div class="inline-flex items-start">
-                  <label class="relative flex items-center cursor-pointer">
+                <div className="inline-flex items-start">
+                  <label className="relative flex items-center cursor-pointer">
                     <input
                       type="checkbox"
-                      class="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                      className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
                       id="check"
                     />
-                    <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                    <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4"
+                        className="h-4 w-4"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         stroke="currentColor"
                         strokeWidth="1"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         ></path>
                       </svg>
                     </span>
@@ -140,7 +140,7 @@ const Overview = () => {
                     <button className="text-white bg-[#898989]/15 flex items-center px-4 py-3 rounded-lg mainText14">
                       <div className="mr-2 w-8">
                         <svg
-                          class="w-full h-full"
+                          className="w-full h-full"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +192,7 @@ const Overview = () => {
                       Next
                       <div className="ml-2 w-8">
                         <svg
-                          class="w-full h-full"
+                          className="w-full h-full"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
