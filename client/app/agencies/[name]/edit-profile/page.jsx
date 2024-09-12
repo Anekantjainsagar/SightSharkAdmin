@@ -7,10 +7,12 @@ import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { BiPencil } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import DeleteAgency from "@/app/Components/Agencies/DeleteAgency";
 
 const Overview = () => {
   const [status, setStatus] = useState("Active");
   const [comment, setComment] = useState("");
+  const [deleteAgency, setDeleteAgency] = useState(false);
   const [data, setData] = useState({
     name: "",
     profile: "",
@@ -48,6 +50,7 @@ const Overview = () => {
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
+      <DeleteAgency showSubscribe={deleteAgency} setShowSubscribe={setDeleteAgency}  />
       <div className="w-[87%] bg-main h-full relative">
         <div className="bg-newBubbleColor/5 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
@@ -361,7 +364,9 @@ const Overview = () => {
                 <div className="flex items-center justify-between">
                   <button
                     className={`bg-red-600 font-semibold px-8 py-2 rounded-xl flex items-center ml-4`}
-                    onClick={() => {}}
+                    onClick={() => {
+                      setDeleteAgency(!deleteAgency);
+                    }}
                   >
                     <MdDelete className="mr-1 text-xl" />
                     Delete Agency

@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 
 const SettingsLeftbar = () => {
   let items = [
@@ -81,7 +81,7 @@ const SettingsLeftbar = () => {
   ];
 
   return (
-    <div className="w-4/12 h-full flex flex-col items-start px-8 border-r border-gray-300/30">
+    <div className="w-4/12 h-full flex flex-col items-start border border-gray-500/30 rounded-lg px-6 py-4 text-white">
       <h4 className="mainLogoSize font-semibold">Settings</h4>
       <div className="mt-4">
         {items?.map((e, i) => {
@@ -95,39 +95,20 @@ const SettingsLeftbar = () => {
 const Block = ({ e, idx }) => {
   const pathname = usePathname();
   const history = useRouter();
-  const [hover, setHover] = useState(false);
 
   return (
     <div
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       className={`flex items-start p-4 rounded-xl mb-1 ${
-        idx == 0 && "border-b border-b-gray-400/50"
-      } ${
-        pathname == e?.route && "bg-gray-800/30"
-      } hover:bg-gray-800/30 cursor-pointer`}
+        pathname == e?.route && "bg-[#171C2A] border border-gray-500/20"
+      } hover:bg-[#171C2A] cursor-pointer`}
       onClick={() => {
         history.push(e?.route);
       }}
     >
-      <div className="w-8 mr-4">
-        {hover ? e?.icon[1] : pathname == e?.route ? e?.icon[1] : e?.icon[0]}
-      </div>
+      <div className="w-8 mr-4">{e?.icon[0]}</div>
       <div>
-        <h5
-          className={`${
-            hover
-              ? "text-newPurple"
-              : pathname == e?.route
-              ? "text-newPurple"
-              : ""
-          } mainText18`}
-        >
-          {e?.title}
-        </h5>
-        <p className={`${hover ? "text-gray-400" : "text-gray-400"} text-base`}>
-          {e?.about}
-        </p>
+        <h5 className={`mainText18`}>{e?.title}</h5>
+        <p className={`text-gray-400 text-base mt-1.5`}>{e?.about}</p>
       </div>
     </div>
   );

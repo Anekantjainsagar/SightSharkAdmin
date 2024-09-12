@@ -32,11 +32,11 @@ const Overview = () => {
                   onClick={() => {
                     setAddAgency(!addAgency);
                   }}
-                  className="bg-newBlue px-3 py-3 rounded-xl ml-4 flex items-center gap-x-2 text-base"
+                  className="bg-newBlue px-6 py-3 rounded-xl ml-4 flex items-center gap-x-2 text-base"
                 >
                   <FaPlus className="text-sm" /> Add Agency
                 </button>
-                <button className="glass px-3 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/20">
+                <button className="glass px-6 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/20">
                   <svg
                     width="24"
                     height="24"
@@ -58,7 +58,7 @@ const Overview = () => {
                   </svg>
                   Export as CSV
                 </button>
-                <button className="glass px-3 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/20">
+                <button className="glass px-6 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/20">
                   <svg
                     width="20"
                     height="20"

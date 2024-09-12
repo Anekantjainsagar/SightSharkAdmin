@@ -94,7 +94,7 @@ input[type="number"] {
 }
 
 .userBlockGrid {
-  grid-template-columns: 5% 25% 10% 15% 15% 20% 10%;
+  grid-template-columns: 3% 20% 15% 15% 15% 17% 15%;
 }
 
 .status-active {
@@ -112,4 +112,14 @@ input[type="number"] {
 .status-hold {
   background-color: rgba(233, 197, 91, 0.3);
   color: #e9c55b;
+}
+
+.status-online {
+  background-color: #094b31;
+  color: #73e2a7;
+  border-color: #73e2a7;
+}
+
+.dot-online {
+  background-color: #73e2a7;
 }
