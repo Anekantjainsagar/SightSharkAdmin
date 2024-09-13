@@ -135,7 +135,7 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
                 width="24.667"
                 height="26.3333"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
                 <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix

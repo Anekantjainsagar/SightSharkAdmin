@@ -5,6 +5,8 @@ import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { FaSearch } from "react-icons/fa";
+import { IoMdCheckmark } from "react-icons/io";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -16,7 +18,7 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     backgroundColor: "transparent",
-    width: "60vw",
+    width: "65vw",
     border: "none",
   },
 };
@@ -191,27 +193,37 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           />
           <div className="mb-10">
             <div className="flex items-center px-[8vw]">
-              <div className="bg-newPurple w-[4vw] aspect-square rounded-full"></div>
+              <div className="bg-newBlue w-[6vw] aspect-square rounded-full flex items-center justify-center text-[24px]">
+                {page > 1 ? <IoMdCheckmark /> : "1"}
+              </div>
               <div
                 className={`line h-[1px] w-full ${
-                  page >= 2 ? "bg-newPurple" : "bg-white/40"
+                  page >= 2 ? "bg-newBlue" : "bg-[#343745]"
                 }`}
               ></div>
               <div
-                className={`w-[4vw] aspect-square rounded-full ${
-                  page >= 2 ? "bg-newPurple" : "border border-gray-300/80"
-                }`}
-              ></div>
+                className={`w-[6vw] aspect-square rounded-full ${
+                  page >= 2
+                    ? "bg-newBlue"
+                    : "border border-gray-500/20 bg-[#343745]"
+                } flex items-center justify-center text-[24px]`}
+              >
+                {page > 2 ? <IoMdCheckmark /> : "2"}
+              </div>
               <div
                 className={`line h-[1px] w-full ${
-                  page == maxPage ? "bg-newPurple" : "bg-white/40"
+                  page == maxPage ? "bg-newBlue" : "bg-[#343745]"
                 }`}
               ></div>
               <div
-                className={`w-[4vw] aspect-square rounded-full ${
-                  page == maxPage ? "bg-newPurple" : "border border-gray-300/80"
-                }`}
-              ></div>
+                className={`w-[6vw] aspect-square rounded-full ${
+                  page == maxPage
+                    ? "bg-newBlue"
+                    : "border border-gray-500/20 bg-[#343745]"
+                } flex items-center justify-center text-[24px]`}
+              >
+                {page > 3 ? <IoMdCheckmark /> : "3"}
+              </div>
             </div>
             <div className="flex items-center mainText20 justify-between px-[6vw] mt-2">
               <p>Agency Details</p>
@@ -224,7 +236,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
               <div className="px-[8vw] w-full">
                 <div className="flex items-center justify-center mb-6">
                   <div className="relative">
-                    {" "}
                     <input
                       type="file"
                       ref={fileInputRef}
@@ -235,7 +246,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       onClick={() => {
                         fileInputRef.current.click();
                       }}
-                      className="absolute bg-newPurple text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
+                      className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
                     >
                       +
                     </div>
@@ -246,7 +257,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       alt="Agency Img"
                       width={1000}
                       height={1000}
-                      className="bg-[#D9D9D9] p-2 w-[4vw] rounded-full"
+                      className="w-[4vw] rounded-full"
                     />
                   </div>
                 </div>
@@ -263,7 +274,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Agency Name"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 h-[45px] px-4 py-2 rounded-lg"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -278,7 +289,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Website"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -293,7 +304,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Location"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -308,7 +319,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Warranty Period"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -323,7 +334,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="date"
                       placeholder="Enter deployment Period"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -338,7 +349,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter License Limit"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                 </div>
@@ -355,22 +366,20 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     />
                     <div
                       onClick={() => {
-                        fileInputRefAgent.current.click();
+                        fileInputRef.current.click();
                       }}
-                      className="absolute bg-newPurple text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
+                      className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
                     >
                       +
                     </div>
                     <Image
                       src={
-                        data?.keyContact?.profile
-                          ? data?.keyContact?.profile
-                          : "/Agency/temp_logo.png"
+                        data?.profile ? data?.profile : "/Agency/temp_logo.png"
                       }
                       alt="Agency Img"
                       width={1000}
                       height={1000}
-                      className="bg-[#D9D9D9] p-2 w-[4vw] rounded-full"
+                      className="w-[4vw] rounded-full"
                     />
                   </div>
                 </div>
@@ -393,7 +402,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Name"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -414,7 +423,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Designation"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -435,7 +444,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="email"
                       placeholder="Enter Email Address"
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -456,50 +465,82 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="number"
                       placeholder="Enter Phone no."
-                      className="bg-transparent outline-none border border-gray-100/30 px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     />
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="px-[4vw] h-[40vh] pb-5 overflow-y-auto small-scroller w-full grid grid-cols-3 gap-3">
-                {connectorsData.map((e, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between border border-gray-300/30 px-2 py-1 rounded-full"
-                    >
-                      <div className="flex items-center">
-                        <Image
-                          src={e?.img}
-                          alt={e?.img?.src}
-                          width={1000}
-                          height={1000}
-                          className="w-[3vw] mr-2 p-1.5 aspect-squre object-contain"
-                        />
-                        <label
-                          htmlFor={e?.title}
-                          className="text-base cursor-pointer"
-                        >
-                          {e?.title}
-                        </label>
+              <div className="px-[4vw] h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
+                {" "}
+                <div className="relative flex items-center w-[456px]">
+                  <FaSearch className="absolute left-4 z-40 text-white" />{" "}
+                  {/* Search Icon */}
+                  <input
+                    type="search"
+                    placeholder="Search"
+                    className="outline-none text-base border border-gray-500/20 px-6 bg-[#898989]/15 py-2 rounded-lg pl-12 w-full" // Add padding to the left for the icon
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-3 mt-5">
+                  {connectorsData.map((e, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center justify-between border border-gray-300/30 px-3 py-3 rounded-full"
+                      >
+                        <div className="flex items-center">
+                          <Image
+                            src={e?.img}
+                            alt={e?.img?.src}
+                            width={1000}
+                            height={1000}
+                            className="w-8 h-8 mr-2 aspect-squre object-contain"
+                          />
+                          <label
+                            htmlFor={e?.title}
+                            className="mainText14 cursor-pointer"
+                          >
+                            {e?.title}
+                          </label>
+                        </div>
+                        <div className="inline-flex items-start mr-1">
+                          <label className="relative flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              className="before:content[''] peer relative h-6 w-6 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                              id="check"
+                            />
+                            <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                  clipRule="evenodd"
+                                ></path>
+                              </svg>
+                            </span>
+                          </label>
+                        </div>
                       </div>
-                      <input
-                        type="checkbox"
-                        id={e?.title}
-                        className="form-checkbox cursor-pointer h-6 w-6 text-blue-600 rounded-full appearance-none border-2 border-gray-300 checked:bg-blue-600 mr-2"
-                      />
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
           <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-between py-6 mt-10 mainText20">
             <button
-              className={`text-white ${
-                page == 1 ? "bg-gray-800" : "bg-newPurple cursor-pointer"
-              } px-8 py-1.5 rounded-md`}
+              className={`text-white w-[170px] ${
+                page == 1 ? "bg-[#898989]/15" : "bg-newBlue cursor-pointer"
+              } h-12 rounded-lg`}
               disabled={page == 1}
               onClick={() => {
                 setPage(page - 1);
@@ -514,7 +555,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   setPage(page + 1);
                 }
               }}
-              className={`text-white bg-newPurple px-8 py-1.5 rounded-md`}
+              className={`text-white bg-newBlue w-[170px] h-12 rounded-lg`}
             >
               {page == maxPage ? "Submit" : "Next"}
             </button>

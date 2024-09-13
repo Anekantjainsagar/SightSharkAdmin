@@ -88,6 +88,10 @@ input[type="number"] {
   border-radius: 10px;
 }
 
+.agencySmallBlockGrid {
+  grid-template-columns: 3% 28% 19% 25% 25%;
+}
+
 .agencyBlockGrid {
   /* grid-template-columns: 3% 14% 8% 22% 15% 24% 12%; */
   grid-template-columns: 3% 15% 9% 13% 23% 12% 10% 15%;

@@ -69,23 +69,23 @@ const UserDetailBlock = ({ status, acess }) => {
           <path
             d="M1.99984 8.8335C2.46007 8.8335 2.83317 8.4604 2.83317 8.00016C2.83317 7.53993 2.46007 7.16683 1.99984 7.16683C1.5396 7.16683 1.1665 7.53993 1.1665 8.00016C1.1665 8.4604 1.5396 8.8335 1.99984 8.8335Z"
             stroke="#85888E"
-            stroke-width="1.66667"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M1.99984 3.00016C2.46007 3.00016 2.83317 2.62707 2.83317 2.16683C2.83317 1.70659 2.46007 1.3335 1.99984 1.3335C1.5396 1.3335 1.1665 1.70659 1.1665 2.16683C1.1665 2.62707 1.5396 3.00016 1.99984 3.00016Z"
             stroke="#85888E"
-            stroke-width="1.66667"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M1.99984 14.6668C2.46007 14.6668 2.83317 14.2937 2.83317 13.8335C2.83317 13.3733 2.46007 13.0002 1.99984 13.0002C1.5396 13.0002 1.1665 13.3733 1.1665 13.8335C1.1665 14.2937 1.5396 14.6668 1.99984 14.6668Z"
             stroke="#85888E"
-            stroke-width="1.66667"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </div>

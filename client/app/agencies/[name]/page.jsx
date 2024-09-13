@@ -78,8 +78,7 @@ const Overview = ({ params }) => {
                           key={i}
                           className="flex items-center px-2 py-1 rounded-full"
                         >
-                          {" "}
-                          <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-8 aspect-square p-1.5 mr-3">
+                          <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-8 aspect-square p-1.5 mr-3">
                             <Image
                               src={e?.img}
                               alt={e?.img?.src}
