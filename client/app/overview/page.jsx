@@ -47,7 +47,10 @@ const Overview = () => {
                 },
               ].map((e, i) => {
                 return (
-                  <div className="bg-[#171C2A]/20 flex items-center justify-between p-6 border border-gray-500/20 rounded-xl">
+                  <div
+                    key={i}
+                    className="bg-[#171C2A]/20 flex items-center justify-between p-6 border border-gray-500/20 rounded-xl"
+                  >
                     <div>
                       <p className="text-[#CECFD2]">{e?.name}</p>
                       <p className="text-[30px] font-semibold mt-1">
