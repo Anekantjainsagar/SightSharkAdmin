@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useRouter } from "next/navigation";
@@ -135,24 +135,24 @@ const App = () => {
               </span>
               <div className="line w-full h-[1px] bg-[#343745]"></div>
             </div>
-            <div className="items-stretch grid grid-cols-2 gap-x-4">
-              <button className="w-full bg-[#121136] rounded-[10px] flex items-center justify-center h-[5vh]">
+            <div className="items-stretch flex flex-col gap-y-3">
+              <button className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12">
                 <Image
-                  src="/google.svg"
+                  src="/login/google.png"
                   width={1000}
                   height={1000}
                   alt="Google icon"
-                  className="w-[2vw] mr-2"
+                  className="w-5 aspect-square mr-3"
                 />
                 <p>Sign in with Google</p>
               </button>
-              <button className="w-full bg-[#121136] rounded-[10px] flex items-center justify-center h-[5vh]">
+              <button className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12">
                 <Image
-                  src="/facebook.svg"
+                  src="/login/facebook.png"
                   width={1000}
                   height={1000}
                   alt="Facebook icon"
-                  className="w-[1.5vw] mr-3"
+                  className="w-5 aspect-square mr-3"
                 />
                 <p>Sign in with Facebook</p>
               </button>

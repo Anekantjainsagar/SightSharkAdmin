@@ -2,7 +2,7 @@ import React from "react";
 
 const AgencySmallBlock = ({ status }) => {
   return (
-    <div className="py-3 px-7 border-gray-200/10 border-y grid agencySmallBlockGrid items-center cursor-pointer text-textGrey mainText14">
+    <div className="py-3 px-7 border-gray-400/5 border-y grid agencySmallBlockGrid items-center cursor-pointer text-textGrey mainText12">
       <div className="inline-flex items-start">
         <label className="relative flex items-center cursor-pointer">
           <input
@@ -28,7 +28,7 @@ const AgencySmallBlock = ({ status }) => {
           </span>
         </label>
       </div>
-      <h5 className="text-center">Alpha solutions</h5>
+      <h5>Alpha solutions</h5>
       <div
         className={`status-${status?.toLowerCase()} w-fit mx-auto px-2.5 border-2 py-0.5 rounded-2xl`}
       >

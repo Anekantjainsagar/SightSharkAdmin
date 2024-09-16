@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import IconCloud from "@/app/Components/Animations/Cloud";
 import Image from "next/image";
 
-const RightSide = () => {
+const RightSide = memo(() => {
   return (
     <div className="w-5/12 relative p-[3vw] flex flex-col items-center justify-between bg-gradient-to-br from-gradientMain/50 from-[50%] to-black/50 h-full">
       <div className="w-11/12 flex items-center justify-center">
@@ -47,6 +47,6 @@ const RightSide = () => {
       </div>
     </div>
   );
-};
+});
 
 export default RightSide;

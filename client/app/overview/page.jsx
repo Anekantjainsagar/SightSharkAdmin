@@ -17,12 +17,12 @@ const Overview = () => {
       <Leftbar />
       <AddAgency showSubscribe={addAgency} setShowSubscribe={setAddAgency} />
       <div className="w-[87%] bg-main h-full relative">
-        <div className="bg-newBubbleColor/5 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-20 absolute bottom-0 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
           <Navbar />
-          <div className="text-white w-full border border-gray-200/20 rounded-2xl p-6">
+          <div className="text-white w-full border border-gray-200/5 rounded-2xl p-6">
             <div className="grid grid-cols-4 gap-x-6">
               {[
                 {
@@ -49,7 +49,7 @@ const Overview = () => {
                 return (
                   <div
                     key={i}
-                    className="bg-[#171C2A]/20 flex items-center justify-between p-6 border border-gray-500/20 rounded-xl"
+                    className="bg-[#171C2A]/50 flex items-center justify-between p-6 border border-gray-500/5 rounded-xl"
                   >
                     <div>
                       <p className="text-[#CECFD2]">{e?.name}</p>
@@ -68,9 +68,9 @@ const Overview = () => {
                 );
               })}
             </div>
-            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/20 mt-6">
+            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-6">
               <h3 className="text-[20px]">Agencies</h3>
-              <div className="mt-4 border border-gray-200/20 rounded-2xl">
+              <div className="mt-4 border border-gray-200/5 rounded-2xl">
                 <div className="grid bg-[#030021]/40 py-3.5 px-7 agencySmallBlockGrid items-center rounded-2xl">
                   <div className="inline-flex items-start">
                     <label className="relative flex items-center cursor-pointer">
@@ -106,14 +106,16 @@ const Overview = () => {
                     return (
                       <h5
                         key={i}
-                        className="maintext12 text-center font-light tracking-wider"
+                        className={`maintext12 ${
+                          e?.includes("Name") ? "text-start" : "text-center"
+                        } font-light tracking-wider`}
                       >
                         {e}
                       </h5>
                     );
                   })}
                 </div>
-                <div className="h-[25vh] overflow-y-auto small-scroller">
+                <div className="h-[26vh] overflow-y-auto small-scroller">
                   <AgencySmallBlock status={"Active"} />
                   <AgencySmallBlock status={"Offline"} />
                   <AgencySmallBlock status={"Active"} />
@@ -125,7 +127,7 @@ const Overview = () => {
                 </div>
               </div>
             </div>{" "}
-            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/20 mt-6">
+            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-[20px]">Critical Notifications</h3>{" "}
                 <p
