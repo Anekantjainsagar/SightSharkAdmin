@@ -49,4 +49,6 @@ const RightSide = memo(() => {
   );
 });
 
+RightSide.displayName = "RightSide";
+
 export default RightSide;
