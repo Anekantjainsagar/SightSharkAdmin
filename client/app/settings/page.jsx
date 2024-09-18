@@ -27,7 +27,7 @@ const Settings = () => {
           <Navbar />
           <div className="h-[85vh] w-full flex gap-x-5 justify-between items-start text-white">
             <SettingsLeftbar />
-            <div className="w-8/12 h-full justify-between flex flex-col items-start border border-gray-500/30 rounded-lg px-6 py-4 text-white">
+            <div className="w-8/12 h-fit justify-between flex flex-col items-start border border-gray-500/5 rounded-lg px-6 py-4 text-white">
               <div className="w-full">
                 <h4 className="mainLogoSize font-semibold">Account</h4>{" "}
                 <div className="gradient-line my-4"></div>
@@ -45,7 +45,7 @@ const Settings = () => {
                       }}
                       type="text"
                       placeholder="Enter First Name"
-                      className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -60,7 +60,7 @@ const Settings = () => {
                       }}
                       type="text"
                       placeholder="Enter Last Name"
-                      className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -75,7 +75,7 @@ const Settings = () => {
                       }}
                       type="email"
                       placeholder="Enter Email"
-                      className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -90,7 +90,7 @@ const Settings = () => {
                       }}
                       type="number"
                       placeholder="Enter Phone"
-                      className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                     />
                   </div>{" "}
                   <div className="flex flex-col">
@@ -105,7 +105,7 @@ const Settings = () => {
                       }}
                       type="country"
                       placeholder="Enter Country"
-                      className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -120,20 +120,20 @@ const Settings = () => {
                       }}
                       type="number"
                       placeholder="Enter Postal Code"
-                      className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                     />
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-end w-full">
+              <div className="mt-10 flex items-center justify-end w-full">
                 <button
-                  className={`bg-[#898989]/15 font-semibold px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-[#898989]/15 font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Discard
                 </button>
                 <button
-                  className={`bg-newBlue font-semibold px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-newBlue font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Save

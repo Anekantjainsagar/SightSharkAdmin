@@ -7,6 +7,7 @@ import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { AiOutlineClose } from "react-icons/ai";
 
 const RecentActivites = () => {
   const history = useRouter();
@@ -22,20 +23,16 @@ const RecentActivites = () => {
           <Navbar />
           <div className="text-white w-full rounded-lg flex items-start justify-between">
             <AgencyDetails />
-            <div className="w-[69%] h-[82vh]">
-              <AgencyDetailsTopbar />
-              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-4">
+            <div className="w-[69%]">
+              <div className="border border-gray-500/5 h-[88vh] w-full rounded-lg p-4">
                 <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 h-full">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="mainText20">Recent Activity </h4>
                     <p
-                      className="text-white text-base flex items-center"
-                      onClick={() =>
-                        history.push("/agencies/recent-activities")
-                      }
+                      className="text-white flex items-center cursor-pointer text-xl"
+                      onClick={() => history.push("/agencies/alpha-solutions")}
                     >
-                      View All
-                      <HiOutlineArrowNarrowRight className="text-base ml-2" />
+                      <AiOutlineClose />
                     </p>
                   </div>
                   <div className="gradient-line my-4"></div>

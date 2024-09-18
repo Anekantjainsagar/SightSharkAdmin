@@ -27,7 +27,7 @@ const Settings = () => {
           <Navbar />
           <div className="h-[85vh] w-full flex gap-x-5 justify-between items-start text-white">
             <SettingsLeftbar />
-            <div className="w-8/12 h-full justify-between flex flex-col items-start border border-gray-500/30 rounded-lg px-6 py-4 text-white">
+            <div className="w-8/12 h-fit justify-between flex flex-col items-start border border-gray-500/5 rounded-lg px-6 py-4 text-white">
               <div className="w-full">
                 <h4 className="mainLogoSize font-semibold">Security</h4>
                 <div className="mt-5">
@@ -44,7 +44,7 @@ const Settings = () => {
                           type={showOriginalPassword ? "text" : "password"}
                           name="Password"
                           id="currentPass"
-                          className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md w-full"
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full"
                           placeholder="Your Current Password"
                           value={data?.oldPass}
                           onChange={(e) =>
@@ -70,7 +70,7 @@ const Settings = () => {
                           type={showNewPassword ? "text" : "password"}
                           name="Password"
                           id="newPass"
-                          className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md w-full"
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full"
                           placeholder="Your New Password"
                           value={data?.newPassword}
                           onChange={(e) =>
@@ -99,7 +99,7 @@ const Settings = () => {
                           type={showNewPassword ? "text" : "password"}
                           name="Password"
                           id="retypeNewPassword"
-                          className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md w-full"
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full"
                           placeholder="Your New Password"
                           value={data?.reNewPassword}
                           onChange={(e) =>
@@ -135,15 +135,15 @@ const Settings = () => {
                   </label>
                 </div>
               </div>
-              <div className="flex items-center justify-end w-full">
+              <div className="flex items-center justify-end w-full mt-10">
                 <button
-                  className={`bg-[#898989]/15 font-semibold px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-[#898989]/15 font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Discard
                 </button>
                 <button
-                  className={`bg-newBlue font-semibold px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-newBlue font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Save

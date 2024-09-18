@@ -4,15 +4,21 @@ import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import UserDetailBlock from "@/app/Components/Users/UserDetailBlock";
 import { FaPlus } from "react-icons/fa";
+import AddUsers from "@/app/Components/Users/AddUsers";
 
 const Overview = () => {
   const [page, setPage] = useState(1);
+  const [showSubscribe, setShowSubscribe] = useState(false);
 
   let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
+      <AddUsers
+        showSubscribe={showSubscribe}
+        setShowSubscribe={setShowSubscribe}
+      />
       <div className="w-[87%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
@@ -24,7 +30,9 @@ const Overview = () => {
               <h3 className="text-2xl">Users</h3>
               <div className="flex items-center">
                 <button
-                  onClick={() => {}}
+                  onClick={() => {
+                    setShowSubscribe(!showSubscribe);
+                  }}
                   className="bg-newBlue px-6 py-3 rounded-xl ml-4 flex items-center gap-x-2 text-base"
                 >
                   <FaPlus className="text-sm" /> Add Users
@@ -106,7 +114,7 @@ const Overview = () => {
                 </div>
                 <div className="h-[11%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">
-                    <button className="text-white bg-[#898989]/15 flex items-center px-4 py-3 rounded-lg mainText14">
+                    <button className="text-white bg-[#898989]/15 w-[145px] justify-center flex items-center px-4 py-3 rounded-lg mainText14">
                       <div className="mr-2 w-8">
                         <svg
                           className="w-full h-full"
@@ -157,7 +165,7 @@ const Overview = () => {
                           );
                         })}
                     </div>
-                    <button className="text-white bg-newBlue flex items-center px-4 py-3 rounded-lg mainText14">
+                    <button className="text-white bg-newBlue flex items-center w-[145px] justify-center px-4 py-3 rounded-lg mainText14">
                       Next
                       <div className="ml-2 w-8">
                         <svg

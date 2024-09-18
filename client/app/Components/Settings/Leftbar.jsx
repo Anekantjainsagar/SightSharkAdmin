@@ -81,7 +81,7 @@ const SettingsLeftbar = () => {
   ];
 
   return (
-    <div className="w-4/12 h-full flex flex-col items-start border border-gray-500/30 rounded-lg px-6 py-4 text-white">
+    <div className="w-4/12 h-full flex flex-col items-start border border-gray-500/5 rounded-lg px-6 py-4 text-white">
       <h4 className="mainLogoSize font-semibold">Settings</h4>
       <div className="mt-4">
         {items?.map((e, i) => {
@@ -99,7 +99,7 @@ const Block = ({ e, idx }) => {
   return (
     <div
       className={`flex items-start p-4 rounded-xl mb-1 ${
-        pathname == e?.route && "bg-[#171C2A] border border-gray-500/20"
+        pathname == e?.route && "bg-[#171C2A] border border-gray-500/5"
       } hover:bg-[#171C2A] cursor-pointer`}
       onClick={() => {
         history.push(e?.route);

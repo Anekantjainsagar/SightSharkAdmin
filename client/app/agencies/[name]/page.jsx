@@ -32,7 +32,7 @@ const Overview = ({ params }) => {
                     <h4 className="mainText20">Data Sources </h4>
                     <button
                       onClick={() => {}}
-                      className="bg-newBlue px-5 py-3 rounded-xl flex items-center gap-x-2 text-base"
+                      className="bg-newBlue px-5 w-[185px] justify-center py-3 rounded-xl flex items-center gap-x-2 text-base"
                     >
                       <FaPlus className="text-sm" /> Add Source
                     </button>
@@ -100,7 +100,7 @@ const Overview = ({ params }) => {
                     <h4 className="mainText20">Templates </h4>
                     <button
                       onClick={() => {}}
-                      className="bg-newBlue px-5 py-3 rounded-xl flex items-center gap-x-2 text-base"
+                      className="bg-newBlue px-5 py-3 w-[185px] rounded-xl flex items-center gap-x-2 text-base"
                     >
                       <FaPlus className="text-sm" /> Add Template
                     </button>
