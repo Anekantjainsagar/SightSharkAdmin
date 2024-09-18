@@ -17,9 +17,9 @@ const Overview = () => {
       <Leftbar />
       <AddAgency showSubscribe={addAgency} setShowSubscribe={setAddAgency} />
       <div className="w-[87%] bg-main h-full relative">
-        <div className="bg-newBubbleColor/5 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-20 absolute bottom-0 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
           <Navbar />
           <div className="text-white w-full rounded-lg">
@@ -36,7 +36,7 @@ const Overview = () => {
                 >
                   <FaPlus className="text-sm" /> Add Agency
                 </button>
-                <button className="glass px-6 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/20">
+                <button className="glass px-6 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/5">
                   <svg
                     width="24"
                     height="24"
@@ -58,7 +58,7 @@ const Overview = () => {
                   </svg>
                   Export as CSV
                 </button>
-                <button className="glass px-6 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/20">
+                <button className="glass px-6 py-3 rounded-xl ml-4 text-base flex items-center gap-x-2 border border-gray-200/5">
                   <svg
                     width="20"
                     height="20"
@@ -78,7 +78,7 @@ const Overview = () => {
                 </button>
               </div>
             </div>
-            <div className="mt-5 border border-gray-200/20 rounded-2xl">
+            <div className="mt-5 border border-gray-200/5 rounded-2xl">
               <div className="grid bg-[#030021]/40 py-4 px-7 agencyBlockGrid items-center rounded-2xl">
                 <div className="inline-flex items-start">
                   <label className="relative flex items-center cursor-pointer">
@@ -137,7 +137,7 @@ const Overview = () => {
                 </div>
                 <div className="h-[11%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">
-                    <button className="text-white bg-[#898989]/15 flex items-center px-4 py-3 rounded-lg mainText14">
+                    <button className="text-white bg-[#898989]/15 flex items-center w-[145px] justify-center py-3 rounded-lg mainText14">
                       <div className="mr-2 w-8">
                         <svg
                           className="w-full h-full"
@@ -188,7 +188,7 @@ const Overview = () => {
                           );
                         })}
                     </div>
-                    <button className="text-white bg-newBlue flex items-center px-4 py-3 rounded-lg mainText14">
+                    <button className="text-white bg-newBlue flex items-center w-[145px] justify-center py-3 rounded-lg mainText14">
                       Next
                       <div className="ml-2 w-8">
                         <svg

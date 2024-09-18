@@ -6,7 +6,7 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
   const history = useRouter();
 
   return (
-    <div className="py-4 px-7 border-gray-200/10 border-y grid agencyBlockGrid items-center cursor-pointer text-textGrey mainText14">
+    <div className="py-4 px-7 border-gray-200/5 border-y grid agencyBlockGrid items-center cursor-pointer text-textGrey mainText14">
       <div className="inline-flex items-start">
         <label className="relative flex items-center cursor-pointer">
           <input

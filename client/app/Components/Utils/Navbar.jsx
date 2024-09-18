@@ -21,10 +21,10 @@ const Navbar = () => {
           <input
             type="search"
             placeholder="Search"
-            className="outline-none text-base border border-gray-200/20 bg-transparent px-6 glass py-3 rounded-lg pl-12 w-full" // Add padding to the left for the icon
+            className="outline-none text-base border border-gray-200/5 bg-transparent px-6 glass py-3 rounded-lg pl-12 w-full" // Add padding to the left for the icon
           />
         </div>
-        <div className="w-12 h-12 rounded-lg glass flex items-center justify-center border border-gray-200/20">
+        <div className="w-12 h-12 rounded-lg glass flex items-center justify-center border border-gray-200/5">
           <svg
             width="24"
             height="25"

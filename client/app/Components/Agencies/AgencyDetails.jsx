@@ -4,7 +4,7 @@ import { PieChart } from "react-minimal-pie-chart";
 
 const AgencyDetails = () => {
   return (
-    <div className="border border-gray-500/30 h-[88vh] p-4 w-[30%] rounded-lg flex flex-col items-center justify-center">
+    <div className="border border-gray-500/5 h-[88vh] p-4 w-[30%] rounded-lg flex flex-col items-center justify-center">
       <Image
         width={1000}
         height={1000}
@@ -131,7 +131,7 @@ const AgencyDetails = () => {
           return (
             <div
               key={i}
-              className={`w-full flex items-center justify-between text-base p-3 border border-gray-500/20 ${
+              className={`w-full flex items-center justify-between text-base p-3 border border-gray-500/15 ${
                 i == 0 && "rounded-t-xl"
               } ${i == 4 && "rounded-b-xl"}`}
             >
@@ -153,8 +153,8 @@ const AgencyDetails = () => {
           );
         })}
       </div>{" "}
-      <div className="border rounded-xl w-full border-gray-500/20">
-        <h5 className="w-full p-3 border-b border-b-gray-500/20">
+      <div className="border rounded-xl w-full border-gray-500/15">
+        <h5 className="w-full p-3 border-b border-b-gray-500/15">
           Key Contact Info
         </h5>
         {[
@@ -192,8 +192,8 @@ const AgencyDetails = () => {
           );
         })}{" "}
       </div>
-      <div className="border rounded-xl w-full border-gray-500/20 mt-4">
-        <h5 className="w-full p-3 border-b border-b-gray-500/20">
+      <div className="border rounded-xl w-full border-gray-500/15 mt-4">
+        <h5 className="w-full p-3 border-b border-b-gray-500/15">
           License Limit
         </h5>
         <div className="w-4/12 mx-auto my-4 relative">

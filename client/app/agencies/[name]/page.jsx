@@ -17,17 +17,17 @@ const Overview = ({ params }) => {
     <div className="flex items-start h-[100vh]">
       <Leftbar />
       <div className="w-[87%] bg-main h-full relative">
-        <div className="bg-newBubbleColor/5 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-20 absolute bottom-0 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
           <Navbar />
           <div className="text-white w-full rounded-lg flex items-start justify-between">
             <AgencyDetails />
             <div className="w-[69%]">
               <AgencyDetailsTopbar />
-              <div className="border border-gray-500/30 h-[83vh] w-full rounded-lg p-4">
-                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20">
+              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-4">
+                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="mainText20">Data Sources </h4>
                     <button
@@ -95,7 +95,7 @@ const Overview = ({ params }) => {
                     })}
                   </div>
                 </div>
-                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20 my-4">
+                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 my-4">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="mainText20">Templates </h4>
                     <button
@@ -135,7 +135,7 @@ const Overview = ({ params }) => {
                     })}
                   </div>
                 </div>
-                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/20 my-4 h-[29vh]">
+                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 my-4 h-[29vh]">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="mainText20">Recent Activity </h4>
                     <p
@@ -151,7 +151,7 @@ const Overview = ({ params }) => {
                   <div className="gradient-line my-4"></div>
                   <div>
                     <div>
-                      <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/20">
+                      <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/5">
                         14 August 2024
                       </span>
                       <div className="mt-4">

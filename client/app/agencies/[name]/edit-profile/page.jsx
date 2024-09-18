@@ -50,18 +50,21 @@ const Overview = () => {
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
-      <DeleteAgency showSubscribe={deleteAgency} setShowSubscribe={setDeleteAgency}  />
+      <DeleteAgency
+        showSubscribe={deleteAgency}
+        setShowSubscribe={setDeleteAgency}
+      />
       <div className="w-[87%] bg-main h-full relative">
-        <div className="bg-newBubbleColor/5 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
-        <div className="bg-newBubbleColor/5 w-[20vw] h-[20vw] right-20 absolute bottom-0 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
+        <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
           <Navbar />
           <div className="text-white w-full rounded-lg flex items-start justify-between">
             <AgencyDetails />
             <div className="w-[69%] h-[82vh]">
               <AgencyDetailsTopbar />
-              <div className="border border-gray-500/30 h-[83vh] w-full rounded-lg p-4 flex flex-col justify-between">
+              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-4 flex flex-col justify-between">
                 <div>
                   <div>
                     <h4 className="mainText20">Agency Details</h4>{" "}
@@ -109,7 +112,7 @@ const Overview = () => {
                             }}
                             type="text"
                             placeholder="Enter Agency Name"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -124,7 +127,7 @@ const Overview = () => {
                             }}
                             type="text"
                             placeholder="Enter Website"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -139,7 +142,7 @@ const Overview = () => {
                             }}
                             type="text"
                             placeholder="Enter Location"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -149,7 +152,7 @@ const Overview = () => {
                           <select
                             name="status"
                             id="status"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                             value={data?.warrenty}
                             onChange={(e) => {
                               setData({ ...data, warrenty: e.target.value });
@@ -176,7 +179,7 @@ const Overview = () => {
                             }}
                             type="date"
                             placeholder="Enter deployment Period"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -186,7 +189,7 @@ const Overview = () => {
                           <select
                             name="status"
                             id="status"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                             value={data?.license}
                             onChange={(e) => {
                               setData({ ...data, license: e.target.value });
@@ -208,7 +211,7 @@ const Overview = () => {
                           <select
                             name="status"
                             id="status"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                           >
@@ -233,7 +236,7 @@ const Overview = () => {
                             }}
                             type="text"
                             placeholder="Enter Comment"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                       </div>
@@ -291,7 +294,7 @@ const Overview = () => {
                             }}
                             type="text"
                             placeholder="Enter Name"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -312,7 +315,7 @@ const Overview = () => {
                             }}
                             type="text"
                             placeholder="Enter Designation"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -333,7 +336,7 @@ const Overview = () => {
                             }}
                             type="email"
                             placeholder="Enter Email Address"
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -354,7 +357,7 @@ const Overview = () => {
                             }}
                             type="number"
                             placeholder="Enter Phone no."
-                            className="glass outline-none border border-gray-500/30 px-4 py-2 rounded-md"
+                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md"
                           />
                         </div>
                       </div>
