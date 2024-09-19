@@ -9,9 +9,11 @@ import { BiPencil } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import DeleteAgency from "@/app/Components/Agencies/DeleteAgency";
 
+
 const Overview = () => {
   const [status, setStatus] = useState("Active");
   const [comment, setComment] = useState("");
+
   const [deleteAgency, setDeleteAgency] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -54,6 +56,7 @@ const Overview = () => {
         showSubscribe={deleteAgency}
         setShowSubscribe={setDeleteAgency}
       />
+
       <div className="w-[87%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>

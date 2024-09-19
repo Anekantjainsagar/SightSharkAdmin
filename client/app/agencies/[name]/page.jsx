@@ -7,15 +7,21 @@ import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { FaPlus } from "react-icons/fa";
+import AddDataSouces from "../../Components/Agencies/AddDataSources";
 import { useRouter } from "next/navigation";
 
 const Overview = ({ params }) => {
   const history = useRouter();
+  const [addDataSouces, setAddDataSouces] = useState(false);
   const { name } = params;
 
   return (
     <div className="flex items-start h-[100vh]">
-      <Leftbar />
+      <Leftbar />{" "}
+      <AddDataSouces
+        showSubscribe={addDataSouces}
+        setShowSubscribe={setAddDataSouces}
+      />
       <div className="w-[87%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
@@ -31,7 +37,9 @@ const Overview = ({ params }) => {
                   <div className="flex items-center justify-between w-full">
                     <h4 className="mainText20">Data Sources </h4>
                     <button
-                      onClick={() => {}}
+                      onClick={(e) => {
+                        setAddDataSouces(!addDataSouces);
+                      }}
                       className="bg-newBlue px-5 w-[185px] justify-center py-3 rounded-xl flex items-center gap-x-2 text-base"
                     >
                       <FaPlus className="text-sm" /> Add Source
@@ -162,7 +170,7 @@ const Overview = ({ params }) => {
                               className={`flex items-center justify-between mb-4`}
                             >
                               <div className="flex items-center gap-x-3 ml-12">
-                                <Circle />
+                                <Circle0 />
                                 <h6 className="mainText14">
                                   <span className="font-semibold">
                                     ProWiz Analytics
@@ -188,10 +196,26 @@ const Overview = ({ params }) => {
   );
 };
 
-const Circle = () => {
+const Circle0 = () => {
+  return (
+    <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
+      <div className="bg-[#FDC53E] w-full h-full rounded-full"></div>
+    </div>
+  );
+};
+
+const Circle1 = () => {
   return (
     <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
       <div className="bg-[#FF8A00] w-full h-full rounded-full"></div>
+    </div>
+  );
+};
+
+const Circle2 = () => {
+  return (
+    <div className="bg-[#B7FFD8] p-2 w-7 rounded-full aspect-square">
+      <div className="bg-[#37BA73] w-full h-full rounded-full"></div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
+import Required from "../Utils/Required";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -136,6 +137,7 @@ const connectorsData = [
 
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 3;
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     name: "",
@@ -265,6 +267,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label htmlFor="name" className="mb-1.5 text-base">
                       Agency Name
+                      <Required />
                     </label>
                     <input
                       id="name"
@@ -280,6 +283,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label htmlFor="website" className="mb-1.5 text-base">
                       Website
+                      <Required />
                     </label>
                     <input
                       id="website"
@@ -310,6 +314,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label htmlFor="warrenty" className="mb-1.5 text-base">
                       Warranty Period
+                      <Required />
                     </label>
                     <input
                       id="warrenty"
@@ -340,6 +345,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label htmlFor="license" className="mb-1.5 text-base">
                       License Limit
+                      <Required />
                     </label>
                     <input
                       id="license"
@@ -479,59 +485,72 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <input
                     type="search"
                     placeholder="Search"
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
                     className="outline-none text-base border border-gray-500/20 px-6 bg-[#898989]/15 py-2 rounded-lg pl-12 w-full" // Add padding to the left for the icon
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-3 mt-5">
-                  {connectorsData.map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-center justify-between border border-gray-300/30 px-3 py-3 rounded-full"
-                      >
-                        <div className="flex items-center">
-                          <Image
-                            src={e?.img}
-                            alt={e?.img?.src}
-                            width={1000}
-                            height={1000}
-                            className="w-8 h-8 mr-2 aspect-squre object-contain"
-                          />
-                          <label
-                            htmlFor={e?.title}
-                            className="mainText14 cursor-pointer"
-                          >
-                            {e?.title}
-                          </label>
-                        </div>
-                        <div className="inline-flex items-start mr-1">
-                          <label className="relative flex items-center cursor-pointer">
-                            <input
-                              type="checkbox"
-                              className="before:content[''] peer relative h-6 w-6 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                              id="check"
+                  {connectorsData
+                    ?.filter((e) => {
+                      if (search) {
+                        return e?.title
+                          ?.toLowerCase()
+                          ?.includes(search?.toLowerCase());
+                      }
+                      return e;
+                    })
+                    .map((e, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between border border-gray-300/30 px-3 py-3 rounded-full"
+                        >
+                          <div className="flex items-center">
+                            <Image
+                              src={e?.img}
+                              alt={e?.img?.src}
+                              width={1000}
+                              height={1000}
+                              className="w-8 h-8 mr-2 aspect-squre object-contain"
                             />
-                            <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                strokeWidth="1"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                ></path>
-                              </svg>
-                            </span>
-                          </label>
+                            <label
+                              htmlFor={e?.title}
+                              className="mainText14 cursor-pointer"
+                            >
+                              {e?.title}
+                            </label>
+                          </div>
+                          <div className="inline-flex items-start mr-1">
+                            <label className="relative flex items-center cursor-pointer">
+                              <input
+                                type="checkbox"
+                                className="before:content[''] peer relative h-6 w-6 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                                id="check"
+                              />
+                              <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-4 w-4"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                  stroke="currentColor"
+                                  strokeWidth="1"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clipRule="evenodd"
+                                  ></path>
+                                </svg>
+                              </span>
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
               </div>
             )}

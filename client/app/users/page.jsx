@@ -105,12 +105,7 @@ const Overview = () => {
                   <UserDetailBlock status={"Online"} acess={"Owner"} />{" "}
                   <UserDetailBlock status={"Online"} acess={"Guest"} />
                   <UserDetailBlock status={"Online"} acess={"Admin"} />
-                  <UserDetailBlock status={"Online"} acess={"Owner"} />{" "}
                   <UserDetailBlock status={"Online"} acess={"Guest"} />
-                  <UserDetailBlock status={"Online"} acess={"Admin"} />
-                  <UserDetailBlock status={"Online"} acess={"Owner"} />{" "}
-                  <UserDetailBlock status={"Online"} acess={"Guest"} />
-                  <UserDetailBlock status={"Online"} acess={"Admin"} />
                 </div>
                 <div className="h-[11%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">

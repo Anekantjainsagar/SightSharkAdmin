@@ -5,6 +5,8 @@ import Navbar from "@/app/Components/Utils/Navbar";
 import SettingsLeftbar from "@/app/Components/Settings/Leftbar";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 
+import Required from "@/app/Components/Utils/Required";
+
 const Settings = () => {
   const [showOriginalPassword, setShowOriginalPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -37,7 +39,7 @@ const Settings = () => {
                   <div className="grid grid-cols-1 gap-y-5 mt-4 w-full">
                     <div className="flex flex-col">
                       <label htmlFor="currentPass" className="mb-1.5 text-base">
-                        Current Password
+                        Current Password <Required />
                       </label>
                       <div className="w-full relative mt-1">
                         <input
@@ -64,6 +66,7 @@ const Settings = () => {
                     <div className="flex flex-col">
                       <label htmlFor="newPass" className="mb-1.5 text-base">
                         New Password
+                        <Required />
                       </label>
                       <div className="w-full relative mt-1">
                         <input
@@ -93,6 +96,7 @@ const Settings = () => {
                         className="mb-1.5 text-base"
                       >
                         Retype New Password
+                        <Required />
                       </label>
                       <div className="w-full relative mt-1">
                         <input
@@ -137,13 +141,13 @@ const Settings = () => {
               </div>
               <div className="flex items-center justify-end w-full mt-10">
                 <button
-                  className={`bg-[#898989]/15 font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-[#898989]/15 font-semibold w-[160px] px-8 py-3 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Discard
                 </button>
                 <button
-                  className={`bg-newBlue font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-newBlue font-semibold w-[160px] px-8 py-3 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Save

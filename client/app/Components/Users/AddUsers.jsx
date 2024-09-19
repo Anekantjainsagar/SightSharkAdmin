@@ -7,6 +7,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
+import Required from "../Utils/Required";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -103,6 +104,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label htmlFor="name" className="mb-1.5 text-base">
                   First Name
+                  <Required />
                 </label>
                 <input
                   id="name"
@@ -118,6 +120,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label htmlFor="lastName" className="mb-1.5 text-base">
                   Last Name
+                  <Required />
                 </label>
                 <input
                   id="lastName"
@@ -133,6 +136,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label htmlFor="email" className="mb-1.5 text-base">
                   Email
+                  <Required />
                 </label>
                 <input
                   id="email"
@@ -148,6 +152,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label htmlFor="access" className="mb-1.5">
                   Access
+                  <Required />
                 </label>
                 <select
                   name="access"

@@ -37,9 +37,9 @@ const RecentActivites = () => {
                   </div>
                   <div className="gradient-line my-4"></div>
                   <div>
-                    {[1, 2, 3, 4].map((e, i) => {
+                    {[1, 2, 3, 4].map((e, idx) => {
                       return (
-                        <div key={i} className="mb-6">
+                        <div key={idx} className="mb-6">
                           <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/20">
                             14 August 2024
                           </span>
@@ -51,7 +51,13 @@ const RecentActivites = () => {
                                   className={`flex items-center justify-between mb-4`}
                                 >
                                   <div className="flex items-center gap-x-3 ml-12">
-                                    <Circle />
+                                    {idx % 3 == 0 ? (
+                                      <Circle0 />
+                                    ) : idx % 3 == 1 ? (
+                                      <Circle1 />
+                                    ) : (
+                                      <Circle2 />
+                                    )}
                                     <h6 className="mainText14">
                                       <span className="font-semibold">
                                         ProWiz Analytics
@@ -79,10 +85,26 @@ const RecentActivites = () => {
   );
 };
 
-const Circle = () => {
+const Circle0 = () => {
+  return (
+    <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
+      <div className="bg-[#FDC53E] w-full h-full rounded-full"></div>
+    </div>
+  );
+};
+
+const Circle1 = () => {
   return (
     <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
       <div className="bg-[#FF8A00] w-full h-full rounded-full"></div>
+    </div>
+  );
+};
+
+const Circle2 = () => {
+  return (
+    <div className="bg-[#B7FFD8] p-2 w-7 rounded-full aspect-square">
+      <div className="bg-[#37BA73] w-full h-full rounded-full"></div>
     </div>
   );
 };

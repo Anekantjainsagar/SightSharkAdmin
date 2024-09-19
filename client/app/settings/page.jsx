@@ -127,13 +127,13 @@ const Settings = () => {
               </div>
               <div className="mt-10 flex items-center justify-end w-full">
                 <button
-                  className={`bg-[#898989]/15 font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-[#898989]/15 font-semibold w-[160px] px-8 py-3 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Discard
                 </button>
                 <button
-                  className={`bg-newBlue font-semibold w-[160px] px-8 py-2 rounded-xl ml-4`}
+                  className={`bg-newBlue font-semibold w-[160px] px-8 py-3 rounded-xl ml-4`}
                   onClick={() => {}}
                 >
                   Save
