@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -16,12 +17,13 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     backgroundColor: "transparent",
-    width: "30vw",
+    width: "25vw",
     border: "none",
   },
 };
 
 const HelpPage = ({ showSubscribe, setShowSubscribe }) => {
+  const history = useRouter();
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -36,27 +38,33 @@ const HelpPage = ({ showSubscribe, setShowSubscribe }) => {
         contentLabel="Example Modal"
       >
         <div className="relative rounded-lg bg-[#0C111D] py-6 border border-gray-500/40 px-4 text-white flex flex-col items-center justify-center">
-          <h4 className="mainText20">Contact Us</h4>
-          <p className="bg-[#171C2A] p-3 text-[#ECECED] text-center text-base my-2.5">
-            All Dashboards, Data sources and Templates will be lost and
-            permanently deleted.
+          <Image
+            src={"/agent.png"}
+            alt="Agent png"
+            className="w-20 aspect-square rounded-full"
+            width={1000}
+            height={1000}
+          />
+          <h4 className="mainText20 w-11/12 text-center mt-3">
+            Talk to a member of our Support team.
+          </h4>
+          <p className="bg-[#171C2A] p-3 text-[#ECECED] text-center text-base my-3">
+            Our support team is here to assist you with any questions or issues
+            you may have.
           </p>
-          <div className="flex items-center gap-x-4 w-full">
-            <button
-              className={`bg-red-500 w-full py-2 rounded-lg text-center`}
-              onClick={() => {
-                closeModal();
-              }}
-            >
-              Cancel
-            </button>
-            <button
-              className={`bg-newBlue w-full py-2 rounded-lg text-center`}
-              onClick={() => {}}
-            >
-              Contact
-            </button>{" "}
-          </div>
+          <button
+            className={`bg-newBlue w-full py-2 rounded-lg text-center`}
+            onClick={() => {
+              window.navigator.clipboard.writeText("info@prowiz.io");
+              window.open(
+                "https://mail.google.com/mail/u/0/#inbox?compose=CllgCJvqrzHxdSbzTnJJBXPfCsstgGRGnmLrfzcjZFXvQKpdJcpmlSFFLjRjSGkdzXWrwfdDhbB",
+                "__blank"
+              );
+              setShowSubscribe(!showSubscribe);
+            }}
+          >
+            info@prowiz.io
+          </button>{" "}
         </div>
       </Modal>
     </div>

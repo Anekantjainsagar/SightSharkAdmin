@@ -146,7 +146,7 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
                   strokeWidth="1.66667"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  shape-rendering="crispEdges"
+                  shapeRendering="crispEdges"
                 />
               </g>
               <defs>
