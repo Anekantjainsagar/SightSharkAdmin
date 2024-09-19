@@ -2,14 +2,15 @@
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { AiOutlineLogout } from "react-icons/ai";
 import { CiGrid41, CiSettings, CiWallet } from "react-icons/ci";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { IoNewspaperOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
+import HelpPage from "@/app/Components/Utils/HelpPage";
 
 const Leftbar = () => {
   const history = useRouter();
+  const [show, setShow] = useState(false);
   let mainRoutes = [
     {
       title: "Overview",
@@ -234,7 +235,6 @@ const Leftbar = () => {
     {
       title: "Help",
       icon: <IoIosHelpCircleOutline className="text-2xl" />,
-      // route: "/help",
       temp_icon: [
         <svg
           width="24"
@@ -273,11 +273,12 @@ const Leftbar = () => {
   ];
 
   return (
-    <div className="bg-main w-[13%] text-white h-full relative border-r border-r-white/20">
+    <div className="bg-main w-[15%] text-white h-full relative border-r border-r-white/20">
+      <HelpPage showSubscribe={show} setShowSubscribe={setShow} />
       <div className="w-[120px] h-[100px] rounded-full bg-[#1664FF]/40 absolute left-[-2vw] top-[15vh]"></div>
       <div className="w-[60px] h-[50px] rounded-full bg-[#1664FF]/50 absolute right-2 bottom-[1vh]"></div>
       <div className="w-full h-full absolute top-0 left-0 py-5 flex flex-col items-center justify-between backdrop-blur-3xl z-10">
-        <div className="w-10/12 h-full flex flex-col items-center justify-between">
+        <div className="w-10/12 h-full flex flex-col items-center justify-between pb-6">
           <div className="w-full">
             <div className="flex items-center">
               <Image
@@ -300,7 +301,9 @@ const Leftbar = () => {
           <div className="w-full">
             <div className="">
               {settingRoutes?.map((e, i) => {
-                return <NewwBlock e={e} key={i} />;
+                return (
+                  <NewwBlock e={e} key={i} setShow={setShow} show={show} />
+                );
               })}
             </div>
             <div className="gradient-line my-4"></div>
@@ -338,25 +341,29 @@ const LogoutBtn = () => {
           />
         </svg>
       </div>
-      <p className="ml-4 text-base">Log Out</p>
+      <p className="ml-4 mainText18">Log Out</p>
     </div>
   );
 };
 
-const NewwBlock = ({ e }) => {
+const NewwBlock = ({ e, setShow, show }) => {
   const history = useRouter();
 
   return (
     <div
       className={`flex items-center py-2 rounded-xl cursor-pointer text-white`}
       onClick={() => {
-        history.push(e?.route);
+        if (e?.route) {
+          history.push(e?.route);
+        } else {
+          setShow(!show);
+        }
       }}
     >
       <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-12 aspect-square p-2">
         {e?.temp_icon[1]}
       </div>
-      <p className="ml-4 text-base">{e?.title}</p>
+      <p className="ml-4 mainText18">{e?.title}</p>
     </div>
   );
 };
@@ -370,7 +377,7 @@ const Block = ({ e }) => {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className={`flex items-center rounded-lg cursor-pointer px-4 py-3 mb-2 text-base ${
+      className={`flex items-center rounded-lg cursor-pointer px-3 py-3 mb-2 mainText18 ${
         pathname.includes(e?.route)
           ? "bg-[#898989]/15 border border-gray-200/5"
           : "text-gray-400"

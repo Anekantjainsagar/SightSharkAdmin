@@ -19,7 +19,7 @@ const Settings = () => {
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
-      <div className="w-[87%] bg-main h-full relative">
+      <div className="w-[85%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[30vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[30vw] h-[30vh] absolute left-0 bottom-0 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[30vw] h-[30vh] absolute left-[40%] top-1/2 -translate-y-1/2 rounded-full"></div>

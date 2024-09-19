@@ -16,13 +16,13 @@ const Overview = () => {
     <div className="flex items-start h-[100vh]">
       <Leftbar />
       <AddAgency showSubscribe={addAgency} setShowSubscribe={setAddAgency} />
-      <div className="w-[87%] bg-main h-full relative">
+      <div className="w-[85%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
           <Navbar />
-          <div className="text-white w-full rounded-lg">
+          <div className="text-white w-full rounded-lg p-6">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl">
                 Agencies <span className="text-xl text-white/80">(25)</span>
@@ -123,8 +123,8 @@ const Overview = () => {
                   );
                 })}
               </div>
-              <div className="h-[72vh]">
-                <div className="overflow-y-auto small-scroller h-[89%]">
+              <div className="h-[70vh]">
+                <div className="overflow-y-auto small-scroller h-[86%]">
                   <AgencyDetailsBlock status={"Active"} percentage={10} />
                   <AgencyDetailsBlock status={"Offline"} percentage={20} />
                   <AgencyDetailsBlock status={"Active"} percentage={30} />
@@ -133,7 +133,6 @@ const Overview = () => {
                   <AgencyDetailsBlock status={"Offline"} percentage={60} />
                   <AgencyDetailsBlock status={"Active"} percentage={70} />
                   <AgencyDetailsBlock status={"Offline"} percentage={80} />
-                  <AgencyDetailsBlock status={"Offline"} percentage={90} />
                 </div>
                 <div className="h-[11%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">

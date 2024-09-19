@@ -19,13 +19,13 @@ const Overview = () => {
         showSubscribe={showSubscribe}
         setShowSubscribe={setShowSubscribe}
       />
-      <div className="w-[87%] bg-main h-full relative">
+      <div className="w-[85%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
           <Navbar />
-          <div className="text-white w-full rounded-lg">
+          <div className="text-white w-full rounded-lg p-6">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl">Users</h3>
               <div className="flex items-center">
@@ -97,7 +97,7 @@ const Overview = () => {
                   }
                 )}
               </div>
-              <div className="h-[72vh]">
+              <div className="h-[70vh]">
                 <div className="overflow-y-auto small-scroller h-[89%]">
                   <UserDetailBlock status={"Online"} acess={"Owner"} />
                   <UserDetailBlock status={"Online"} acess={"Guest"} />
