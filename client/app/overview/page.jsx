@@ -25,7 +25,7 @@ const Overview = () => {
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full p-6">
-            <div className="grid grid-cols-2 gap-y-6 2xl:grid-cols-4 gap-x-6">
+            <div className="grid grid-cols-4 gap-x-6">
               {[
                 {
                   name: "Total Clients",

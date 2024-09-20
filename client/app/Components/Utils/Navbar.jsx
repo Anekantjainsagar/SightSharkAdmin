@@ -7,7 +7,7 @@ const Navbar = () => {
   const { userData } = useContext(Context);
 
   return (
-    <div className="text-white py-4 flex items-center justify-between w-full">
+    <div className="text-white py-4 flex items-center justify-between w-full px-6">
       <div>
         <h3 className="bigFont font-semibold">Hello {userData?.name},</h3>
         <p className="text-base text-[#85888E]">
@@ -15,7 +15,7 @@ const Navbar = () => {
         </p>
       </div>
       <div className="flex items-center gap-x-4">
-        <div className="relative flex items-center w-[500px]">
+        <div className="relative flex items-center w-[300px] 2xl:w-[500px]">
           <FaSearch className="absolute left-4 z-40 text-white" />{" "}
           {/* Search Icon */}
           <input

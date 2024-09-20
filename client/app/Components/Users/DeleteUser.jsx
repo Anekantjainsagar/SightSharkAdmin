@@ -18,7 +18,7 @@ const customStyles = {
   },
 };
 
-const DeleteAgency = ({ showSubscribe, setShowSubscribe }) => {
+const DeleteUser = ({ showSubscribe, setShowSubscribe }) => {
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -51,19 +51,17 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe }) => {
             </svg>
           </div>
           <h4 className="mainText20 mt-5">
-            Are you sure you want to delete the Agency?
+            Are you sure you want to delete the User?
           </h4>
-          <p className="bg-[#171C2A] p-3 text-[#ECECED] text-center text-base my-2.5">
-            All Dashboards, Data sources and Templates will be lost and
-            permanently deleted.
+          <p className="bg-[#171C2A] p-3 text-[#ECECED] w-full text-center text-base my-2.5">
+            The user’s access to the app will be revoked.
           </p>
           <p className="text-[#B2B4BA] text-base my-2">
             This action can’t be undone.
           </p>
           <p className="mainText18 mb-2 text-[#B2B4BA]">
-            Type{" "}
-            <span className="font-semibold text-white">Alpha Solutions</span> to
-            confirm
+            Type <span className="font-semibold text-white">Olivia Rhye</span>{" "}
+            to confirm
           </p>
           <input
             type="text"
@@ -92,4 +90,4 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe }) => {
   );
 };
 
-export default DeleteAgency;
+export default DeleteUser;

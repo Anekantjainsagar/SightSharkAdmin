@@ -7,12 +7,14 @@ import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { FaPlus } from "react-icons/fa";
+import AddTemplates from "../../Components/Agencies/AddTemplates";
 import AddDataSouces from "../../Components/Agencies/AddDataSources";
 import { useRouter } from "next/navigation";
 
 const Overview = ({ params }) => {
   const history = useRouter();
   const [addDataSouces, setAddDataSouces] = useState(false);
+  const [addTemplates, setAddTemplates] = useState(false);
   const { name } = params;
 
   return (
@@ -21,6 +23,10 @@ const Overview = ({ params }) => {
       <AddDataSouces
         showSubscribe={addDataSouces}
         setShowSubscribe={setAddDataSouces}
+      />
+      <AddTemplates
+        showSubscribe={addTemplates}
+        setShowSubscribe={setAddTemplates}
       />
       <div className="w-[85%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
@@ -107,8 +113,10 @@ const Overview = ({ params }) => {
                   <div className="flex items-center justify-between w-full">
                     <h4 className="mainText20">Templates </h4>
                     <button
-                      onClick={() => {}}
-                      className="bg-newBlue px-5 py-3 w-[185px] rounded-xl flex items-center gap-x-2 text-base"
+                      onClick={() => {
+                        setAddTemplates(!addTemplates);
+                      }}
+                      className="bg-newBlue px-5 py-3 w-[185px] rounded-xl flex items-center justify-center gap-x-2 text-base"
                     >
                       <FaPlus className="text-sm" /> Add Template
                     </button>
