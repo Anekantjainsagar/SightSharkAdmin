@@ -60,7 +60,7 @@ const Overview = () => {
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
-        <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
+        <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex items-start justify-between">
             <AgencyDetails />
@@ -366,7 +366,7 @@ const Overview = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between 2xl:mt-0 mt-6">
                   <button
                     className={`bg-red-600 font-semibold px-8 py-2 rounded-xl flex items-center ml-4`}
                     onClick={() => {

@@ -26,7 +26,7 @@ const Overview = ({ params }) => {
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
-        <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5">
+        <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex items-start justify-between">
             <AgencyDetails />
@@ -158,7 +158,7 @@ const Overview = ({ params }) => {
                   </div>
                   <div className="gradient-line my-4"></div>
                   <div>
-                    <div>
+                    <div className="">
                       <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/5">
                         14 August 2024
                       </span>
