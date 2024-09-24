@@ -18,8 +18,7 @@ const Leftbar = () => {
       route: "/overview",
       temp_icon: [
         <svg
-          width="24"
-          height="24"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           viewBox="0 0 24 24"
           fill="none"
           key={1}
@@ -55,9 +54,8 @@ const Leftbar = () => {
           />
         </svg>,
         <svg
-          width="24"
           key={1}
-          height="24"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -103,9 +101,8 @@ const Leftbar = () => {
       route: "/agencies",
       temp_icon: [
         <svg
-          width="18"
           key={1}
-          height="22"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           viewBox="0 0 18 22"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +116,7 @@ const Leftbar = () => {
           />
         </svg>,
         <svg
-          width="18"
-          height="22"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           key={1}
           viewBox="0 0 18 22"
           fill="none"
@@ -143,8 +139,7 @@ const Leftbar = () => {
       route: "/users",
       temp_icon: [
         <svg
-          width="22"
-          height="20"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           viewBox="0 0 22 20"
           fill="none"
           key={1}
@@ -159,9 +154,8 @@ const Leftbar = () => {
           />
         </svg>,
         <svg
-          width="22"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           key={1}
-          height="20"
           viewBox="0 0 22 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -278,7 +272,7 @@ const Leftbar = () => {
       <div className="w-[120px] h-[100px] rounded-full bg-[#1664FF]/40 absolute left-[-2vw] top-[15vh]"></div>
       <div className="w-[60px] h-[50px] rounded-full bg-[#1664FF]/50 absolute right-2 bottom-[1vh]"></div>
       <div className="w-full h-full absolute top-0 left-0 py-5 flex flex-col items-center justify-between backdrop-blur-3xl z-10">
-        <div className="w-10/12 h-full flex flex-col items-center justify-between pb-6">
+        <div className="w-10/12 h-full flex flex-col items-center justify-between pb-0 min-[1600px]:pb-6">
           <div className="w-full">
             <div className="flex items-center">
               <Image
@@ -288,7 +282,7 @@ const Leftbar = () => {
                 height={1000}
                 className="w-[2vw]"
               />
-              <h1 className="mainText18 font-semibold uppercase tracking-wider ml-3">
+              <h1 className="mainText20 font-semibold uppercase tracking-wider ml-3">
                 sightshark
               </h1>
             </div>
@@ -326,7 +320,7 @@ const LogoutBtn = () => {
         history.push("/");
       }}
     >
-      <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#D93F21]/10 to-[#D93F21]/20 w-12 aspect-square p-2">
+      <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#D93F21]/10 to-[#D93F21]/20 w-9 min-[1600px]:w-12 aspect-square p-2">
         <svg
           width="24"
           height="24"
@@ -362,7 +356,7 @@ const NewwBlock = ({ e, setShow, show }) => {
         }
       }}
     >
-      <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-12 aspect-square p-2">
+      <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-9 min-[1600px]:w-12 aspect-square p-2">
         {e?.temp_icon[1]}
       </div>
       <p className="ml-4 mainText18">{e?.title}</p>
@@ -390,7 +384,7 @@ const Block = ({ e }) => {
         }
       }}
     >
-      <span className="w-6">
+      <span>
         {pathname.includes(e?.route)
           ? e?.temp_icon[0]
           : hover

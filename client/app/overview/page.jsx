@@ -10,7 +10,6 @@ import Notify from "@/app/Components/Overview/Notify";
 import { useRouter } from "next/navigation";
 
 const Overview = () => {
-  const [page, setPage] = useState(1);
   const [addAgency, setAddAgency] = useState(false);
   const history = useRouter();
 
@@ -24,7 +23,7 @@ const Overview = () => {
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
-          <div className="text-white w-full p-6">
+          <div className="text-white w-full py-2 px-6 min-[1600px]:py-6">
             <div className="grid grid-cols-4 gap-x-6">
               {[
                 {
@@ -51,11 +50,13 @@ const Overview = () => {
                 return (
                   <div
                     key={i}
-                    className="bg-[#171C2A]/50 flex items-center justify-between p-6 border border-gray-500/5 rounded-xl"
+                    className="bg-[#171C2A]/50 flex items-center justify-between p-4 min-[1600px]:p-6 border border-gray-500/5 rounded-xl"
                   >
                     <div>
-                      <p className="text-[#CECFD2]">{e?.name}</p>
-                      <p className="text-[30px] font-semibold mt-1">
+                      <p className="text-sm min-[1600px]:text-base text-[#CECFD2]">
+                        {e?.name}
+                      </p>
+                      <p className="text-[20px] min-[1600px]:text-[30px] font-semibold mt-1">
                         {e?.value}
                       </p>
                     </div>
@@ -64,14 +65,14 @@ const Overview = () => {
                       alt={e.img?.src}
                       width={1000}
                       height={1000}
-                      className="w-[60px] aspect-square"
+                      className="w-[50px] min-[1600px]:w-[60px] aspect-square"
                     />
                   </div>
                 );
               })}
             </div>
-            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-6">
-              <h3 className="text-[20px]">Agencies</h3>
+            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-4 min-[1600px]:mt-6">
+              <h3 className="mainText20">Agencies</h3>
               <div className="mt-4 border border-gray-200/5 rounded-2xl">
                 <div className="grid bg-[#030021]/40 py-3.5 px-7 agencySmallBlockGrid items-center rounded-2xl">
                   <div className="inline-flex items-start">
@@ -108,8 +109,10 @@ const Overview = () => {
                     return (
                       <h5
                         key={i}
-                        className={`maintext12 ${
-                          e?.includes("Name") ? "text-start" : "text-center"
+                        className={`text-sm min-[1600px]:text-base ${
+                          e?.includes("Name")
+                            ? "text-start min-[1600px]:ml-0 ml-1"
+                            : "text-center"
                         } font-light tracking-wider`}
                       >
                         {e}
@@ -129,7 +132,7 @@ const Overview = () => {
                 </div>
               </div>
             </div>{" "}
-            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-6">
+            <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-4 min-[1600px]:mt-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-[20px]">Critical Notifications</h3>{" "}
                 <p

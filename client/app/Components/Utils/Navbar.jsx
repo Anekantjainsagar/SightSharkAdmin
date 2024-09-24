@@ -10,24 +10,23 @@ const Navbar = () => {
     <div className="text-white py-4 flex items-center justify-between w-full px-6">
       <div>
         <h3 className="bigFont font-semibold">Hello {userData?.name},</h3>
-        <p className="text-base text-[#85888E]">
+        <p className="text-sm min-[1600px]:text-base text-[#85888E]">
           Here’s your overview of the agencies
         </p>
       </div>
       <div className="flex items-center gap-x-4">
-        <div className="relative flex items-center w-[300px] 2xl:w-[500px]">
+        <div className="relative flex items-center w-[340px] min-[1600px]:w-[500px]">
           <FaSearch className="absolute left-4 z-40 text-white" />{" "}
           {/* Search Icon */}
           <input
             type="search"
             placeholder="Search"
-            className="outline-none text-base border border-gray-200/5 bg-transparent px-6 glass py-3 rounded-lg pl-12 w-full" // Add padding to the left for the icon
+            className="outline-none text-sm min-[1600px]:text-base border border-gray-200/5 bg-transparent px-6 glass py-2 min-[1600px]:py-3 rounded-lg pl-12 w-full" // Add padding to the left for the icon
           />
         </div>
-        <div className="w-12 h-12 rounded-lg glass flex items-center justify-center border border-gray-200/5">
+        <div className="w-10 min-[1600px]:w-12 h-9 min-[1600px]:h-12 rounded-lg glass flex items-center justify-center border border-gray-200/5">
           <svg
-            width="24"
-            height="25"
+            className="w-5 min-[1600px]:w-6 h-5 min-[1600px]:h-6"
             viewBox="0 0 24 25"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

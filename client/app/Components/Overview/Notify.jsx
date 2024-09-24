@@ -12,16 +12,16 @@ const Notify = ({ status }) => {
           alt="Demonstrating"
           width={1000}
           height={1000}
-          className="w-[30px] aspect-square"
+          className="w-[26px] min-[1600px]:w-[30px] aspect-square"
         />
-        <p className="text-base font-medium ml-6">
+        <p className="text-sm min-[1600px]:text-base font-medium ml-4 min-[1600px]:ml-6">
           ProWiz Analytics -{" "}
           <span className="font-normal mainText14">
             Added a new client “SightShark”
           </span>
         </p>
       </div>
-      <p>6 Sept, 2023 02:30 PM</p>
+      <p className="text-sm min-[1600px]:text-base">6 Sept, 2023 02:30 PM</p>
     </div>
   );
 };
