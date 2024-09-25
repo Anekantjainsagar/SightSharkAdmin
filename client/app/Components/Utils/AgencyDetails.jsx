@@ -46,7 +46,7 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
             </span>
           </label>
         </div>
-        <h5>Alpha solutions</h5>
+        <h5 className="min-[1600px]:ml-0 ml-2">Alpha solutions</h5>
         <div className="w-full flex items-center justify-center">
           <div
             className={`status-${status?.toLowerCase()} w-fit p-2 border-2 rounded-2xl`}
@@ -64,7 +64,9 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
           />
           <p className="ml-2 min-[1600px]:ml-4">Olivia Rhye</p>
         </div>
-        <p className="break-words w-full text-center">alpha.solutions@example.com</p>
+        <p className="break-words w-full text-center">
+          alpha.solutions@example.com
+        </p>
         <p className="text-center">13-08-2024</p>
         <div className="flex items-center justify-center">
           <div className="bg-[#343745] w-[6vw] rounded-full h-3">
