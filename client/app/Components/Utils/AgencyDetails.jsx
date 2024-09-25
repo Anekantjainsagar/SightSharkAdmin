@@ -47,14 +47,14 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
           </label>
         </div>
         <h5>Alpha solutions</h5>
-        <div className="w-full">
+        <div className="w-full flex items-center justify-center">
           <div
-            className={`status-${status?.toLowerCase()} w-fit px-2.5 border-2 py-0.5 rounded-2xl`}
+            className={`status-${status?.toLowerCase()} w-fit p-2 border-2 rounded-2xl`}
           >
-            {status}
+            {/* {status} */}
           </div>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           <Image
             src="/Agency/Avatar.png"
             width={1000}
@@ -64,10 +64,10 @@ const AgencyDetailsBlock = ({ status, percentage }) => {
           />
           <p className="ml-2 min-[1600px]:ml-4">Olivia Rhye</p>
         </div>
-        <p className="break-words w-full">alpha.solutions@example.com</p>
-        <p>13-08-2024</p>
-        <div className="flex items-center">
-          <div className="bg-[#343745] w-[9vw] rounded-full h-3">
+        <p className="break-words w-full text-center">alpha.solutions@example.com</p>
+        <p className="text-center">13-08-2024</p>
+        <div className="flex items-center justify-center">
+          <div className="bg-[#343745] w-[6vw] rounded-full h-3">
             <div
               className={`bg-white text-transparent rounded-full h-full text-xs`}
               style={{ width: `${percentage}%` }}
