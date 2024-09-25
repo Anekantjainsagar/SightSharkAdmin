@@ -136,7 +136,7 @@ const Overview = () => {
               <div className="flex items-center justify-between">
                 <h3 className="text-[20px]">Critical Notifications</h3>{" "}
                 <p
-                  className="text-white text-base flex items-center cursor-pointer"
+                  className="text-white text-sm min-[1600px]:text-base flex items-center cursor-pointer"
                   onClick={() => {
                     history.push("/overview/critical-notification");
                   }}

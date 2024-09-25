@@ -34,25 +34,25 @@ const Overview = ({ params }) => {
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
-          <div className="text-white w-full rounded-lg flex items-start justify-between">
+          <div className="text-white w-full rounded-lg flex items-start justify-between px-6">
             <AgencyDetails />
             <div className="w-[69%]">
               <AgencyDetailsTopbar />
-              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-4">
-                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5">
+              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-3 min-[1600px]:p-4">
+                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="mainText20">Data Sources </h4>
+                    <h4 className="min-[1600px]:text-xl">Data Sources </h4>
                     <button
                       onClick={(e) => {
                         setAddDataSouces(!addDataSouces);
                       }}
-                      className="bg-newBlue px-5 w-[185px] justify-center py-3 rounded-xl flex items-center gap-x-2 text-base"
+                      className="bg-newBlue px-5 w-[170px] min-[1600px]:w-[185px] justify-center py-2.5 min-[1600px]:py-3 rounded-xl flex items-center gap-x-2 text-sm min-[1600px]:text-base"
                     >
                       <FaPlus className="text-sm" /> Add Source
                     </button>
-                  </div>{" "}
+                  </div>
                   <div className="gradient-line my-4"></div>
-                  <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-4">
+                  <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4">
                     {[
                       {
                         img: "/Agency/logo/facebook.svg",
@@ -92,7 +92,7 @@ const Overview = ({ params }) => {
                           key={i}
                           className="flex items-center px-2 py-1 rounded-full"
                         >
-                          <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-8 aspect-square p-1.5 mr-3">
+                          <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-7 min-[1600px]:w-8 aspect-square p-1.5 mr-3">
                             <Image
                               src={e?.img}
                               alt={e?.img?.src}
@@ -101,7 +101,10 @@ const Overview = ({ params }) => {
                               className="object-contain"
                             />
                           </div>
-                          <label htmlFor={e?.title} className="mainText14">
+                          <label
+                            htmlFor={e?.title}
+                            className="text-sm min-[1600px]:text-base"
+                          >
                             {e?.title}
                           </label>
                         </div>
@@ -109,14 +112,14 @@ const Overview = ({ params }) => {
                     })}
                   </div>
                 </div>
-                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 my-4">
+                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="mainText20">Templates </h4>
+                    <h4 className="min-[1600px]:text-xl">Templates </h4>
                     <button
                       onClick={() => {
                         setAddTemplates(!addTemplates);
                       }}
-                      className="bg-newBlue px-5 py-3 w-[185px] rounded-xl flex items-center justify-center gap-x-2 text-base"
+                      className="bg-newBlue px-5 py-2.5 min-[1600px]:py-3 w-[170px] min-[1600px]:w-[185px] rounded-xl flex items-center justify-center gap-x-2 text-sm min-[1600px]:text-base"
                     >
                       <FaPlus className="text-sm" /> Add Template
                     </button>
@@ -151,11 +154,11 @@ const Overview = ({ params }) => {
                     })}
                   </div>
                 </div>
-                <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 my-4 h-[29vh]">
+                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[33vh]">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="mainText20">Recent Activity </h4>
+                    <h4 className="min-[1600px]:text-xl">Recent Activity </h4>
                     <p
-                      className="text-white text-base flex items-center cursor-pointer"
+                      className="text-white text-sm min-[1600px]:text-base flex items-center cursor-pointer"
                       onClick={() =>
                         history.push(`/agencies/${name}/recent-activities`)
                       }
@@ -167,7 +170,7 @@ const Overview = ({ params }) => {
                   <div className="gradient-line my-4"></div>
                   <div>
                     <div className="">
-                      <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/5">
+                      <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/5 text-sm min-[1600px]:text-base">
                         14 August 2024
                       </span>
                       <div className="mt-4">
@@ -179,7 +182,7 @@ const Overview = ({ params }) => {
                             >
                               <div className="flex items-center gap-x-3 ml-12">
                                 <Circle0 />
-                                <h6 className="mainText14">
+                                <h6 className="text-[13px] min-[1600px]:text-base">
                                   <span className="font-semibold">
                                     ProWiz Analytics
                                   </span>{" "}
@@ -187,7 +190,7 @@ const Overview = ({ params }) => {
                                   and LinkedIn Ads data sources
                                 </h6>
                               </div>
-                              <p className="mainText14">02:30 PM</p>
+                              <p className="text-[13px] min-[1600px]:text-base">02:30 PM</p>
                             </div>
                           );
                         })}

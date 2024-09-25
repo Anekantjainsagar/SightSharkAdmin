@@ -3,7 +3,7 @@ import React from "react";
 
 const Notify = ({ status }) => {
   return (
-    <div className="flex items-center justify-between py-2">
+    <div className="flex items-center justify-between py-1.5 min-[1600px]:py-2">
       <div className="flex items-center">
         <Image
           src={

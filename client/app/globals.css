@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .mainLogoSize {
-  @apply text-[24px];
+  @apply text-[20px] min-[1600px]:text-[24px];
 }
 
 .bigFont {

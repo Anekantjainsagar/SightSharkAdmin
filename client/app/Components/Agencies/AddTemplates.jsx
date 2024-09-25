@@ -24,120 +24,7 @@ const customStyles = {
   },
 };
 
-const connectorsData = [
-  {
-    title: "Amazon Selling Partner",
-    img: "/Agency/connectors/Amazon Selling Partner.svg",
-  },
-  {
-    title: "Bamboo HR",
-    img: "/Agency/connectors/BambooHR.svg",
-  },
-  {
-    title: "Facebook Ads",
-    img: "/Agency/connectors/Facebook Ads.svg",
-  },
-  {
-    title: "Facebook Insights",
-    img: "/Agency/connectors/Facebook Insights.svg",
-  },
-  {
-    title: "Google Ads Manager",
-    img: "/Agency/connectors/Google Ads Manager.svg",
-  },
-  {
-    title: "Google Ads",
-    img: "/Agency/connectors/Google Ads.svg",
-  },
-  {
-    title: "Google Analytics",
-    img: "/Agency/connectors/Google Analytics 4.svg",
-  },
-  {
-    title: "Google DV360",
-    img: "/Agency/connectors/Google DV360.svg",
-  },
-  {
-    title: "Google My Business",
-    img: "/Agency/connectors/Google My Business.svg",
-  },
-  {
-    title: "Google Search Console",
-    img: "/Agency/connectors/Google Search Console.svg",
-  },
-  {
-    title: "Google Sheets",
-    img: "/Agency/connectors/Google Sheets.svg",
-  },
-  {
-    title: "HubSpot",
-    img: "/Agency/connectors/HubSpot.svg",
-  },
-  {
-    title: "Instagram Ads",
-    img: "/Agency/connectors/Instagram Ads.svg",
-  },
-  {
-    title: "Instagram Insights",
-    img: "/Agency/connectors/Instagram Insights.svg",
-  },
-  {
-    title: "JSON",
-    img: "/Agency/connectors/JSON.svg",
-  },
-  {
-    title: "Klaviyo",
-    img: "/Agency/connectors/Klaviyo.svg",
-  },
-  {
-    title: "LinkedIn",
-    img: "/Agency/connectors/LinkedIn.svg",
-  },
-  {
-    title: "Outbrain",
-    img: "/Agency/connectors/Outbrain.svg",
-  },
-  {
-    title: "PayPal",
-    img: "/Agency/connectors/PayPal.svg",
-  },
-  {
-    title: "Shopify",
-    img: "/Agency/connectors/Shopify.svg",
-  },
-  {
-    title: "Stripe",
-    img: "/Agency/connectors/Stripe.svg",
-  },
-  {
-    title: "Taboola",
-    img: "/Agency/connectors/Taboola.svg",
-  },
-  {
-    title: "TikTok",
-    img: "/Agency/connectors/TikTok.svg",
-  },
-  {
-    title: "X Ads",
-    img: "/Agency/connectors/X Ads.svg",
-  },
-  {
-    title: "Xero",
-    img: "/Agency/connectors/Xero.svg",
-  },
-  {
-    title: "Klaviyo",
-    img: "/Agency/connectors/Klaviyo.svg",
-  },
-  {
-    title: "YouTube",
-    img: "/Agency/connectors/YouTube.svg",
-  },
-];
-
 const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
-  let maxPage = 3;
-  const [search, setSearch] = useState("");
   const [data, setData] = useState({
     dataSources: [],
   });
@@ -184,7 +71,7 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
                     onClick={() => {
                       fileInputRef.current.click();
                     }}
-                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 bottom-2.5 cursor-pointer right-2.5 rounded-full"
+                    className="absolute bg-newBlue flex items-center justify-center text-xl min-[1600px]:text-2xl px-2 bottom-0 min-[1600px]:bottom-2.5 cursor-pointer right-0 min-[1600px]:right-2.5 rounded-full"
                   >
                     +
                   </div>
@@ -195,13 +82,16 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
                     alt="Agency Img"
                     width={1000}
                     height={1000}
-                    className="w-[8vw] rounded-full"
+                    className="w-[6vw] min-[1600px]:w-[8vw] rounded-full"
                   />
                 </div>
               </div>
               <div className="gap-y-6 grid">
                 <div className="flex flex-col">
-                  <label htmlFor="name" className="mb-1.5 text-base">
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                  >
                     Template Name
                     <Required />
                   </label>
@@ -213,11 +103,14 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
                     }}
                     type="text"
                     placeholder="Enter Template Name"
-                    className="bg-[#898989]/15 outline-none border border-gray-500/20 h-[45px] px-4 py-2 rounded-lg"
+                    className="bg-[#898989]/15 outline-none border border-gray-500/20 h-[45px] px-4 py-2 text-sm min-[1600px]:text-base rounded-md"
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="website" className="mb-1.5 text-base">
+                  <label
+                    htmlFor="website"
+                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                  >
                     Template Link
                     <Required />
                   </label>
@@ -229,16 +122,16 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
                     }}
                     type="text"
                     placeholder="Enter Template Link"
-                    className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                    className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 text-sm min-[1600px]:text-base rounded-md"
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-end py-6 mt-10 mainText20">
+          <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-end py-6 mt-10 text-[15px] min-[1600px]:text-xl">
             <button
               onClick={() => {}}
-              className={`text-white bg-newBlue w-[170px] h-12 rounded-lg`}
+              className={`text-white bg-newBlue w-[150px] min-[1600px]:w-[170px] h-9 min-[1600px]:h-12 rounded-lg`}
             >
               Save
             </button>

@@ -4,6 +4,7 @@ const nextConfig = {
     domains: [
       "upload.wikimedia.org",
       "source.roboflow.com",
+      "i.pinimg.com",
       "encrypted-tbn0.gstatic.com",
     ],
   },

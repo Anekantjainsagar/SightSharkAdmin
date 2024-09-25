@@ -22,12 +22,14 @@ const CriticalNotification = () => {
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
-          <div className="text-white w-full p-6">
+          <div className="text-white w-full py-2 px-6 min-[1600px]:py-6">
             <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5">
               <div className="flex items-center justify-between">
-                <h3 className="text-[20px]">Critical Notifications</h3>{" "}
+                <h3 className="text-[18px] min-[1600px]:text-[20px]">
+                  Critical Notifications
+                </h3>{" "}
                 <p
-                  className="text-white text-2xl flex items-center cursor-pointer"
+                  className="text-white text-xl min-[1600px]:text-2xl flex items-center cursor-pointer"
                   onClick={() => {
                     history.push("/overview");
                   }}

@@ -27,7 +27,7 @@ const RecentActivites = () => {
               <div className="border border-gray-500/5 h-[88vh] w-full rounded-lg p-4">
                 <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 h-full">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="mainText20">Recent Activity </h4>
+                    <h4 className="min-[1600px]:text-xl text-lg">Recent Activity </h4>
                     <p
                       className="text-white flex items-center cursor-pointer text-xl"
                       onClick={() => history.push("/agencies/alpha-solutions")}
@@ -40,7 +40,7 @@ const RecentActivites = () => {
                     {[1, 2, 3, 4].map((e, idx) => {
                       return (
                         <div key={idx} className="mb-6">
-                          <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/20">
+                          <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/20 text-sm min-[1600px]:text-base">
                             14 August 2024
                           </span>
                           <div className="mt-4">
@@ -58,7 +58,7 @@ const RecentActivites = () => {
                                     ) : (
                                       <Circle2 />
                                     )}
-                                    <h6 className="mainText14">
+                                    <h6 className="text-[13px] min-[1600px]:text-base">
                                       <span className="font-semibold">
                                         ProWiz Analytics
                                       </span>{" "}
@@ -66,7 +66,9 @@ const RecentActivites = () => {
                                       Ads and LinkedIn Ads data sources
                                     </h6>
                                   </div>
-                                  <p className="mainText14">02:30 PM</p>
+                                  <p className="text-[13px] min-[1600px]:text-base">
+                                    02:30 PM
+                                  </p>
                                 </div>
                               );
                             })}
@@ -87,7 +89,7 @@ const RecentActivites = () => {
 
 const Circle0 = () => {
   return (
-    <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
+    <div className="bg-[#FFE8CC] p-1.5 min-[1600px]:p-2 w-6 min-[1600px]:w-7 rounded-full aspect-square">
       <div className="bg-[#FDC53E] w-full h-full rounded-full"></div>
     </div>
   );
@@ -95,7 +97,7 @@ const Circle0 = () => {
 
 const Circle1 = () => {
   return (
-    <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
+    <div className="bg-[#FFE8CC] p-1.5 min-[1600px]:p-2 w-6 min-[1600px]:w-7 rounded-full aspect-square">
       <div className="bg-[#FF8A00] w-full h-full rounded-full"></div>
     </div>
   );
@@ -103,7 +105,7 @@ const Circle1 = () => {
 
 const Circle2 = () => {
   return (
-    <div className="bg-[#B7FFD8] p-2 w-7 rounded-full aspect-square">
+    <div className="bg-[#B7FFD8] p-1.5 min-[1600px]:p-2 w-6 min-[1600px]:w-7 rounded-full aspect-square">
       <div className="bg-[#37BA73] w-full h-full rounded-full"></div>
     </div>
   );
