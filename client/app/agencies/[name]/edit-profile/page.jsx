@@ -71,7 +71,7 @@ const Overview = () => {
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-20 absolute bottom-10 rounded-full"></div>
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
-          <div className="text-white w-full rounded-lg flex items-start justify-between px-6">
+          <div className="text-white w-full rounded-lg flex flex-row-reverse items-start justify-between px-6">
             <AgencyDetails />
             <div className="w-[69%] min-[1600px]:h-[82vh] h-fit">
               <AgencyDetailsTopbar />

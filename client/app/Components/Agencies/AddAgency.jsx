@@ -547,7 +547,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 {/* <h5 className="font-medium text-xl mt-5 mb-2">
                   Service Account Details
                 </h5> */}
-                <div className="w-full mb-5">
+                <div className="w-full mb-10">
                   <div className="flex flex-col mb-5">
                     <label
                       htmlFor="switchAcc1"
@@ -743,57 +743,70 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     return (
                       <div
                         key={i}
-                        className="border border-gray-300/30 p-2 rounded-lg"
+                        className="border border-gray-300/30 p-2 rounded-lg flex items-center justify-center"
                       >
-                        <div className="grid grid-cols-3 w-full px-4 py-1">
-                          <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                            Table: {e?.title}
-                          </p>
-                          <p>Track</p>
-                          <p>Show Fields</p>
+                        <div className="flex flex-col items-center justify-center w-[30%]">
+                          <Image
+                            src={e?.img}
+                            alt={e?.img?.src}
+                            width={1000}
+                            height={1000}
+                            className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-squre object-contain"
+                          />
+                          <h6 className="mt-2 text-lg">{e?.title}</h6>
                         </div>
-                        {[
-                          "Traffic Report",
-                          "Traffic Report Content",
-                          "Traffic Report Term",
-                        ].map((e, i) => {
-                          return (
-                            <div
-                              key={i}
-                              className="w-full grid grid-cols-3 rounded-md py-1.5 bg-gray-800/40 border border-gray-500/15 px-4 text-gray-300"
-                            >
-                              <p>{e}</p>{" "}
-                              <div className="inline-flex items-start">
-                                <label className="relative flex items-center cursor-pointer">
-                                  <input
-                                    type="checkbox"
-                                    className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                                    id="check"
-                                  />
-                                  <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="h-4 w-4"
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                      stroke="currentColor"
-                                      strokeWidth="1"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clipRule="evenodd"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </label>
+                        <div className="w-[1px] mx-5 h-full bg-gray-300/30"></div>
+                        <div className="w-[70%]">
+                          <div className="grid grid-cols-3 w-full px-4 py-1">
+                            <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+                              {e?.title}
+                            </p>
+                            <p>Track</p>
+                            <p>Show Fields</p>
+                          </div>
+                          {[
+                            "Traffic Report",
+                            "Traffic Report Content",
+                            "Traffic Report Term",
+                          ].map((e, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="w-full grid grid-cols-3 rounded-md py-1.5 bg-gray-800/40 border border-gray-500/15 px-4 text-gray-300"
+                              >
+                                <p>{e}</p>{" "}
+                                <div className="inline-flex items-start">
+                                  <label className="relative flex items-center cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                                      id="check"
+                                    />
+                                    <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-4 w-4"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        stroke="currentColor"
+                                        strokeWidth="1"
+                                      >
+                                        <path
+                                          fillRule="evenodd"
+                                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                          clipRule="evenodd"
+                                        ></path>
+                                      </svg>
+                                    </span>
+                                  </label>
+                                </div>
+                                <p className="text-blue-500 underline cursor-pointer">
+                                  Show Fields
+                                </p>
                               </div>
-                              <p className="text-blue-500 underline cursor-pointer">
-                                Show Fields
-                              </p>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                        </div>
                       </div>
                     );
                   })}
