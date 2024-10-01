@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
+import Info from "@/app/Components/Login/Info";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 import Required from "../Utils/Required";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -136,8 +138,9 @@ const connectorsData = [
 ];
 
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
-  let maxPage = 3;
+  let maxPage = 5;
   const [search, setSearch] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     name: "",
@@ -154,6 +157,8 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
       email: "",
       phone: "",
     },
+    serviceAcc: { acc1: "", acc2: "" },
+    credentials: { email: "", password: "" },
     dataSources: [],
   });
   const fileInputRef = React.useRef(null);
@@ -195,7 +200,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           />
           <div className="mb-10">
             <div className="flex items-center px-[8vw]">
-              <div className="bg-newBlue w-[6vw] aspect-square rounded-full flex items-center justify-center text-[24px]">
+              <div className="bg-newBlue w-[11vw] aspect-square rounded-full flex items-center justify-center text-[20px]">
                 {page > 1 ? <IoMdCheckmark /> : "1"}
               </div>
               <div
@@ -204,33 +209,63 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 }`}
               ></div>
               <div
-                className={`w-[6vw] aspect-square rounded-full ${
+                className={`w-[11vw] aspect-square rounded-full ${
                   page >= 2
                     ? "bg-newBlue"
                     : "border border-gray-500/20 bg-[#343745]"
-                } flex items-center justify-center text-[24px]`}
+                } flex items-center justify-center text-[20px]`}
               >
                 {page > 2 ? <IoMdCheckmark /> : "2"}
               </div>
               <div
                 className={`line h-[1px] w-full ${
-                  page == maxPage ? "bg-newBlue" : "bg-[#343745]"
+                  page >= 3 ? "bg-newBlue" : "bg-[#343745]"
                 }`}
               ></div>
               <div
-                className={`w-[6vw] aspect-square rounded-full ${
+                className={`w-[11vw] aspect-square rounded-full ${
+                  page >= 3
+                    ? "bg-newBlue"
+                    : "border border-gray-500/20 bg-[#343745]"
+                } flex items-center justify-center text-[20px]`}
+              >
+                {page > 3 ? <IoMdCheckmark /> : "3"}
+              </div>{" "}
+              <div
+                className={`line h-[1px] w-full ${
+                  page >= 4 ? "bg-newBlue" : "bg-[#343745]"
+                }`}
+              ></div>
+              <div
+                className={`w-[11vw] aspect-square rounded-full ${
+                  page >= 4
+                    ? "bg-newBlue"
+                    : "border border-gray-500/20 bg-[#343745]"
+                } flex items-center justify-center text-[20px]`}
+              >
+                {page > 4 ? <IoMdCheckmark /> : "4"}
+              </div>{" "}
+              <div
+                className={`line h-[1px] w-full ${
+                  page >= 4 ? "bg-newBlue" : "bg-[#343745]"
+                }`}
+              ></div>
+              <div
+                className={`w-[11vw] aspect-square rounded-full ${
                   page == maxPage
                     ? "bg-newBlue"
                     : "border border-gray-500/20 bg-[#343745]"
-                } flex items-center justify-center text-[24px]`}
+                } flex items-center justify-center text-[20px]`}
               >
-                {page > 3 ? <IoMdCheckmark /> : "3"}
+                {page > 5 ? <IoMdCheckmark /> : maxPage}
               </div>
             </div>
-            <div className="flex items-center text-sm min-[1600px]:text-xl justify-between px-[6vw] mt-2">
-              <p>Agency Details</p>
-              <p>Key Contact Details</p>
-              <p>Data Sources</p>
+            <div className="flex items-center grid grid-cols-5 text-sm min-[1600px]:text-base px-12 mt-2">
+              <p className="text-center">Agency Details</p>
+              <p className="text-center">Key Contact Details</p>
+              <p className="text-center">Portal Deployment</p>
+              <p className="text-center">Data Sources</p>
+              <p className="text-center">Data Sources Details</p>
             </div>
           </div>
           <div className="h-[45vh] min-[1600px]:h-[40vh]">
@@ -506,7 +541,125 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : page == 3 ? (
+              <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
+                {/* <h5 className="font-medium text-xl mb-2">Credentials</h5> */}
+                {/* <h5 className="font-medium text-xl mt-5 mb-2">
+                  Service Account Details
+                </h5> */}
+                <div className="w-full mb-5">
+                  <div className="flex flex-col mb-5">
+                    <label
+                      htmlFor="switchAcc1"
+                      className="mb-1.5 text-base flex items-center"
+                    >
+                      Service Account 1<Info />
+                    </label>
+                    <textarea
+                      id="switchAcc1"
+                      value={data?.serviceAcc?.acc1}
+                      onChange={(e) => {
+                        setData({
+                          ...data,
+                          serviceAcc: {
+                            ...data?.serviceAcc,
+                            acc1: e.target.value,
+                          },
+                        });
+                      }}
+                      rows={2}
+                      placeholder="Service Account 1"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                    ></textarea>
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="switchAcc2"
+                      className="mb-1.5 text-base flex items-center"
+                    >
+                      Service Account 2 <Info />
+                    </label>
+                    <textarea
+                      id="switchAcc2"
+                      value={data?.serviceAcc?.acc2}
+                      onChange={(e) => {
+                        setData({
+                          ...data,
+                          serviceAcc: {
+                            ...data?.serviceAcc,
+                            acc2: e.target.value,
+                          },
+                        });
+                      }}
+                      rows={2}
+                      placeholder="Service Account 2"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                    ></textarea>
+                  </div>
+                </div>{" "}
+                <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="emailKey"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="emailKey"
+                      value={data?.credentials?.email}
+                      onChange={(e) => {
+                        setData({
+                          ...data,
+                          credentials: {
+                            ...data?.credentials,
+                            email: e.target.value,
+                          },
+                        });
+                      }}
+                      type="text"
+                      placeholder="Enter Email"
+                      className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="passwordKey"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
+                      Password
+                    </label>
+                    <div className="w-full relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="passwordKey"
+                        value={data?.credentials?.password}
+                        onChange={(e) => {
+                          setData({
+                            ...data,
+                            credentials: {
+                              ...data?.credentials,
+                              password: e.target.value,
+                            },
+                          });
+                        }}
+                        placeholder="Enter Password"
+                        className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                      />
+                      <div
+                        className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowPassword(!showPassword);
+                        }}
+                      >
+                        {showPassword ? <LuEye /> : <LuEyeOff />}
+                      </div>
+                    </div>
+                  </div>
+                </div>{" "}
+              </div>
+            ) : page == 4 ? (
               <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
                 {" "}
                 <div className="relative flex items-center w-[350px] min-[1600px]:w-[456px]">
@@ -581,6 +734,69 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                         </div>
                       );
                     })}
+                </div>
+              </div>
+            ) : (
+              <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
+                <div className="grid grid-cols-1 gap-3">
+                  {connectorsData?.slice(0, 5).map((e, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="border border-gray-300/30 p-2 rounded-lg"
+                      >
+                        <div className="grid grid-cols-3 w-full px-4 py-1">
+                          <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+                            Table: {e?.title}
+                          </p>
+                          <p>Track</p>
+                          <p>Show Fields</p>
+                        </div>
+                        {[
+                          "Traffic Report",
+                          "Traffic Report Content",
+                          "Traffic Report Term",
+                        ].map((e, i) => {
+                          return (
+                            <div
+                              key={i}
+                              className="w-full grid grid-cols-3 rounded-md py-1.5 bg-gray-800/40 border border-gray-500/15 px-4 text-gray-300"
+                            >
+                              <p>{e}</p>{" "}
+                              <div className="inline-flex items-start">
+                                <label className="relative flex items-center cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                                    id="check"
+                                  />
+                                  <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-4 w-4"
+                                      viewBox="0 0 20 20"
+                                      fill="currentColor"
+                                      stroke="currentColor"
+                                      strokeWidth="1"
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clipRule="evenodd"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </label>
+                              </div>
+                              <p className="text-blue-500 underline cursor-pointer">
+                                Show Fields
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}

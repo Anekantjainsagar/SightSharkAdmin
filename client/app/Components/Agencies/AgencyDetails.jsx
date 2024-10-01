@@ -4,7 +4,7 @@ import { PieChart } from "react-minimal-pie-chart";
 
 const AgencyDetails = () => {
   return (
-    <div className="border border-gray-500/5 min-[1600px]:h-[88vh] p-4 w-[30%] rounded-lg flex flex-col items-center justify-center">
+    <div className="border border-gray-500/15 min-[1600px]:h-[88vh] p-4 w-[30%] rounded-lg flex flex-col items-center justify-center">
       <Image
         width={1000}
         height={1000}
@@ -55,6 +55,48 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Website",
+            value: "www.prowiz.io",
+          },
+          {
+            img: (
+              <svg
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.49999 14.5001H5.83332C3.53214 14.5001 1.66666 12.6346 1.66666 10.3334C1.66666 8.03223 3.53214 6.16675 5.83332 6.16675H7.49999M12.5 14.5001H14.1667C16.4678 14.5001 18.3333 12.6346 18.3333 10.3334C18.3333 8.03223 16.4678 6.16675 14.1667 6.16675H12.5M5.83332 10.3334L14.1667 10.3334"
+                  stroke="#B2B4BA"
+                  strokeWidth="1.66667"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ),
+            title: "Agency Portal Link",
+            value: "www.prowiz.io",
+          },
+          {
+            img: (
+              <svg
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.49999 14.5001H5.83332C3.53214 14.5001 1.66666 12.6346 1.66666 10.3334C1.66666 8.03223 3.53214 6.16675 5.83332 6.16675H7.49999M12.5 14.5001H14.1667C16.4678 14.5001 18.3333 12.6346 18.3333 10.3334C18.3333 8.03223 16.4678 6.16675 14.1667 6.16675H12.5M5.83332 10.3334L14.1667 10.3334"
+                  stroke="#B2B4BA"
+                  strokeWidth="1.66667"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ),
+            title: "Client Portal Link",
             value: "www.prowiz.io",
           },
           {
@@ -131,7 +173,7 @@ const AgencyDetails = () => {
           return (
             <div
               key={i}
-              className={`w-full flex items-center justify-between text-base p-3 border border-gray-500/15 ${
+              className={`w-full flex items-center justify-between text-base px-3 py-2 border border-gray-500/15 ${
                 i == 0 && "rounded-t-xl"
               } ${i == 4 && "rounded-b-xl"}`}
             >
@@ -184,7 +226,7 @@ const AgencyDetails = () => {
           return (
             <div
               key={i}
-              className="w-full flex items-center justify-between px-4 my-3.5"
+              className="w-full flex items-center justify-between px-4 my-2.5"
             >
               <h6 className="text-textGrey text-sm min-[1600px]:text-base">
                 {e?.title}
