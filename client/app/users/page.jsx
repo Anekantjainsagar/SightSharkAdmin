@@ -1,12 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import UserDetailBlock from "@/app/Components/Users/UserDetailBlock";
 import { FaPlus } from "react-icons/fa";
 import AddUsers from "@/app/Components/Users/AddUsers";
+import Context from "../Context/Context";
 
 const Overview = () => {
+  const { users } = useContext(Context);
   const [page, setPage] = useState(1);
   const [showSubscribe, setShowSubscribe] = useState(false);
 
@@ -90,7 +92,9 @@ const Overview = () => {
                       <h5
                         key={i}
                         className={`text-[13px] min-[1600px]:text-base font-light tracking-wider ${
-                          e?.includes("Name") ? "min-[1600px]:ml-0 ml-2" : "text-center"
+                          e?.includes("Name")
+                            ? "min-[1600px]:ml-0 ml-2"
+                            : "text-center"
                         }`}
                       >
                         {e}
@@ -101,12 +105,11 @@ const Overview = () => {
               </div>
               <div className="h-[68vh] min-[1600px]:h-[70vh]">
                 <div className="overflow-y-auto small-scroller h-[89%]">
-                  <UserDetailBlock status={"Online"} acess={"Owner"} />
-                  <UserDetailBlock status={"Online"} acess={"Guest"} />
-                  <UserDetailBlock status={"Online"} acess={"Admin"} />
-                  <UserDetailBlock status={"Online"} acess={"Owner"} />{" "}
-                  <UserDetailBlock status={"Online"} acess={"Guest"} />
-                  <UserDetailBlock status={"Online"} acess={"Admin"} />
+                  {users?.map((e, i) => {
+                    return (
+                      <UserDetailBlock status={"Online"} data={e} key={i} />
+                    );
+                  })}
                 </div>
                 <div className="h-[14%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">

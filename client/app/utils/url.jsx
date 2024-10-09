@@ -1,1 +1,1 @@
-export const BACKEND_URI = "http://localhost:5000/api";
+export const BACKEND_URI = "https://sightshark-backend.onrender.com";

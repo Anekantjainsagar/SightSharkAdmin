@@ -3,18 +3,54 @@ import React, { useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useRouter } from "next/navigation";
-import { Toaster } from "react-hot-toast";
-// import axios from "axios";
-// import { BACKEND_URI } from "@/app/utils/url";
+import toast, { Toaster } from "react-hot-toast";
 // import Cookies from "js-cookie";
 // import Context from "./Context/Context";
 import Image from "next/image";
+import { BACKEND_URI } from "./utils/url";
+import { setCookie } from "cookies-next";
 
 const App = () => {
   const history = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ password: "", email: "" });
   // const { checkToken } = useContext(Context);
+
+  const onLogin = () => {
+    if (user?.email && user?.password) {
+      try {
+        const loginData = new URLSearchParams({
+          username: user?.email,
+          password: user?.password,
+        });
+
+        fetch(`${BACKEND_URI}/auth/login`, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: "POST",
+          body: loginData,
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            if (res.access_token) {
+              toast.success("Login Successfully");
+              setCookie("token", res.access_token);
+              history.push("/overview");
+            }
+          })
+          .catch((err) => {
+            toast.error(err.msg);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      toast.error("Please fill all the details");
+    }
+  };
 
   return (
     <div className="bg-[#091022] w-full flex items-start justify-between h-[100vh]">
@@ -120,20 +156,7 @@ const App = () => {
             </div>
             <button
               onClick={() => {
-                // if (!user?.email || !user?.password) {
-                //   toast.error("Please enter the details");
-                // } else {
-                //   axios
-                //     .post(`${BACKEND_URI}/login/login`, { ...user })
-                //     .then((res) => {
-                //       Cookies.set("token", res.data);
-                history.push("/overview");
-                //       checkToken();
-                //     })
-                //     .catch((err) => {
-                //       console.log(err);
-                //     });
-                // }
+                onLogin();
               }}
               className="w-full py-3 bg-newBlue rounded-[10px] mainText18"
             >
@@ -147,7 +170,12 @@ const App = () => {
               <div className="line w-full h-[1px] bg-[#343745]"></div>
             </div>
             <div className="items-stretch flex flex-col gap-y-3">
-              <button className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12">
+              <button
+                onClick={() => {
+                  window.open(`${BACKEND_URI}/auth/google/login`, "__blank");
+                }}
+                className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12"
+              >
                 <Image
                   src="/login/google.png"
                   width={1000}
@@ -157,7 +185,12 @@ const App = () => {
                 />
                 <p>Sign in with Google</p>
               </button>
-              <button className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12">
+              <button
+                onClick={() => {
+                  window.open(`${BACKEND_URI}/auth/facebook/login`, "__blank");
+                }}
+                className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12"
+              >
                 <Image
                   src="/login/facebook.png"
                   width={1000}

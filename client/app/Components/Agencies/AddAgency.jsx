@@ -26,119 +26,8 @@ const customStyles = {
   },
 };
 
-const connectorsData = [
-  {
-    title: "Amazon Selling Partner",
-    img: "/Agency/connectors/Amazon Selling Partner.svg",
-  },
-  {
-    title: "Bamboo HR",
-    img: "/Agency/connectors/BambooHR.svg",
-  },
-  {
-    title: "Facebook Ads",
-    img: "/Agency/connectors/Facebook Ads.svg",
-  },
-  {
-    title: "Facebook Insights",
-    img: "/Agency/connectors/Facebook Insights.svg",
-  },
-  {
-    title: "Google Ads Manager",
-    img: "/Agency/connectors/Google Ads Manager.svg",
-  },
-  {
-    title: "Google Ads",
-    img: "/Agency/connectors/Google Ads.svg",
-  },
-  {
-    title: "Google Analytics",
-    img: "/Agency/connectors/Google Analytics 4.svg",
-  },
-  {
-    title: "Google DV360",
-    img: "/Agency/connectors/Google DV360.svg",
-  },
-  {
-    title: "Google My Business",
-    img: "/Agency/connectors/Google My Business.svg",
-  },
-  {
-    title: "Google Search Console",
-    img: "/Agency/connectors/Google Search Console.svg",
-  },
-  {
-    title: "Google Sheets",
-    img: "/Agency/connectors/Google Sheets.svg",
-  },
-  {
-    title: "HubSpot",
-    img: "/Agency/connectors/HubSpot.svg",
-  },
-  {
-    title: "Instagram Ads",
-    img: "/Agency/connectors/Instagram Ads.svg",
-  },
-  {
-    title: "Instagram Insights",
-    img: "/Agency/connectors/Instagram Insights.svg",
-  },
-  {
-    title: "JSON",
-    img: "/Agency/connectors/JSON.svg",
-  },
-  {
-    title: "Klaviyo",
-    img: "/Agency/connectors/Klaviyo.svg",
-  },
-  {
-    title: "LinkedIn",
-    img: "/Agency/connectors/LinkedIn.svg",
-  },
-  {
-    title: "Outbrain",
-    img: "/Agency/connectors/Outbrain.svg",
-  },
-  {
-    title: "PayPal",
-    img: "/Agency/connectors/PayPal.svg",
-  },
-  {
-    title: "Shopify",
-    img: "/Agency/connectors/Shopify.svg",
-  },
-  {
-    title: "Stripe",
-    img: "/Agency/connectors/Stripe.svg",
-  },
-  {
-    title: "Taboola",
-    img: "/Agency/connectors/Taboola.svg",
-  },
-  {
-    title: "TikTok",
-    img: "/Agency/connectors/TikTok.svg",
-  },
-  {
-    title: "X Ads",
-    img: "/Agency/connectors/X Ads.svg",
-  },
-  {
-    title: "Xero",
-    img: "/Agency/connectors/Xero.svg",
-  },
-  {
-    title: "Klaviyo",
-    img: "/Agency/connectors/Klaviyo.svg",
-  },
-  {
-    title: "YouTube",
-    img: "/Agency/connectors/YouTube.svg",
-  },
-];
-
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
-  let maxPage = 5;
+  let maxPage = 4;
   const [search, setSearch] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
@@ -158,7 +47,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
       phone: "",
     },
     serviceAcc: { acc1: "", acc2: "" },
-    credentials: { email: "", password: "" },
+    credentials: { email: "", password: "", cpassword: "" },
     dataSources: [],
   });
   const fileInputRef = React.useRef(null);
@@ -200,7 +89,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           />
           <div className="mb-10">
             <div className="flex items-center px-[8vw]">
-              <div className="bg-newBlue w-[11vw] aspect-square rounded-full flex items-center justify-center text-[20px]">
+              <div className="bg-newBlue w-[8vw] aspect-square rounded-full flex items-center justify-center text-[20px]">
                 {page > 1 ? <IoMdCheckmark /> : "1"}
               </div>
               <div
@@ -209,7 +98,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 }`}
               ></div>
               <div
-                className={`w-[11vw] aspect-square rounded-full ${
+                className={`w-[8vw] aspect-square rounded-full ${
                   page >= 2
                     ? "bg-newBlue"
                     : "border border-gray-500/20 bg-[#343745]"
@@ -223,7 +112,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 }`}
               ></div>
               <div
-                className={`w-[11vw] aspect-square rounded-full ${
+                className={`w-[8vw] aspect-square rounded-full ${
                   page >= 3
                     ? "bg-newBlue"
                     : "border border-gray-500/20 bg-[#343745]"
@@ -237,21 +126,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 }`}
               ></div>
               <div
-                className={`w-[11vw] aspect-square rounded-full ${
-                  page >= 4
-                    ? "bg-newBlue"
-                    : "border border-gray-500/20 bg-[#343745]"
-                } flex items-center justify-center text-[20px]`}
-              >
-                {page > 4 ? <IoMdCheckmark /> : "4"}
-              </div>{" "}
-              <div
-                className={`line h-[1px] w-full ${
-                  page >= 4 ? "bg-newBlue" : "bg-[#343745]"
-                }`}
-              ></div>
-              <div
-                className={`w-[11vw] aspect-square rounded-full ${
+                className={`w-[8vw] aspect-square rounded-full ${
                   page == maxPage
                     ? "bg-newBlue"
                     : "border border-gray-500/20 bg-[#343745]"
@@ -260,12 +135,11 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 {page > 5 ? <IoMdCheckmark /> : maxPage}
               </div>
             </div>
-            <div className="flex items-center grid grid-cols-5 text-sm min-[1600px]:text-base px-12 mt-2">
+            <div className="flex items-center grid grid-cols-4 text-sm min-[1600px]:text-base px-10 mt-2">
               <p className="text-center">Agency Details</p>
               <p className="text-center">Key Contact Details</p>
               <p className="text-center">Portal Deployment</p>
-              <p className="text-center">Data Sources</p>
-              <p className="text-center">Data Sources Details</p>
+              <p className="text-center">Credentials</p>
             </div>
           </div>
           <div className="h-[45vh] min-[1600px]:h-[40vh]">
@@ -543,10 +417,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
               </div>
             ) : page == 3 ? (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
-                {/* <h5 className="font-medium text-xl mb-2">Credentials</h5> */}
-                {/* <h5 className="font-medium text-xl mt-5 mb-2">
-                  Service Account Details
-                </h5> */}
                 <div className="w-full mb-10">
                   <div className="flex flex-col mb-5">
                     <label
@@ -567,7 +437,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                           },
                         });
                       }}
-                      rows={2}
+                      rows={4}
                       placeholder="Service Account 1"
                       className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     ></textarea>
@@ -591,13 +461,16 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                           },
                         });
                       }}
-                      rows={2}
+                      rows={4}
                       placeholder="Service Account 2"
                       className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                     ></textarea>
                   </div>
                 </div>{" "}
-                <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+              </div>
+            ) : (
+              <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
+                <div className="grid grid-cols-1 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
                   <div className="flex flex-col">
                     <label
                       htmlFor="emailKey"
@@ -656,161 +529,43 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                         {showPassword ? <LuEye /> : <LuEyeOff />}
                       </div>
                     </div>
+                  </div>{" "}
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="passwordKeyConfirm"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
+                      Confirm Password
+                    </label>
+                    <div className="w-full relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="passwordKeyConfirm"
+                        value={data?.credentials?.cpassword}
+                        onChange={(e) => {
+                          setData({
+                            ...data,
+                            credentials: {
+                              ...data?.credentials,
+                              cpassword: e.target.value,
+                            },
+                          });
+                        }}
+                        placeholder="Enter Confirm Password"
+                        className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                      />
+                      <div
+                        className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowPassword(!showPassword);
+                        }}
+                      >
+                        {showPassword ? <LuEye /> : <LuEyeOff />}
+                      </div>
+                    </div>
                   </div>
                 </div>{" "}
-              </div>
-            ) : page == 4 ? (
-              <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-                {" "}
-                <div className="relative flex items-center w-[350px] min-[1600px]:w-[456px]">
-                  <FaSearch className="absolute left-4 z-40 text-white" />{" "}
-                  {/* Search Icon */}
-                  <input
-                    type="search"
-                    placeholder="Search"
-                    value={search}
-                    onChange={(e) => {
-                      setSearch(e.target.value);
-                    }}
-                    className="outline-none text-sm min-[1600px]:text-base border border-gray-500/20 px-6 bg-[#898989]/15 py-1.5 min-[1600px]:py-2 rounded-lg pl-12 w-full" // Add padding to the left for the icon
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-3 mt-5">
-                  {connectorsData
-                    ?.filter((e) => {
-                      if (search) {
-                        return e?.title
-                          ?.toLowerCase()
-                          ?.includes(search?.toLowerCase());
-                      }
-                      return e;
-                    })
-                    .map((e, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className="flex items-center justify-between border border-gray-300/30 px-3 py-3 rounded-full"
-                        >
-                          <div className="flex items-center">
-                            <Image
-                              src={e?.img}
-                              alt={e?.img?.src}
-                              width={1000}
-                              height={1000}
-                              className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2 aspect-squre object-contain"
-                            />
-                            <label
-                              htmlFor={e?.title}
-                              className="text-[13px] min-[1600px]:text-base cursor-pointer"
-                            >
-                              {e?.title}
-                            </label>
-                          </div>
-                          <div className="inline-flex items-start mr-1">
-                            <label className="relative flex items-center cursor-pointer">
-                              <input
-                                type="checkbox"
-                                className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                                id="check"
-                              />
-                              <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="min-[1600px]:h-4 min-[1600px]:w-4 w-3 h-3"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                  stroke="currentColor"
-                                  strokeWidth="1"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                    clipRule="evenodd"
-                                  ></path>
-                                </svg>
-                              </span>
-                            </label>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
-            ) : (
-              <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-                <div className="grid grid-cols-1 gap-3">
-                  {connectorsData?.slice(0, 5).map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="border border-gray-300/30 p-2 rounded-lg flex items-center justify-center"
-                      >
-                        <div className="flex flex-col items-center justify-center w-[30%]">
-                          <Image
-                            src={e?.img}
-                            alt={e?.img?.src}
-                            width={1000}
-                            height={1000}
-                            className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-squre object-contain"
-                          />
-                          <h6 className="mt-2 text-lg">{e?.title}</h6>
-                        </div>
-                        <div className="w-[1px] mx-5 h-full bg-gray-300/30"></div>
-                        <div className="w-[70%]">
-                          <div className="grid grid-cols-3 w-full px-4 py-1">
-                            <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                              {e?.title}
-                            </p>
-                            <p>Track</p>
-                            <p>Show Fields</p>
-                          </div>
-                          {[
-                            "Traffic Report",
-                            "Traffic Report Content",
-                            "Traffic Report Term",
-                          ].map((e, i) => {
-                            return (
-                              <div
-                                key={i}
-                                className="w-full grid grid-cols-3 rounded-md py-1.5 bg-gray-800/40 border border-gray-500/15 px-4 text-gray-300"
-                              >
-                                <p>{e}</p>{" "}
-                                <div className="inline-flex items-start">
-                                  <label className="relative flex items-center cursor-pointer">
-                                    <input
-                                      type="checkbox"
-                                      className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                                      id="check"
-                                    />
-                                    <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-4 w-4"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        stroke="currentColor"
-                                        strokeWidth="1"
-                                      >
-                                        <path
-                                          fillRule="evenodd"
-                                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                          clipRule="evenodd"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </label>
-                                </div>
-                                <p className="text-blue-500 underline cursor-pointer">
-                                  Show Fields
-                                </p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             )}
           </div>

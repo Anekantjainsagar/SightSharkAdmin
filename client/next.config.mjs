@@ -6,6 +6,7 @@ const nextConfig = {
       "source.roboflow.com",
       "i.pinimg.com",
       "encrypted-tbn0.gstatic.com",
+      "storage.googleapis.com",
     ],
   },
 };
