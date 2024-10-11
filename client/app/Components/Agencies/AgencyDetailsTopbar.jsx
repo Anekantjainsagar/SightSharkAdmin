@@ -2,17 +2,17 @@
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-const AgencyDetailsTopbar = () => {
+const AgencyDetailsTopbar = ({ name }) => {
   const history = useRouter();
   const pathname = usePathname();
 
   return (
     <div className="h-[5vh] flex items-start">
       {[
-        { title: "About", route: "/agencies/alpha-solutions" },
+        { title: "About", route: `/agencies/${name}` },
         {
           title: "Edit Profile",
-          route: "/agencies/alpha-solutions/edit-profile",
+          route: `/agencies/${name}/edit-profile`,
         },
       ].map((e, i) => {
         return (

@@ -1,22 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
-import AddAgency from "@/app/Components/Agencies/AddAgency";
 import AgencySmallBlock from "@/app/Components/Agencies/AgencySmallBlock";
 import Image from "next/image";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import Notify from "@/app/Components/Overview/Notify";
 import { useRouter } from "next/navigation";
+import Context from "../Context/Context";
 
 const Overview = () => {
-  const [addAgency, setAddAgency] = useState(false);
+  const { agencies } = useContext(Context);
   const history = useRouter();
 
   return (
     <div className="flex items-start h-[100vh]">
       <Leftbar />
-      <AddAgency showSubscribe={addAgency} setShowSubscribe={setAddAgency} />
       <div className="w-[85%] bg-main h-full relative">
         <div className="bg-newBubbleColor/10 w-[50vw] h-[30vh] absolute top-1/2 -translate-y-1/2 rounded-full"></div>
         <div className="bg-newBubbleColor/10 w-[20vw] h-[20vw] right-0 absolute top-3/6 rounded-full"></div>
@@ -121,17 +120,14 @@ const Overview = () => {
                   })}
                 </div>
                 <div className="h-[26vh] overflow-y-auto small-scroller">
-                  <AgencySmallBlock status={"Active"} />
-                  <AgencySmallBlock status={"Offline"} />
-                  <AgencySmallBlock status={"Active"} />
-                  <AgencySmallBlock status={"Offline"} />
-                  <AgencySmallBlock status={"Active"} />
-                  <AgencySmallBlock status={"Offline"} />
-                  <AgencySmallBlock status={"Active"} />
-                  <AgencySmallBlock status={"Offline"} />
+                  {agencies?.slice(0, 10)?.map((e, i) => {
+                    return (
+                      <AgencySmallBlock data={e} key={i} status={"Active"} />
+                    );
+                  })}
                 </div>
               </div>
-            </div>{" "}
+            </div>
             <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-4 min-[1600px]:mt-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-[20px]">Critical Notifications</h3>{" "}

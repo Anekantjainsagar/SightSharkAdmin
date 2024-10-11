@@ -1,13 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AgencyDetailsBlock from "@/app/Components/Utils/AgencyDetails";
 import AddAgency from "@/app/Components/Agencies/AddAgency";
 import { FaPlus } from "react-icons/fa";
+import Context from "../Context/Context";
 
 const Overview = () => {
   const [page, setPage] = useState(1);
+  const { agencies } = useContext(Context);
   const [addAgency, setAddAgency] = useState(false);
 
   let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -132,13 +134,16 @@ const Overview = () => {
               </div>
               <div className="h-[69.5vh] min-[1600px]:h-[70vh]">
                 <div className="overflow-y-auto small-scroller h-[86%]">
-                  <AgencyDetailsBlock status={"Active"} percentage={10} />
-                  <AgencyDetailsBlock status={"Offline"} percentage={20} />
-                  <AgencyDetailsBlock status={"Active"} percentage={30} />
-                  <AgencyDetailsBlock status={"Offline"} percentage={40} />
-                  <AgencyDetailsBlock status={"Active"} percentage={50} />
-                  <AgencyDetailsBlock status={"Offline"} percentage={60} />
-                  <AgencyDetailsBlock status={"Active"} percentage={70} />
+                  {agencies?.map((e, i) => {
+                    return (
+                      <AgencyDetailsBlock
+                        key={i}
+                        data={e}
+                        status={"Offline"}
+                        percentage={20}
+                      />
+                    );
+                  })}
                 </div>
                 <div className="h-[14%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">

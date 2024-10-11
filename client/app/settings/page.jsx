@@ -1,18 +1,28 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import SettingsLeftbar from "@/app/Components/Settings/Leftbar";
+import Context from "../Context/Context";
 
 const Settings = () => {
+  const { userData } = useContext(Context);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     country: "",
-    postal: "",
+    postal_code: "",
   });
+
+  useEffect(() => {
+    setData({
+      firstName: userData?.first_name,
+      lastName: userData?.last_name,
+      ...userData,
+    });
+  }, [userData]);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -36,7 +46,10 @@ const Settings = () => {
                 </h6>{" "}
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 mt-4 w-full">
                   <div className="flex flex-col">
-                    <label htmlFor="firstName" className="mb-1.5 text-sm min-[1600px]:text-base">
+                    <label
+                      htmlFor="firstName"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
                       First Name
                     </label>
                     <input
@@ -51,7 +64,10 @@ const Settings = () => {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label htmlFor="lastName" className="mb-1.5 text-sm min-[1600px]:text-base">
+                    <label
+                      htmlFor="lastName"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
                       Last Name
                     </label>
                     <input
@@ -66,7 +82,10 @@ const Settings = () => {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label htmlFor="email" className="mb-1.5 text-sm min-[1600px]:text-base">
+                    <label
+                      htmlFor="email"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
                       Email
                     </label>
                     <input
@@ -81,7 +100,10 @@ const Settings = () => {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label htmlFor="phone" className="mb-1.5 text-sm min-[1600px]:text-base">
+                    <label
+                      htmlFor="phone"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
                       Phone
                     </label>
                     <input
@@ -96,7 +118,10 @@ const Settings = () => {
                     />
                   </div>{" "}
                   <div className="flex flex-col">
-                    <label htmlFor="country" className="mb-1.5 text-sm min-[1600px]:text-base">
+                    <label
+                      htmlFor="country"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
                       Country
                     </label>
                     <input
@@ -111,14 +136,17 @@ const Settings = () => {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label htmlFor="postal" className="mb-1.5 text-sm min-[1600px]:text-base">
+                    <label
+                      htmlFor="postal"
+                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                    >
                       Postal Code
                     </label>
                     <input
                       id="postal"
-                      value={data?.postal}
+                      value={data?.postal_code}
                       onChange={(e) => {
-                        setData({ ...data, postal: e.target.value });
+                        setData({ ...data, postal_code: e.target.value });
                       }}
                       type="number"
                       placeholder="Enter Postal Code"

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import Image from "next/image";
@@ -10,12 +10,22 @@ import { FaPlus } from "react-icons/fa";
 import AddTemplates from "../../Components/Agencies/AddTemplates";
 import AddDataSouces from "../../Components/Agencies/AddDataSources";
 import { useRouter } from "next/navigation";
+import Context from "@/app/Context/Context";
 
 const Overview = ({ params }) => {
   const history = useRouter();
   const [addDataSouces, setAddDataSouces] = useState(false);
   const [addTemplates, setAddTemplates] = useState(false);
+  const { agencies } = useContext(Context);
+  const [data, setData] = useState();
   const { name } = params;
+
+  useEffect(() => {
+    let temp = agencies?.find((e) => {
+      return e?.agency_name?.replaceAll(" ", "-") == name;
+    });
+    setData(temp);
+  }, [name, agencies]);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -35,9 +45,9 @@ const Overview = ({ params }) => {
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex flex-row-reverse items-start justify-between px-6">
-            <AgencyDetails />
+            <AgencyDetails data={data} />
             <div className="w-[69%]">
-              <AgencyDetailsTopbar />
+              <AgencyDetailsTopbar name={name} />
               <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-3 min-[1600px]:p-4">
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5">
                   <div className="flex items-center justify-between w-full">

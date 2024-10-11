@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
@@ -10,6 +10,9 @@ import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 import Required from "../Utils/Required";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { BACKEND_URI } from "@/app/utils/url";
+import { getCookie } from "cookies-next";
+import Context from "@/app/Context/Context";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -28,6 +31,7 @@ const customStyles = {
 
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
+  const { setAgencies, agencies } = useContext(Context);
   const [search, setSearch] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
@@ -53,7 +57,54 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   const fileInputRef = React.useRef(null);
   const fileInputRefAgent = React.useRef(null);
 
-  // Function to handle file selection
+  const handleSave = () => {
+    if (data?.name && data?.website && data?.warrenty && data?.license) {
+      let queryParams = new URLSearchParams({
+        agency_name: data?.name,
+        website: data?.website,
+        location: data?.location,
+        warranty_period: parseInt(data?.warrenty),
+        deployment_date: data?.deployment,
+        license_limit: data?.license,
+        name: data?.keyContact?.name,
+        designation: data?.keyContact?.designation,
+        email_address: data?.keyContact?.email,
+        phone: data?.keyContact?.phone,
+        service_account_cloud: data?.serviceAcc?.acc1,
+        service_account_api: data?.serviceAcc?.acc2,
+      }).toString();
+      try {
+        fetch(`${BACKEND_URI}/agency/create?${queryParams}`, {
+          headers: {
+            Accept:
+              "application/json, application/xml, text/plain, text/html, *.*",
+            Authorization: `Bearer ${getCookie("token")}`,
+          },
+          method: "POST",
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.msg) {
+              toast.success("Agency created successfully");
+              setShowSubscribe(false);
+              setAgencies([...agencies, res.data]);
+            } else if (res.detail) {
+              toast.error(res.detail);
+            }
+          })
+          .catch((err) => {
+            console.error("Error creating user:", err);
+            toast.error("An error occurred while creating the user");
+          });
+      } catch (error) {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred");
+      }
+    } else {
+      toast.error("Please fill all the required details");
+    }
+  };
+
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -258,11 +309,11 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     <input
                       id="deployment"
                       value={data?.deployment}
+                      type="date"
+                      placeholder="Enter deployment Period"
                       onChange={(e) => {
                         setData({ ...data, deployment: e.target.value });
                       }}
-                      type="date"
-                      placeholder="Enter deployment Period"
                       className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
                   </div>
@@ -584,6 +635,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             <button
               onClick={() => {
                 if (page == maxPage) {
+                  handleSave();
                 } else {
                   setPage(page + 1);
                 }

@@ -1,20 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
-// import Cookies from "js-cookie";
-// import Context from "./Context/Context";
 import Image from "next/image";
 import { BACKEND_URI } from "./utils/url";
 import { setCookie } from "cookies-next";
+import Context from "./Context/Context";
 
 const App = () => {
   const history = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const { checkToken } = useContext(Context);
   const [user, setUser] = useState({ password: "", email: "" });
-  // const { checkToken } = useContext(Context);
 
   const onLogin = () => {
     if (user?.email && user?.password) {
@@ -38,10 +37,12 @@ const App = () => {
             if (res.access_token) {
               toast.success("Login Successfully");
               setCookie("token", res.access_token);
+              checkToken();
               history.push("/overview");
             }
           })
           .catch((err) => {
+            console.log(err);
             toast.error(err.msg);
           });
       } catch (error) {

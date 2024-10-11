@@ -2,17 +2,21 @@ import Image from "next/image";
 import React from "react";
 import { PieChart } from "react-minimal-pie-chart";
 
-const AgencyDetails = () => {
+const AgencyDetails = ({ data }) => {
   return (
     <div className="border border-gray-500/15 min-[1600px]:h-[88vh] p-4 w-[30%] rounded-lg flex flex-col items-center justify-center">
       <Image
         width={1000}
         height={1000}
-        src="/Agency/individual/logo.png"
+        src={
+          data?.profile_picture
+            ? data?.profile_picture
+            : "/Agency/individual/logo.png"
+        }
         alt="Agency logo"
         className="w-[60px] aspect-square border border-gray-200/30 rounded-full"
       />
-      <h3 className="mainLogoSize">Prowiz Analytics</h3>
+      <h3 className="mainLogoSize">{data?.agency_name}</h3>
       <div className="w-full mb-4 mt-2">
         {[
           {
@@ -55,7 +59,7 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Website",
-            value: "www.prowiz.io",
+            value: data?.website,
           },
           {
             img: (
@@ -76,7 +80,7 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Agency Portal Link",
-            value: "www.prowiz.io",
+            value: data?.agency_portal,
           },
           {
             img: (
@@ -97,7 +101,7 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Client Portal Link",
-            value: "www.prowiz.io",
+            value: data?.client_portal,
           },
           {
             img: (
@@ -125,7 +129,7 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Location",
-            value: "Chandigarh, India",
+            value: data?.location,
           },
           {
             img: (
@@ -146,7 +150,9 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Deployment Date",
-            value: "15th August, 2024",
+            value: data?.deployment_date
+              ? new Date(data?.deployment_date).toString()?.slice(4, 21)
+              : "",
           },
           {
             img: (
@@ -167,7 +173,7 @@ const AgencyDetails = () => {
               </svg>
             ),
             title: "Warranty Period",
-            value: "6 Months",
+            value: data?.warranty_period,
           },
         ].map((e, i) => {
           return (
@@ -205,22 +211,22 @@ const AgencyDetails = () => {
           {
             img: "/Agency/individual/icons/status.png",
             title: "Name",
-            value: "Varun Sethi",
+            value: data?.name,
           },
           {
             img: "/Agency/individual/icons/website.png",
             title: "Designation",
-            value: "Co-Founder",
+            value: data?.designation,
           },
           {
             img: "/Agency/individual/icons/location.png",
             title: "Email Address",
-            value: "varun@prowiz.io",
+            value: data?.email_address,
           },
           {
             img: "/Agency/individual/icons/deployment.png",
             title: "Phone Number",
-            value: "+91 1234567890",
+            value: data?.phone,
           },
         ].map((e, i) => {
           return (
@@ -246,11 +252,11 @@ const AgencyDetails = () => {
         </h5>
         <div className="w-4/12 mx-auto my-4 relative">
           <p className="text-center text-sm min-[1600px]:text-xl absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 font-semibold">
-            15{" "}
+            1{" "}
             <span className="text-xs min-[1600px]:text-sm font-normal">
               out of
             </span>{" "}
-            50
+            {data?.license_limit}
           </p>
           <PieChart
             data={[

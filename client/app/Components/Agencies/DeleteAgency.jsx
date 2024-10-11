@@ -1,7 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import toast, { Toaster } from "react-hot-toast";
+import Context from "@/app/Context/Context";
+import { BACKEND_URI } from "@/app/utils/url";
+import { getCookie } from "cookies-next";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -18,7 +21,9 @@ const customStyles = {
   },
 };
 
-const DeleteAgency = ({ showSubscribe, setShowSubscribe }) => {
+const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
+  const [value, setValue] = useState("");
+  const { agencies, setAgencies } = useContext(Context);
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -61,14 +66,15 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe }) => {
             This action can’t be undone.
           </p>
           <p className="mainText18 mb-2 text-[#B2B4BA]">
-            Type{" "}
-            <span className="font-semibold text-white">Alpha Solutions</span> to
+            Type <span className="font-semibold text-white">{name}</span> to
             confirm
           </p>
           <input
             type="text"
-            className="mb-4 glass outline-none text-sm min-[1600px]:text-lg px-4 py-2 w-full rounded-md"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
             placeholder="Enter here"
+            className="mb-4 glass outline-none text-sm min-[1600px]:text-lg px-4 py-2 w-full rounded-md"
           />
           <div className="flex items-center gap-x-4 w-full text-sm min-[1600px]:text-base">
             <button
@@ -81,7 +87,45 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe }) => {
             </button>
             <button
               className={`bg-red-600 w-full py-1.5 min-[1600px]:py-2 rounded-lg text-center`}
-              onClick={() => {}}
+              onClick={() => {
+                if (value == name) {
+                  try {
+                    fetch(`${BACKEND_URI}/agency/delete/${id}`, {
+                      method: "DELETE",
+                      headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${getCookie("token")}`,
+                      },
+                    })
+                      .then((response) => {
+                        if (!response.ok) {
+                          throw new Error(
+                            `HTTP error! status: ${response.status}`
+                          );
+                        }
+                        return response.json();
+                      })
+                      .then((res) => {
+                        if (res.msg) {
+                          setShowSubscribe(false);
+                          toast.success("Agency Deleted Successfully");
+                          let temp = agencies?.filter((e) => {
+                            return e?.agency_id != id;
+                          });
+                          setAgencies(temp);
+                        }
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  } catch (error) {
+                    console.log(error);
+                  }
+                } else {
+                  toast.error("Please enter the correct value");
+                }
+              }}
             >
               Delete
             </button>{" "}
