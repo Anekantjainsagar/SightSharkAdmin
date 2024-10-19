@@ -67,7 +67,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
       data?.email &&
       data?.password &&
       data?.access
-    ) {
+    ) { 
       // Construct URL with all non-file fields as query parameters
       const queryParams = new URLSearchParams({
         email: data?.email,
@@ -82,7 +82,6 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
       }).toString();
 
       let formdata = new FormData();
-
       // Handle profile picture file upload
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
         formdata.append("file_content", data?.profile); // The file itself
@@ -106,10 +105,11 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
         })
           .then((res) => res.json())
           .then((res) => {
+            console.log(res);
             if (res.msg) {
               toast.success("User created successfully");
               closeModal();
-              setUsers([...users, res.data]);
+              setUsers({ ...users, data: [...users.data, res.data] });
             } else if (res.detail) {
               toast.error(res.detail);
             }

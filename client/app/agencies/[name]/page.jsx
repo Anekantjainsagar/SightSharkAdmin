@@ -21,7 +21,7 @@ const Overview = ({ params }) => {
   const { name } = params;
 
   useEffect(() => {
-    let temp = agencies?.find((e) => {
+    let temp = agencies?.data?.find((e) => {
       return e?.agency_name?.replaceAll(" ", "-") == name;
     });
     setData(temp);

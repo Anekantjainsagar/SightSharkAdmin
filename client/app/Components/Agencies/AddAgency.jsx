@@ -33,6 +33,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
   const { setAgencies, agencies } = useContext(Context);
   const [search, setSearch] = useState("");
+  const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
@@ -58,7 +59,13 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   const fileInputRefAgent = React.useRef(null);
 
   const handleSave = () => {
-    if (data?.name && data?.website && data?.warrenty && data?.license) {
+    if (
+      data?.name &&
+      data?.website &&
+      data?.warrenty &&
+      data?.license &&
+      data?.keyContact?.email
+    ) {
       let queryParams = new URLSearchParams({
         agency_name: data?.name,
         website: data?.website,
@@ -66,13 +73,26 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
         warranty_period: parseInt(data?.warrenty),
         deployment_date: data?.deployment,
         license_limit: data?.license,
-        name: data?.keyContact?.name,
-        designation: data?.keyContact?.designation,
-        email_address: data?.keyContact?.email,
-        phone: data?.keyContact?.phone,
+        key_contact_name: data?.keyContact?.name,
+        key_contact_designation: data?.keyContact?.designation,
+        key_contact_email_address: data?.keyContact?.email,
+        key_contact_phone: data?.keyContact?.phone,
         service_account_cloud: data?.serviceAcc?.acc1,
         service_account_api: data?.serviceAcc?.acc2,
       }).toString();
+
+      let formdata = new FormData();
+      // Handle profile picture file upload
+      if (data?.profile instanceof File || data?.profile instanceof Blob) {
+        formdata.append("file_content", data?.profile); // The file itself
+        formdata.append("filename", data?.profile.name); // The filename
+        formdata.append("content_type", data?.profile.type); // The MIME type
+      } else {
+        console.log(
+          "Profile picture is not a valid file or blob, skipping upload."
+        );
+      }
+
       try {
         fetch(`${BACKEND_URI}/agency/create?${queryParams}`, {
           headers: {
@@ -81,6 +101,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             Authorization: `Bearer ${getCookie("token")}`,
           },
           method: "POST",
+          body: formdata,
         })
           .then((res) => res.json())
           .then((res) => {
@@ -108,7 +129,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file.name);
+      setFile(URL.createObjectURL(file));
+      setData({ ...data, profile: file }); // Update `data` state with the selected file
+    } else {
+      console.log("No file selected");
     }
   };
 
@@ -213,9 +237,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       +
                     </div>
                     <Image
-                      src={
-                        data?.profile ? data?.profile : "/Agency/temp_logo.png"
-                      }
+                      src={file ? file : "/Agency/temp_logo.png"}
                       alt="Agency Img"
                       width={1000}
                       height={1000}
@@ -422,6 +444,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base"
                     >
                       Email Address
+                      <Required />
                     </label>
                     <input
                       id="email"

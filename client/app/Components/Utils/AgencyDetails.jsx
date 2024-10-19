@@ -52,8 +52,7 @@ const AgencyDetailsBlock = ({ status, percentage, data }) => {
         <div className="w-full flex items-center justify-center">
           <div
             className={`status-${data?.status?.toLowerCase()} w-fit p-2 border-2 rounded-2xl`}
-          >
-          </div>
+          ></div>
         </div>
         <div className="flex items-center justify-start pl-10">
           <Image
@@ -63,10 +62,10 @@ const AgencyDetailsBlock = ({ status, percentage, data }) => {
             className="w-7 min-[1600px]:w-9 aspect-square rounded-full"
             alt="Key contact"
           />
-          <p className="ml-2 min-[1600px]:ml-4">{data?.name}</p>
+          <p className="ml-2 min-[1600px]:ml-4">{data?.key_contact_name}</p>
         </div>
         <p className="break-words w-full text-center">
-          alpha.solutions@example.com
+          {data?.key_contact_email_address}
         </p>
         <p className="text-center">
           {data?.deployment_date

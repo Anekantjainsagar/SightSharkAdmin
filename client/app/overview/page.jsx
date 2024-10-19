@@ -120,7 +120,7 @@ const Overview = () => {
                   })}
                 </div>
                 <div className="h-[26vh] overflow-y-auto small-scroller">
-                  {agencies?.slice(0, 10)?.map((e, i) => {
+                  {agencies?.data?.slice(0, 10)?.map((e, i) => {
                     return (
                       <AgencySmallBlock data={e} key={i} status={"Active"} />
                     );

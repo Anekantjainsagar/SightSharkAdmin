@@ -34,20 +34,35 @@ const State = (props) => {
     }
   };
 
-  const getUsers = () => {
+  const getUsers = (grow, order_by) => {
     let cookie = getCookie("token");
+    let page = users?.current_page ? users?.current_page : 1;
+    let limit = users?.limit ? users?.limit : 7;
+    let order = users?.order == "asc" ? "desc" : "asc";
+    let sort_by = "created_at";
+
+    if (grow == "inc") {
+      page++;
+    } else if (grow == "dec") {
+      page--;
+    }
     if (cookie?.length > 5) {
       try {
         axios
-          .get(`${BACKEND_URI}/user/users`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${cookie}`,
-            },
-          })
+          .get(
+            `${BACKEND_URI}/user/users?offset=${
+              (page - 1) * limit
+            }&limit=${limit}&sort_by=${sort_by}&order=${order}`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie}`,
+              },
+            }
+          )
           .then((res) => {
-            if (res.data?.length > 0) {
+            if (res.data?.data?.length > 0) {
               setUsers(res.data);
             }
           })
@@ -60,20 +75,32 @@ const State = (props) => {
     }
   };
 
-  const getAgencies = () => {
+  const getAgencies = (grow) => {
     let cookie = getCookie("token");
+    let page = agencies?.current_page ? agencies?.current_page : 1;
+    let limit = agencies?.limit ? agencies?.limit : 8;
+    if (grow == "inc") {
+      page++;
+    } else if (grow == "dec") {
+      page--;
+    }
     if (cookie?.length > 5) {
       try {
         axios
-          .get(`${BACKEND_URI}/agency/agencies`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${cookie}`,
-            },
-          })
+          .get(
+            `${BACKEND_URI}/agency/agencies?offset=${
+              (page - 1) * limit
+            }&limit=${limit}`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie}`,
+              },
+            }
+          )
           .then((res) => {
-            if (res.data?.length > 0) {
+            if (res.data.data?.length > 0) {
               setAgencies(res.data);
             }
           })
@@ -101,6 +128,7 @@ const State = (props) => {
         userData,
         checkToken,
         setUsers,
+        getUsers,
         users,
         agencies,
         getAgencies,

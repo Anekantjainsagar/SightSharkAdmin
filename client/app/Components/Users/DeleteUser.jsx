@@ -49,10 +49,10 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
             if (res.msg) {
               setShowSubscribe(false);
               toast.success("User Deleted Successfully");
-              let temp = users?.filter((e) => {
+              let temp = users?.data?.filter((e) => {
                 return e?.id != data?.id;
               });
-              setUsers(temp);
+              setUsers({ ...users, data: temp });
             }
           })
           .catch((err) => {

@@ -55,7 +55,7 @@ const Overview = ({ params }) => {
   const history = useRouter();
 
   useEffect(() => {
-    let temp = agencies?.find((e) => {
+    let temp = agencies?.data?.find((e) => {
       return e?.agency_name?.replaceAll(" ", "-") == name;
     });
     setData({
@@ -67,10 +67,10 @@ const Overview = ({ params }) => {
       deployment: temp?.deployment_date,
       agency_id: temp?.agency_id,
       keyContact: {
-        name: temp?.name,
-        designation: temp?.designation,
-        phone: temp?.phone,
-        email: temp?.email_address,
+        name: temp?.key_contact_name,
+        designation: temp?.key_contact_designation,
+        phone: temp?.key_contact_phone,
+        email: temp?.key_contact_email_address,
       },
       serviceAcc: {
         acc1: temp?.service_account_cloud,
@@ -110,7 +110,7 @@ const Overview = ({ params }) => {
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex flex-row-reverse items-start justify-between px-6">
-            <AgencyDetails />
+            <AgencyDetails data={data} />
             <div className="w-[69%] min-[1600px]:h-[82vh] h-fit">
               <AgencyDetailsTopbar name={name} />
               <div className="border border-gray-500/5 min-[1600px]:h-[83vh] h-fit w-full rounded-lg p-3 min-[1600px]:p-4 flex flex-col justify-between">
@@ -602,10 +602,11 @@ const Overview = ({ params }) => {
                             warranty_period: parseInt(data?.warrenty),
                             deployment_date: data?.deployment,
                             license_limit: data?.license,
-                            name: data?.keyContact?.name,
-                            designation: data?.keyContact?.designation,
-                            email_address: data?.keyContact?.email,
-                            phone: data?.keyContact?.phone,
+                            key_contact_name: data?.keyContact?.name,
+                            key_contact_designation:
+                              data?.keyContact?.designation,
+                            key_contact_email_address: data?.keyContact?.email,
+                            key_contact_phone: data?.keyContact?.phone,
                             service_account_cloud: data?.serviceAcc?.acc1,
                             service_account_api: data?.serviceAcc?.acc2,
                           }).toString();

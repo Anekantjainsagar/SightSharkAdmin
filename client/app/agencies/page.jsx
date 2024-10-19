@@ -8,11 +8,16 @@ import { FaPlus } from "react-icons/fa";
 import Context from "../Context/Context";
 
 const Overview = () => {
-  const [page, setPage] = useState(1);
-  const { agencies } = useContext(Context);
+  const { agencies, getAgencies } = useContext(Context);
   const [addAgency, setAddAgency] = useState(false);
 
-  let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const showNextPage = () => {
+    getAgencies("inc");
+  };
+
+  const showPrevPage = () => {
+    getAgencies("dec");
+  };
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -29,7 +34,7 @@ const Overview = () => {
               <h3 className="text-xl min-[1600px]:text-2xl">
                 Agencies{" "}
                 <span className="text-lg min-[1600px]:text-xl text-white/80">
-                  (25)
+                  ({agencies?.total_count})
                 </span>
               </h3>
               <div className="flex items-center">
@@ -134,7 +139,7 @@ const Overview = () => {
               </div>
               <div className="h-[69.5vh] min-[1600px]:h-[70vh]">
                 <div className="overflow-y-auto small-scroller h-[86%]">
-                  {agencies?.map((e, i) => {
+                  {agencies?.data?.map((e, i) => {
                     return (
                       <AgencyDetailsBlock
                         key={i}
@@ -147,7 +152,15 @@ const Overview = () => {
                 </div>
                 <div className="h-[14%] px-6 flex items-center justify-between bg-[#030021]/40 rounded-2xl">
                   <div className="flex items-center justify-between w-full">
-                    <button className="text-white bg-[#898989]/15 flex items-center w-[120px] min-[1600px]:w-[150px] justify-center py-2.5 min-[1600px]:py-3 rounded-lg text-[14px] min-[1600px]:text-[18px]">
+                    <button
+                      onClick={showPrevPage}
+                      disabled={agencies?.current_page == 1}
+                      className={`text-white ${
+                        agencies?.current_page == 1
+                          ? "bg-gray-400"
+                          : "bg-[#898989]/15"
+                      } bg-[#898989]/15 flex items-center w-[120px] min-[1600px]:w-[150px] justify-center py-2.5 min-[1600px]:py-3 rounded-lg text-[14px] min-[1600px]:text-[18px]`}
+                    >
                       <div className="mr-2 w-5 min-[1600px]:w-8">
                         <svg
                           className="w-full h-full"
@@ -168,37 +181,54 @@ const Overview = () => {
                       Previous
                     </button>
                     <div className="gap-x-4 flex items-center">
-                      {data?.slice(0, 3)?.map((e, i) => {
-                        return (
-                          <div
-                            className={`w-[30px] min-[1600px]:w-[40px] h-[30px] text-sm min-[1600px]:text-base min-[1600px]:h-[40px] rounded-lg flex items-center justify-center cursor-pointer ${
-                              page == e ? "bg-newBlue" : "text-[#85888E]"
-                            }`}
-                            key={i}
-                          >
-                            {e}
-                          </div>
-                        );
-                      })}
-                      {data?.length - 6 > 0 && (
-                        <span className="text-[#85888E]">...</span>
-                      )}
-                      {data
-                        ?.slice(data?.length - 3, data?.length)
+                      {[...Array(agencies?.total_pages).keys()]
+                        .map((i) => i + 1)
+                        ?.slice(0, 3)
                         ?.map((e, i) => {
                           return (
                             <div
-                              key={i}
                               className={`w-[30px] min-[1600px]:w-[40px] h-[30px] text-sm min-[1600px]:text-base min-[1600px]:h-[40px] rounded-lg flex items-center justify-center cursor-pointer ${
-                                page == e ? "bg-newBlue" : "text-[#85888E]"
+                                agencies?.current_page == e
+                                  ? "bg-newBlue"
+                                  : "text-[#85888E]"
                               }`}
+                              key={i}
                             >
                               {e}
                             </div>
                           );
                         })}
+                      {agencies?.total_pages - 6 > 0 && (
+                        <span className="text-[#85888E]">...</span>
+                      )}
+                      {agencies?.total_pages > 3 &&
+                        [...Array(agencies?.total_pages).keys()]
+                          .map((i) => i + 1)
+                          ?.slice(agencies?.total_pages - 3)
+                          ?.map((e, i) => {
+                            return (
+                              <div
+                                className={`w-[30px] min-[1600px]:w-[40px] h-[30px] text-sm min-[1600px]:text-base min-[1600px]:h-[40px] rounded-lg flex items-center justify-center cursor-pointer ${
+                                  users?.current_page == e
+                                    ? "bg-newBlue"
+                                    : "text-[#85888E]"
+                                }`}
+                                key={i}
+                              >
+                                {e}
+                              </div>
+                            );
+                          })}
                     </div>
-                    <button className="text-white bg-newBlue flex items-center w-[120px] min-[1600px]:w-[150px] justify-center py-2.5 min-[1600px]:py-3 rounded-lg text-[14px] min-[1600px]:text-[18px]">
+                    <button
+                      onClick={showNextPage}
+                      disabled={agencies?.total_pages == agencies?.current_page}
+                      className={`text-white ${
+                        agencies?.total_pages == agencies?.current_page
+                          ? "bg-gray-400"
+                          : "bg-newBlue"
+                      } flex items-center w-[120px] min-[1600px]:w-[150px] justify-center py-2.5 min-[1600px]:py-3 rounded-lg text-[14px] min-[1600px]:text-[18px]`}
+                    >
                       Next
                       <div className="ml-2 w-5 min-[1600px]:w-8">
                         <svg

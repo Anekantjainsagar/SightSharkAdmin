@@ -211,22 +211,22 @@ const AgencyDetails = ({ data }) => {
           {
             img: "/Agency/individual/icons/status.png",
             title: "Name",
-            value: data?.name,
+            value: data?.key_contact_name,
           },
           {
             img: "/Agency/individual/icons/website.png",
             title: "Designation",
-            value: data?.designation,
+            value: data?.key_contact_designation,
           },
           {
             img: "/Agency/individual/icons/location.png",
             title: "Email Address",
-            value: data?.email_address,
+            value: data?.key_contact_email_address,
           },
           {
             img: "/Agency/individual/icons/deployment.png",
             title: "Phone Number",
-            value: data?.phone,
+            value: data?.key_contact_phone,
           },
         ].map((e, i) => {
           return (

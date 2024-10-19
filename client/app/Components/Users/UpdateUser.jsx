@@ -106,9 +106,8 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
           })
           .then((res) => {
             if (res.msg) {
-              console.log(res);
-              let temp = users?.filter((e) => e?.id != userData?.id);
-              setUsers([...temp, res.data]);
+              let temp = users?.data?.filter((e) => e?.id != userData?.id);
+              setUsers({ ...users, data: [...temp, res.data] });
               toast.success("User updated successfully");
               closeModal();
             }
