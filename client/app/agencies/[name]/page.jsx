@@ -72,32 +72,39 @@ const Overview = ({ params }) => {
                     </button>
                   </div>
                   <div className="gradient-line my-4"></div>
-                  <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4">
-                    {agencyDatasources?.map((e, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className="flex items-center px-2 py-1 rounded-full"
-                        >
-                          <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-7 min-[1600px]:w-8 aspect-square p-1.5 mr-3">
-                            <Image
-                              src={e?.img_link}
-                              alt={e?.img_link?.src}
-                              width={1000}
-                              height={1000}
-                              className="object-contain"
-                            />
-                          </div>
-                          <label
-                            htmlFor={e?.name}
-                            className="text-sm min-[1600px]:text-base"
+                  {agencyDatasources?.length > 0 ? (
+                    <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4">
+                      {agencyDatasources?.map((e, i) => {
+                        return (
+                          <div
+                            key={i}
+                            className="flex items-center px-2 py-1 rounded-full"
                           >
-                            {e?.name}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
+                            <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-7 min-[1600px]:w-8 aspect-square p-1.5 mr-3">
+                              <Image
+                                src={e?.img_link}
+                                alt={e?.img_link?.src}
+                                width={1000}
+                                height={1000}
+                                className="object-contain"
+                              />
+                            </div>
+                            <label
+                              htmlFor={e?.name}
+                              className="text-sm min-[1600px]:text-base"
+                            >
+                              {e?.name}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="bg-[#171C2A] rounded-lg p-3 min-[1600px]:p-4 text-center">
+                      No Data Sources Available Please Add some of the Data
+                      Sources
+                    </div>
+                  )}
                 </div>
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4">
                   <div className="flex items-center justify-between w-full">
@@ -112,32 +119,38 @@ const Overview = ({ params }) => {
                     </button>
                   </div>{" "}
                   <div className="gradient-line my-4"></div>
-                  <div className="grid grid-cols-5 gap-x-4 mt-2">
-                    {agency_templates?.map((e, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className="border border-gray-400/20 rounded-xl"
-                          onClick={() => {
-                            window.open(e?.template_link, "__blank");
-                          }}
-                        >
-                          {e?.template_image && (
-                            <Image
-                              src={e?.template_image}
-                              alt={e?.template_image?.src}
-                              width={1000}
-                              height={1000}
-                              className="rounded-xl cursor-pointer"
-                            />
-                          )}
-                          <p className="text-center text-sm my-1.5 w-6/12 mx-auto">
-                            {e?.template_name}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  {agency_templates?.length > 0 ? (
+                    <div className="grid grid-cols-5 gap-x-4 mt-2">
+                      {agency_templates?.map((e, i) => {
+                        return (
+                          <div
+                            key={i}
+                            className="border border-gray-400/20 rounded-xl"
+                            onClick={() => {
+                              window.open(e?.template_link, "__blank");
+                            }}
+                          >
+                            {e?.template_image && (
+                              <Image
+                                src={e?.template_image}
+                                alt={e?.template_image?.src}
+                                width={1000}
+                                height={1000}
+                                className="rounded-xl cursor-pointer"
+                              />
+                            )}
+                            <p className="text-center text-sm my-1.5 w-6/12 mx-auto">
+                              {e?.template_name}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="mt-2 text-center">
+                      No Templates Available Please Add some of the Templates
+                    </div>
+                  )}
                 </div>
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[33vh]">
                   <div className="flex items-center justify-between w-full">

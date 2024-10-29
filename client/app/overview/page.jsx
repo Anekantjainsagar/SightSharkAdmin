@@ -26,13 +26,13 @@ const Overview = () => {
             <div className="grid grid-cols-4 gap-x-6">
               {[
                 {
-                  name: "Total Clients",
-                  value: 20,
+                  name: "Total Agencies",
+                  value: agencies?.total_count,
                   img: "/Overview/Icons/total.png",
                 },
                 {
-                  name: "Active Clients",
-                  value: 10,
+                  name: "Active Agencies",
+                  value: agencies?.total_count,
                   img: "/Overview/Icons/active.png",
                 },
                 {

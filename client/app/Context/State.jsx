@@ -119,6 +119,7 @@ const State = (props) => {
 
   const getTemplates = (id) => {
     let cookie = getCookie("token");
+    setAgency_templates([]);
     if (cookie?.length > 5 && id) {
       try {
         axios
@@ -192,6 +193,7 @@ const State = (props) => {
 
   const getAgencyDataSources = (id) => {
     let cookie = getCookie("token");
+    setAgencyDatasources([]);
     if (cookie?.length > 5) {
       try {
         axios
