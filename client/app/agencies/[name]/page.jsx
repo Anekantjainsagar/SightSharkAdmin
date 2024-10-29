@@ -16,7 +16,13 @@ const Overview = ({ params }) => {
   const history = useRouter();
   const [addDataSouces, setAddDataSouces] = useState(false);
   const [addTemplates, setAddTemplates] = useState(false);
-  const { agencies, getTemplates, agency_templates } = useContext(Context);
+  const {
+    agencies,
+    getTemplates,
+    agency_templates,
+    getAgencyDataSources,
+    agencyDatasources,
+  } = useContext(Context);
   const [data, setData] = useState();
   const { name } = params;
 
@@ -26,6 +32,7 @@ const Overview = ({ params }) => {
     });
     setData(temp);
     getTemplates(temp?.agency_id);
+    getAgencyDataSources(temp?.agency_id);
   }, [name, agencies]);
 
   return (
@@ -33,6 +40,7 @@ const Overview = ({ params }) => {
       <Leftbar />{" "}
       <AddDataSouces
         showSubscribe={addDataSouces}
+        original_data={data}
         setShowSubscribe={setAddDataSouces}
       />
       <AddTemplates
@@ -65,40 +73,7 @@ const Overview = ({ params }) => {
                   </div>
                   <div className="gradient-line my-4"></div>
                   <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4">
-                    {[
-                      {
-                        img: "/Agency/logo/facebook.svg",
-                        title: "Meta Ads",
-                      },
-                      {
-                        img: "/Agency/logo/facebook.svg",
-                        title: "Meta Insights",
-                      },
-                      {
-                        img: "/Agency/logo/google analytics.svg",
-                        title: "Google Analytics",
-                      },
-                      {
-                        img: "/Agency/logo/hubspot.svg",
-                        title: "HubSpot",
-                      },
-                      {
-                        img: "/Agency/logo/amazon.svg",
-                        title: "Amazon",
-                      },
-                      {
-                        img: "/Agency/logo/shopify.svg",
-                        title: "Shopify",
-                      },
-                      {
-                        img: "/Agency/logo/google ads.svg",
-                        title: "Google Ads",
-                      },
-                      {
-                        img: "/Agency/logo/linkedin.svg",
-                        title: "Linkedin",
-                      },
-                    ].map((e, i) => {
+                    {agencyDatasources?.map((e, i) => {
                       return (
                         <div
                           key={i}
@@ -106,18 +81,18 @@ const Overview = ({ params }) => {
                         >
                           <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-7 min-[1600px]:w-8 aspect-square p-1.5 mr-3">
                             <Image
-                              src={e?.img}
-                              alt={e?.img?.src}
+                              src={e?.img_link}
+                              alt={e?.img_link?.src}
                               width={1000}
                               height={1000}
                               className="object-contain"
                             />
                           </div>
                           <label
-                            htmlFor={e?.title}
+                            htmlFor={e?.name}
                             className="text-sm min-[1600px]:text-base"
                           >
-                            {e?.title}
+                            {e?.name}
                           </label>
                         </div>
                       );

@@ -12,6 +12,7 @@ const State = (props) => {
   const [agency_templates, setAgency_templates] = useState([]);
   const [datasources, setDatasources] = useState();
   const [selectedDataSources, setSelectedDataSources] = useState([]);
+  const [agencyDatasources, setAgencyDatasources] = useState();
 
   const checkToken = () => {
     let cookie = getCookie("token");
@@ -178,8 +179,57 @@ const State = (props) => {
               )
             );
 
-            console.log(results);
             setDatasources(results);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getAgencyDataSources = (id) => {
+    let cookie = getCookie("token");
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(`${BACKEND_URI}/assign_script/platform?agency_id=${id}`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookie}`,
+            },
+          })
+          .then(async (res) => {
+            const transformedPlatforms = res.data.platforms.map((platform) => {
+              const [name, img_link] = Object.entries(platform)[0];
+              return { name, img_link };
+            });
+
+            const results = await Promise.all(
+              transformedPlatforms.map((source) =>
+                axios
+                  .get(
+                    `${BACKEND_URI}/assign_script/tables?agency_id=${id}&platform_name=${source.name}`,
+                    {
+                      headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${cookie}`,
+                      },
+                    }
+                  )
+                  .then((res) => ({
+                    ...source,
+                    tables: res.data.tables,
+                  }))
+              )
+            );
+
+            setAgencyDatasources(results);
+            // setDatasources(results);
           })
           .catch((err) => {
             console.log(err);
@@ -217,6 +267,8 @@ const State = (props) => {
         setAgencies,
         setSelectedDataSources,
         selectedDataSources,
+        getAgencyDataSources,
+        agencyDatasources,
       }}
     >
       {props.children}

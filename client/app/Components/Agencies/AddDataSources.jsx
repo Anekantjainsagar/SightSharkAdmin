@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
@@ -7,6 +7,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 import Context from "@/app/Context/Context";
+import axios from "axios";
+import { BACKEND_URI } from "@/app/utils/url";
+import { getCookie } from "cookies-next";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -23,127 +26,38 @@ const customStyles = {
   },
 };
 
-const connectorsData = [
-  {
-    title: "Amazon Selling Partner",
-    img: "/Agency/connectors/Amazon Selling Partner.svg",
-  },
-  {
-    title: "Bamboo HR",
-    img: "/Agency/connectors/BambooHR.svg",
-  },
-  {
-    title: "Facebook Ads",
-    img: "/Agency/connectors/Facebook Ads.svg",
-  },
-  {
-    title: "Facebook Insights",
-    img: "/Agency/connectors/Facebook Insights.svg",
-  },
-  {
-    title: "Google Ads Manager",
-    img: "/Agency/connectors/Google Ads Manager.svg",
-  },
-  {
-    title: "Google Ads",
-    img: "/Agency/connectors/Google Ads.svg",
-  },
-  {
-    title: "Google Analytics",
-    img: "/Agency/connectors/Google Analytics 4.svg",
-  },
-  {
-    title: "Google DV360",
-    img: "/Agency/connectors/Google DV360.svg",
-  },
-  {
-    title: "Google My Business",
-    img: "/Agency/connectors/Google My Business.svg",
-  },
-  {
-    title: "Google Search Console",
-    img: "/Agency/connectors/Google Search Console.svg",
-  },
-  {
-    title: "Google Sheets",
-    img: "/Agency/connectors/Google Sheets.svg",
-  },
-  {
-    title: "HubSpot",
-    img: "/Agency/connectors/HubSpot.svg",
-  },
-  {
-    title: "Instagram Ads",
-    img: "/Agency/connectors/Instagram Ads.svg",
-  },
-  {
-    title: "Instagram Insights",
-    img: "/Agency/connectors/Instagram Insights.svg",
-  },
-  {
-    title: "JSON",
-    img: "/Agency/connectors/JSON.svg",
-  },
-  {
-    title: "Klaviyo",
-    img: "/Agency/connectors/Klaviyo.svg",
-  },
-  {
-    title: "LinkedIn",
-    img: "/Agency/connectors/LinkedIn.svg",
-  },
-  {
-    title: "Outbrain",
-    img: "/Agency/connectors/Outbrain.svg",
-  },
-  {
-    title: "PayPal",
-    img: "/Agency/connectors/PayPal.svg",
-  },
-  {
-    title: "Shopify",
-    img: "/Agency/connectors/Shopify.svg",
-  },
-  {
-    title: "Stripe",
-    img: "/Agency/connectors/Stripe.svg",
-  },
-  {
-    title: "Taboola",
-    img: "/Agency/connectors/Taboola.svg",
-  },
-  {
-    title: "TikTok",
-    img: "/Agency/connectors/TikTok.svg",
-  },
-  {
-    title: "X Ads",
-    img: "/Agency/connectors/X Ads.svg",
-  },
-  {
-    title: "Xero",
-    img: "/Agency/connectors/Xero.svg",
-  },
-  {
-    title: "Klaviyo",
-    img: "/Agency/connectors/Klaviyo.svg",
-  },
-  {
-    title: "YouTube",
-    img: "/Agency/connectors/YouTube.svg",
-  },
-];
-
-const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
+const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
   let maxPage = 2;
-  const { datasources, setSelectedDataSources, selectedDataSources } =
-    useContext(Context);
+  const {
+    datasources,
+    setSelectedDataSources,
+    selectedDataSources,
+    agencyDatasources,
+  } = useContext(Context);
+  const [checkedTables, setCheckedTables] = useState();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
   function closeModal() {
     setShowSubscribe(false);
   }
+
+  useEffect(() => {
+    if (agencyDatasources) {
+      setSelectedDataSources(agencyDatasources);
+      setCheckedTables(
+        agencyDatasources.reduce((acc, platform) => {
+          acc[platform.name] = [];
+          return acc;
+        }, {})
+      );
+      const mappedTables = agencyDatasources.reduce((acc, item) => {
+        acc[item.name] = item.tables;
+        return acc;
+      }, {});
+      setCheckedTables(mappedTables);
+    }
+  }, [agencyDatasources]);
 
   return (
     <div className="z-50">
@@ -237,19 +151,28 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
                                 id={e?.name}
                                 onChange={(e) => {
                                   let name = e?.target?.id;
-                                  if (selectedDataSources?.includes(name)) {
+
+                                  if (
+                                    selectedDataSources?.find(
+                                      (e) => e?.name == name
+                                    )
+                                  ) {
                                     let temp = selectedDataSources?.filter(
-                                      (e) => e != name
+                                      (e) => e?.name != name
                                     );
                                     setSelectedDataSources(temp);
                                   } else {
                                     setSelectedDataSources([
                                       ...selectedDataSources,
-                                      name,
+                                      datasources?.find(
+                                        (e) => e?.name === name
+                                      ),
                                     ]);
                                   }
                                 }}
-                                checked={selectedDataSources?.includes(e?.name)}
+                                checked={selectedDataSources?.find(
+                                  (el) => el?.name == e?.name
+                                )}
                                 className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
                               />
                               <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -276,85 +199,10 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
                 </div>
               </div>
             ) : (
-              <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-                <div className="grid grid-cols-1 gap-3">
-                  {selectedDataSources
-                    ?.map((id) => datasources?.find((e) => e?.name === id))
-                    ?.map((e, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center"
-                        >
-                          <div className="flex flex-col items-center justify-center w-[30%]">
-                            <Image
-                              src={e?.img_link}
-                              alt={e?.img_link?.src}
-                              width={1000}
-                              height={1000}
-                              className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-squre object-contain"
-                            />
-                            <h6 className="mt-2 text-lg">{e?.name}</h6>
-                          </div>
-                          <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
-                          <div className="w-[70%]">
-                            <div className="grid grid-cols-3 w-full px-4 py-1">
-                              <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                                {e?.name}
-                              </p>
-                              <p>Track</p>
-                              <p>Show Fields</p>
-                            </div>
-                            {e?.tables.map((el, i) => {
-                              return (
-                                <div
-                                  key={i}
-                                  className="w-full grid grid-cols-3 rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-300"
-                                >
-                                  <label
-                                    htmlFor={el}
-                                    className="cursor-pointer"
-                                  >
-                                    {el}
-                                  </label>{" "}
-                                  <div className="inline-flex items-start">
-                                    <label className="relative flex items-center cursor-pointer">
-                                      <input
-                                        type="checkbox"
-                                        checked
-                                        className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                                        id={el}
-                                      />
-                                      <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          className="h-4 w-4"
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                          stroke="currentColor"
-                                          strokeWidth="1"
-                                        >
-                                          <path
-                                            fillRule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clipRule="evenodd"
-                                          ></path>
-                                        </svg>
-                                      </span>
-                                    </label>
-                                  </div>
-                                  <p className="text-blue-500 underline cursor-pointer">
-                                    Show Fields
-                                  </p>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
+              <Page2
+                setCheckedTables={setCheckedTables}
+                checkedTables={checkedTables}
+              />
             )}
           </div>
           <div className="border-t border-t-gray-100/30 px-[3vw] min-[1600px]:px-[5vw] w-full flex items-center justify-between py-6 mt-10 mainText20">
@@ -371,7 +219,47 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
             </button>
             <button
               onClick={() => {
-                if (page == maxPage) {
+                if (page === maxPage) {
+                  const combined = selectedDataSources.map((item) => ({
+                    ...item,
+                    tables: checkedTables[item.name] || item.tables,
+                  }));
+                  const agencyId = original_data?.agency_id; // Make sure `original_data` is the correct variable for agency_id
+
+                  if (combined?.length > 0 && agencyId) {
+                    let cookie = getCookie("token");
+                    // Use Promise.all to send requests for each item in the combined array
+                    Promise.all(
+                      combined.map((item) => {
+                        const platformName = item.name; // Assuming `item.name` represents the platform name
+                        const tableNames = item.tables || []; // Ensure table names are an array
+
+                        // API call for each item
+                        return axios.post(
+                          `${BACKEND_URI}/assign_script/add_tables?agency_id=${agencyId}&platform_name=${platformName}`,
+                          { table_names: tableNames },
+                          {
+                            headers: {
+                              Accept: "application/json",
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${cookie}`,
+                            },
+                          }
+                        );
+                      })
+                    )
+                      .then((responses) => {
+                        console.log("All tables added successfully", responses);
+                        toast.success("Tables added successfully!");
+                        setShowSubscribe(false);
+                      })
+                      .catch((error) => {
+                        console.error("Error adding tables", error);
+                        toast.error("Error adding tables");
+                      });
+                  } else {
+                    toast.error("Please select at least 1 data source");
+                  }
                 } else {
                   setPage(page + 1);
                 }
@@ -383,6 +271,124 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
           </div>
         </div>
       </Modal>
+    </div>
+  );
+};
+
+const Page2 = ({ checkedTables, setCheckedTables }) => {
+  const { selectedDataSources } = useContext(Context);
+
+  const handleCheckboxChange = (sourceIndex, table, isChecked) => {
+    const platformName = selectedDataSources[sourceIndex].name;
+
+    setCheckedTables((prevCheckedTables) => {
+      // Clone the previous state
+      const newCheckedTables = { ...prevCheckedTables };
+
+      // Add or remove the table based on isChecked
+      if (isChecked) {
+        newCheckedTables[platformName] = [
+          ...newCheckedTables[platformName],
+          table,
+        ];
+      } else {
+        newCheckedTables[platformName] = newCheckedTables[platformName].filter(
+          (t) => t !== table
+        );
+      }
+
+      return newCheckedTables;
+    });
+  };
+
+  useEffect(() => {
+    if (Object?.keys(checkedTables)?.length == 0) {
+      setCheckedTables(
+        selectedDataSources.reduce((acc, platform) => {
+          acc[platform.name] = [];
+          return acc;
+        }, {})
+      );
+    }
+  }, [selectedDataSources]);
+
+  return (
+    <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
+      <div className="grid grid-cols-1 gap-3">
+        {selectedDataSources?.map((e, i) => (
+          <div
+            key={i}
+            className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center"
+          >
+            <div className="flex flex-col items-center justify-center w-[30%]">
+              <img
+                src={e?.img_link}
+                alt={e?.name}
+                width={1000}
+                height={1000}
+                className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
+              />
+              <h6 className="mt-2 text-lg">{e?.name}</h6>
+            </div>
+            <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
+            <div className="w-[70%]">
+              <div className="flex justify-between items-center w-full px-4 py-1">
+                <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+                  {e?.name}
+                </p>
+                <p>Track</p>
+              </div>
+              {checkedTables &&
+                e?.tables.map((table, index) => {
+                  const isChecked = checkedTables[e.name]?.includes(table);
+                  return (
+                    <div
+                      key={index}
+                      className="w-full flex justify-between items-center rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-400"
+                    >
+                      <label htmlFor={table} className="cursor-pointer">
+                        {table}
+                      </label>
+                      <div className="inline-flex items-start">
+                        <label className="relative flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
+                            id={table}
+                            onChange={(event) =>
+                              handleCheckboxChange(
+                                i,
+                                table,
+                                event.target.checked
+                              )
+                            }
+                          />
+                          <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              stroke="currentColor"
+                              strokeWidth="1"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              ></path>
+                            </svg>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
