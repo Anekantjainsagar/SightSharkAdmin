@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
+import Context from "@/app/Context/Context";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -135,11 +136,10 @@ const connectorsData = [
 
 const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 2;
+  const { datasources, setSelectedDataSources, selectedDataSources } =
+    useContext(Context);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [data, setData] = useState({
-    dataSources: [],
-  });
 
   function closeModal() {
     setShowSubscribe(false);
@@ -186,7 +186,6 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
           <div className="h-[45vh] min-[1600px]:h-[40vh]">
             {page == 1 ? (
               <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-                {" "}
                 <div className="relative flex items-center w-[350px] min-[1600px]:w-[456px]">
                   <FaSearch className="absolute left-4 z-40 text-white" />{" "}
                   {/* Search Icon */}
@@ -201,10 +200,10 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-3 mt-5">
-                  {connectorsData
+                  {datasources
                     ?.filter((e) => {
                       if (search) {
-                        return e?.title
+                        return e?.name
                           ?.toLowerCase()
                           ?.includes(search?.toLowerCase());
                       }
@@ -218,25 +217,40 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
                         >
                           <div className="flex items-center">
                             <Image
-                              src={e?.img}
-                              alt={e?.img?.src}
+                              src={e?.img_link}
+                              alt={e?.img_link?.src}
                               width={1000}
                               height={1000}
                               className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2 aspect-squre object-contain"
                             />
                             <label
-                              htmlFor={e?.title}
+                              htmlFor={e?.name}
                               className="text-[13px] min-[1600px]:text-base cursor-pointer"
                             >
-                              {e?.title}
+                              {e?.name}
                             </label>
                           </div>
                           <div className="inline-flex items-start mr-1">
                             <label className="relative flex items-center cursor-pointer">
                               <input
                                 type="checkbox"
+                                id={e?.name}
+                                onChange={(e) => {
+                                  let name = e?.target?.id;
+                                  if (selectedDataSources?.includes(name)) {
+                                    let temp = selectedDataSources?.filter(
+                                      (e) => e != name
+                                    );
+                                    setSelectedDataSources(temp);
+                                  } else {
+                                    setSelectedDataSources([
+                                      ...selectedDataSources,
+                                      name,
+                                    ]);
+                                  }
+                                }}
+                                checked={selectedDataSources?.includes(e?.name)}
                                 className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                                id="check"
                               />
                               <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                 <svg
@@ -264,77 +278,81 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe }) => {
             ) : (
               <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
                 <div className="grid grid-cols-1 gap-3">
-                  {connectorsData?.slice(0, 5).map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center"
-                      >
-                        <div className="flex flex-col items-center justify-center w-[30%]">
-                          <Image
-                            src={e?.img}
-                            alt={e?.img?.src}
-                            width={1000}
-                            height={1000}
-                            className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-squre object-contain"
-                          />
-                          <h6 className="mt-2 text-lg">{e?.title}</h6>
-                        </div>
-                        <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
-                        <div className="w-[70%]">
-                          <div className="grid grid-cols-3 w-full px-4 py-1">
-                            <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                              {e?.title}
-                            </p>
-                            <p>Track</p>
-                            <p>Show Fields</p>
+                  {selectedDataSources
+                    ?.map((id) => datasources?.find((e) => e?.name === id))
+                    ?.map((e, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center"
+                        >
+                          <div className="flex flex-col items-center justify-center w-[30%]">
+                            <Image
+                              src={e?.img_link}
+                              alt={e?.img_link?.src}
+                              width={1000}
+                              height={1000}
+                              className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-squre object-contain"
+                            />
+                            <h6 className="mt-2 text-lg">{e?.name}</h6>
                           </div>
-                          {[
-                            "Traffic Report",
-                            "Traffic Report Content",
-                            "Traffic Report Term",
-                          ].map((e, i) => {
-                            return (
-                              <div
-                                key={i}
-                                className="w-full grid grid-cols-3 rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-300"
-                              >
-                                <p>{e}</p>{" "}
-                                <div className="inline-flex items-start">
-                                  <label className="relative flex items-center cursor-pointer">
-                                    <input
-                                      type="checkbox"
-                                      className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                                      id="check"
-                                    />
-                                    <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-4 w-4"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        stroke="currentColor"
-                                        strokeWidth="1"
-                                      >
-                                        <path
-                                          fillRule="evenodd"
-                                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                          clipRule="evenodd"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </label>
+                          <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
+                          <div className="w-[70%]">
+                            <div className="grid grid-cols-3 w-full px-4 py-1">
+                              <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+                                {e?.name}
+                              </p>
+                              <p>Track</p>
+                              <p>Show Fields</p>
+                            </div>
+                            {e?.tables.map((el, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className="w-full grid grid-cols-3 rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-300"
+                                >
+                                  <label
+                                    htmlFor={el}
+                                    className="cursor-pointer"
+                                  >
+                                    {el}
+                                  </label>{" "}
+                                  <div className="inline-flex items-start">
+                                    <label className="relative flex items-center cursor-pointer">
+                                      <input
+                                        type="checkbox"
+                                        checked
+                                        className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                                        id={el}
+                                      />
+                                      <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          className="h-4 w-4"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                          stroke="currentColor"
+                                          strokeWidth="1"
+                                        >
+                                          <path
+                                            fillRule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clipRule="evenodd"
+                                          ></path>
+                                        </svg>
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <p className="text-blue-500 underline cursor-pointer">
+                                    Show Fields
+                                  </p>
                                 </div>
-                                <p className="text-blue-500 underline cursor-pointer">
-                                  Show Fields
-                                </p>
-                              </div>
-                            );
-                          })}
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
               </div>
             )}

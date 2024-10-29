@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { FaSearch } from "react-icons/fa";
-import { IoMdCheckmark } from "react-icons/io";
 import Required from "../Utils/Required";
+import { BACKEND_URI } from "@/app/utils/url";
+import { getCookie } from "cookies-next";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -24,9 +23,11 @@ const customStyles = {
   },
 };
 
-const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
+const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
   const [data, setData] = useState({
-    dataSources: [],
+    template_name: "",
+    template_link: "",
+    profile_picture: null,
   });
   const fileInputRef = React.useRef(null);
 
@@ -34,6 +35,7 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
     const file = event.target.files[0];
     if (file) {
       console.log("Selected file:", file.name);
+      setData({ ...data, profile_picture: file });
     }
   };
 
@@ -57,7 +59,6 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
             className="absolute top-2 right-2 px-2 cursor-pointer"
           />
           <div className="px-[4vw] h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-            {" "}
             <div className="px-[8vw] w-full">
               <div className="flex items-center justify-center mb-6">
                 <div className="relative">
@@ -97,9 +98,9 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="name"
-                    value={data?.name}
+                    value={data?.template_name}
                     onChange={(e) => {
-                      setData({ ...data, name: e.target.value });
+                      setData({ ...data, template_name: e.target.value });
                     }}
                     type="text"
                     placeholder="Enter Template Name"
@@ -116,9 +117,9 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
                   </label>
                   <input
                     id="website"
-                    value={data?.website}
+                    value={data?.template_link}
                     onChange={(e) => {
-                      setData({ ...data, website: e.target.value });
+                      setData({ ...data, template_link: e.target.value });
                     }}
                     type="text"
                     placeholder="Enter Template Link"
@@ -130,7 +131,62 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe }) => {
           </div>
           <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-end py-6 mt-10 text-[15px] min-[1600px]:text-xl">
             <button
-              onClick={() => {}}
+              onClick={() => {
+                if (data?.template_link && data?.template_name) {
+                  let queryParams = new URLSearchParams({
+                    ...data,
+                    agency_id: original_data?.agency_id,
+                  }).toString();
+
+                  const formData = new FormData();
+                  if (data.profile_picture) {
+                    formData.append("profile_picture", data.profile_picture);
+                    formData.append(
+                      "profile_picture_filename",
+                      data.profile_picture.name
+                    );
+                    formData.append(
+                      "profile_picture_content_type",
+                      data.profile_picture.type
+                    );
+                  }
+
+                  try {
+                    fetch(
+                      `${BACKEND_URI}/template/add/template?${queryParams}`,
+                      {
+                        headers: {
+                          Accept:
+                            "application/json, application/xml, text/plain, text/html, *.*",
+                          Authorization: `Bearer ${getCookie("token")}`,
+                        },
+                        method: "POST",
+                        body: formData,
+                      }
+                    )
+                      .then((res) => res.json())
+                      .then((res) => {
+                        if (res.msg) {
+                          toast.success("Template added successfully");
+                          setShowSubscribe(false);
+                        } else if (res.detail) {
+                          toast.error(res.detail);
+                        }
+                      })
+                      .catch((err) => {
+                        console.error("Error creating user:", err);
+                        toast.error(
+                          "An error occurred while creating the user"
+                        );
+                      });
+                  } catch (error) {
+                    console.error("Unexpected error:", error);
+                    toast.error("An unexpected error occurred");
+                  }
+                } else {
+                  toast.error("Please fill all the required details");
+                }
+              }}
               className={`text-white bg-newBlue w-[150px] min-[1600px]:w-[170px] h-9 min-[1600px]:h-12 rounded-lg`}
             >
               Save

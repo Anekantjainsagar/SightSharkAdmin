@@ -16,7 +16,7 @@ const Overview = ({ params }) => {
   const history = useRouter();
   const [addDataSouces, setAddDataSouces] = useState(false);
   const [addTemplates, setAddTemplates] = useState(false);
-  const { agencies } = useContext(Context);
+  const { agencies, getTemplates, agency_templates } = useContext(Context);
   const [data, setData] = useState();
   const { name } = params;
 
@@ -25,6 +25,7 @@ const Overview = ({ params }) => {
       return e?.agency_name?.replaceAll(" ", "-") == name;
     });
     setData(temp);
+    getTemplates(temp?.agency_id);
   }, [name, agencies]);
 
   return (
@@ -36,6 +37,7 @@ const Overview = ({ params }) => {
       />
       <AddTemplates
         showSubscribe={addTemplates}
+        original_data={data}
         setShowSubscribe={setAddTemplates}
       />
       <div className="w-[85%] bg-main h-full relative">
@@ -136,29 +138,27 @@ const Overview = ({ params }) => {
                   </div>{" "}
                   <div className="gradient-line my-4"></div>
                   <div className="grid grid-cols-5 gap-x-4 mt-2">
-                    {[
-                      {
-                        img: "/Agency/individual/templates/1 (2).png",
-                      },
-                      {
-                        img: "/Agency/individual/templates/1 (1).png",
-                      },
-                      { img: "/Agency/individual/templates/1 (4).png" },
-                      {
-                        img: "/Agency/individual/templates/1 (3).png",
-                      },
-                      {
-                        img: "/Agency/individual/templates/1 (2).png",
-                      },
-                    ].map((e, i) => {
+                    {agency_templates?.map((e, i) => {
                       return (
-                        <div key={i}>
-                          <Image
-                            src={e?.img}
-                            alt={e?.img?.src}
-                            width={1000}
-                            height={1000}
-                          />
+                        <div
+                          key={i}
+                          className="border border-gray-400/20 rounded-xl"
+                          onClick={() => {
+                            window.open(e?.template_link, "__blank");
+                          }}
+                        >
+                          {e?.template_image && (
+                            <Image
+                              src={e?.template_image}
+                              alt={e?.template_image?.src}
+                              width={1000}
+                              height={1000}
+                              className="rounded-xl cursor-pointer"
+                            />
+                          )}
+                          <p className="text-center text-sm my-1.5 w-6/12 mx-auto">
+                            {e?.template_name}
+                          </p>
                         </div>
                       );
                     })}

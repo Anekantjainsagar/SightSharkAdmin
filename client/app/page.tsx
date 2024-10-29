@@ -1,18 +1,17 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import { BACKEND_URI } from "./utils/url";
-import { setCookie } from "cookies-next";
-import Context from "./Context/Context";
+import LoginOtp from "@/app/Components/LoginOtp";
+import { getCookie } from "cookies-next";
+import axios from "axios";
 
 const App = () => {
-  const history = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const { checkToken } = useContext(Context);
+  const [showOtp, setShowOtp] = useState(false);
   const [user, setUser] = useState({ password: "", email: "" });
 
   const onLogin = () => {
@@ -34,11 +33,12 @@ const App = () => {
             return res.json();
           })
           .then((res) => {
-            if (res.access_token) {
-              toast.success("Login Successfully");
-              setCookie("token", res.access_token);
-              checkToken();
-              history.push("/overview");
+            if (res.detail) {
+              toast.error(res.detail);
+            }
+            if (res.msg === "Verification code sent to your email") {
+              toast.success("Login Successfully check otp for verification");
+              setShowOtp(true);
             }
           })
           .catch((err) => {
@@ -56,6 +56,11 @@ const App = () => {
   return (
     <div className="bg-[#091022] w-full flex items-start justify-between h-[100vh]">
       <Toaster />
+      <LoginOtp
+        showSubscribe={showOtp}
+        setShowSubscribe={setShowOtp}
+        email={user?.email}
+      />
       <div className="w-7/12 p-[2vw] flex flex-col items-center justify-center h-full">
         <div className="text-white flex flex-col items-center w-7/12 px-5">
           <div className="flex items-center gap-x-4 min-[1600px]:gap-x-6 mb-8 min-[1600px]:mb-20">
@@ -151,7 +156,36 @@ const App = () => {
                   Remember Me
                 </label>
               </div>
-              <button className="text-[#F04438] mainText18">
+              <button
+                onClick={() => {
+                  if (user?.email) {
+                    const formData = new URLSearchParams();
+                    formData.append("email", user.email);
+
+                    axios
+                      .post(`${BACKEND_URI}/user/recover-password`, formData, {
+                        headers: {
+                          Accept: "application/json",
+                          "Content-Type": "application/x-www-form-urlencoded",
+                          Authorization: `Bearer ${getCookie("token")}`,
+                        },
+                      })
+                      .then((res) => {
+                        if (res.status == 200) {
+                          toast.success("Password reset email sent");
+                        }
+                      })
+                      .catch((err) => {
+                        if (err.response.status === 404) {
+                          toast.error("User not found");
+                        }
+                      });
+                  } else {
+                    toast.error("Please enter an email address");
+                  }
+                }}
+                className="text-[#F04438] mainText18"
+              >
                 Recover Password
               </button>
             </div>

@@ -9,6 +9,9 @@ const State = (props) => {
   const [userData, setUserData] = useState();
   const [users, setUsers] = useState([]);
   const [agencies, setAgencies] = useState([]);
+  const [agency_templates, setAgency_templates] = useState([]);
+  const [datasources, setDatasources] = useState();
+  const [selectedDataSources, setSelectedDataSources] = useState([]);
 
   const checkToken = () => {
     let cookie = getCookie("token");
@@ -113,6 +116,80 @@ const State = (props) => {
     }
   };
 
+  const getTemplates = (id) => {
+    let cookie = getCookie("token");
+    if (cookie?.length > 5 && id) {
+      try {
+        axios
+          .get(`${BACKEND_URI}/template/templates?agency_id=${id}`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookie}`,
+            },
+          })
+          .then((res) => {
+            setAgency_templates(res.data.templates);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getDataSources = () => {
+    let cookie = getCookie("token");
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(`${BACKEND_URI}/platform/platforms`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookie}`,
+            },
+          })
+          .then(async (res) => {
+            const transformedPlatforms = res.data.platforms.map((platform) => {
+              const [name, img_link] = Object.entries(platform)[0];
+              return { name, img_link };
+            });
+
+            const results = await Promise.all(
+              transformedPlatforms.map((source) =>
+                axios
+                  .get(
+                    `${BACKEND_URI}/platform/tables?platform_name=${source.name}`,
+                    {
+                      headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${cookie}`,
+                      },
+                    }
+                  )
+                  .then((res) => ({
+                    ...source,
+                    tables: res.data.tables,
+                  }))
+              )
+            );
+
+            console.log(results);
+            setDatasources(results);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   useEffect(() => {
     checkToken();
   }, []);
@@ -120,6 +197,7 @@ const State = (props) => {
   useEffect(() => {
     getAgencies();
     getUsers();
+    getDataSources();
   }, [userData]);
 
   return (
@@ -129,10 +207,16 @@ const State = (props) => {
         checkToken,
         setUsers,
         getUsers,
+        agency_templates,
+        getTemplates,
         users,
+        datasources,
+        getDataSources,
         agencies,
         getAgencies,
         setAgencies,
+        setSelectedDataSources,
+        selectedDataSources,
       }}
     >
       {props.children}
