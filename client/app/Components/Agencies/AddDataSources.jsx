@@ -236,7 +236,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
 
                         // API call for each item
                         return axios.post(
-                          `${BACKEND_URI}/assign_script/add_tables?agency_id=${agencyId}&platform_name=${platformName}`,
+                          `${BACKEND_URI}/assign_script/update_tables?agency_id=${agencyId}&platform_name=${platformName}`,
                           { table_names: tableNames },
                           {
                             headers: {
@@ -249,7 +249,6 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                       })
                     )
                       .then((responses) => {
-                        console.log("All tables added successfully", responses);
                         toast.success("Tables added successfully!");
                         setShowSubscribe(false);
                       })
