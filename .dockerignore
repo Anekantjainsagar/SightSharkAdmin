@@ -10,3 +10,4 @@ server
 server/
 .env
 *.env
+/client/*.env
