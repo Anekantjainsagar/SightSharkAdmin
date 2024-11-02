@@ -67,7 +67,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
       data?.email &&
       data?.password &&
       data?.access
-    ) { 
+    ) {
       // Construct URL with all non-file fields as query parameters
       const queryParams = new URLSearchParams({
         email: data?.email,
@@ -243,7 +243,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                     setData({ ...data, access: e.target.value });
                   }}
                 >
-                  {["admin", "superadmin", "guest"].map((e, i) => {
+                  {["admin", "superadmin"].map((e, i) => {
                     return (
                       <option value={e} key={i} className="bg-main">
                         {e}

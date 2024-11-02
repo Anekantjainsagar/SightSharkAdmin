@@ -32,7 +32,6 @@ const customStyles = {
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
   const { setAgencies, agencies } = useContext(Context);
-  const [search, setSearch] = useState("");
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
@@ -69,58 +68,60 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
       let queryParams = new URLSearchParams({
         agency_name: data?.name,
         website: data?.website,
-        location: data?.location,
+        location: data?.location || "",
         warranty_period: parseInt(data?.warrenty),
-        deployment_date: data?.deployment,
-        license_limit: data?.license,
+        deployment_date: data?.deployment || "",
+        license_limit: parseInt(data?.license),
+        current_number_of_clients: data?.currentClients || 1,
+        email_address: data?.keyContact?.email || "",
+        password: data?.credentials?.password || "",
         key_contact_name: data?.keyContact?.name,
         key_contact_designation: data?.keyContact?.designation,
         key_contact_email_address: data?.keyContact?.email,
         key_contact_phone: data?.keyContact?.phone,
-        service_account_cloud: data?.serviceAcc?.acc1,
-        service_account_api: data?.serviceAcc?.acc2,
+        service_account_cloud: data?.serviceAcc?.acc1 || "",
+        service_account_api: data?.serviceAcc?.acc2 || "",
+        region: data?.region || "",
+        project_id: data?.projectId || "",
+        project_number: data?.projectNumber || "",
+        status: data?.status || "active",
       }).toString();
 
-      let formdata = new FormData();
-      // Handle profile picture file upload
+      let formData = new FormData();
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
-        formdata.append("file_content", data?.profile); // The file itself
-        formdata.append("filename", data?.profile.name); // The filename
-        formdata.append("content_type", data?.profile.type); // The MIME type
-      } else {
-        console.log(
-          "Profile picture is not a valid file or blob, skipping upload."
-        );
+        formData.append("profile_picture", data?.profile); // The file itself
+        formData.append("profile_picture_filename", data?.profile.name); // The filename
+        formData.append("profile_picture_content_type", data?.profile.type); // The MIME type
       }
 
-      try {
-        fetch(`${BACKEND_URI}/agency/create?${queryParams}`, {
+      axios
+        .post(`${BACKEND_URI}/agency/create?${queryParams}`, formData, {
           headers: {
-            Accept:
-              "application/json, application/xml, text/plain, text/html, *.*",
             Authorization: `Bearer ${getCookie("token")}`,
+            "Content-Type": "multipart/form-data",
           },
-          method: "POST",
-          body: formdata,
         })
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.msg) {
-              toast.success("Agency created successfully");
-              setShowSubscribe(false);
-              setAgencies([...agencies, res.data]);
-            } else if (res.detail) {
-              toast.error(res.detail);
-            }
-          })
-          .catch((err) => {
-            console.error("Error creating user:", err);
+        .then((response) => {
+          const res = response.data;
+          if (res.msg) {
+            toast.success("Agency created successfully");
+            setShowSubscribe(false);
+            setAgencies([...agencies, res.data]);
+          } else if (res.detail) {
+            toast.error(res.detail);
+          }
+        })
+        .catch((error) => {
+          console.error("Error creating user:", error);
+          if (error.response && error.response.data) {
+            toast.error(
+              error.response.data.detail ||
+                "An error occurred while creating the user"
+            );
+          } else {
             toast.error("An error occurred while creating the user");
-          });
-      } catch (error) {
-        console.error("Unexpected error:", error);
-        toast.error("An unexpected error occurred");
-      }
+          }
+        });
     } else {
       toast.error("Please fill all the required details");
     }
@@ -130,7 +131,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     const file = event.target.files[0];
     if (file) {
       setFile(URL.createObjectURL(file));
-      setData({ ...data, profile: file }); // Update `data` state with the selected file
+      setData({ ...data, profile: file });
     } else {
       console.log("No file selected");
     }
@@ -372,16 +373,14 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     />
                     <div
                       onClick={() => {
-                        fileInputRef.current.click();
+                        fileInputRefAgent.current.click();
                       }}
                       className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
                     >
                       +
                     </div>
                     <Image
-                      src={
-                        data?.profile ? data?.profile : "/Agency/temp_logo.png"
-                      }
+                      src={"/Agency/temp_logo.png"}
                       alt="Agency Img"
                       width={1000}
                       height={1000}
