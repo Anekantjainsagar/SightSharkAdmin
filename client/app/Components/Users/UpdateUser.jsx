@@ -80,17 +80,15 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
         status: data?.status || "active",
       }).toString();
 
-      console.log(data);
-
       let formdata = new FormData();
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
         formdata.append("profile_picture", data?.profile); // The file itself
         formdata.append("profile_picture_filename", data?.profile.name); // The filename
         formdata.append("profile_picture_content_type", data?.profile.type); // The MIME type
       } else {
-        console.log(
-          "Profile picture is not a valid file or blob, skipping upload."
-        );
+        formdata.append("profile_picture", null); // The file itself
+        formdata.append("profile_picture_filename", ""); // The filename
+        formdata.append("profile_picture_content_type", ""); // The MIME type
       }
 
       try {
