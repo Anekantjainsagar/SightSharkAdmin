@@ -31,7 +31,7 @@ const customStyles = {
 
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
-  const { setAgencies, agencies } = useContext(Context);
+  const { setAgencies, agencies, getAgencies } = useContext(Context);
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
@@ -107,6 +107,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             toast.success("Agency created successfully");
             setShowSubscribe(false);
             setAgencies([...agencies, res.data]);
+            getAgencies();
           } else if (res.detail) {
             toast.error(res.detail);
           }

@@ -23,7 +23,7 @@ const customStyles = {
 
 const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
   const [value, setValue] = useState("");
-  const { agencies, setAgencies } = useContext(Context);
+  const { agencies, setAgencies, getAgencies } = useContext(Context);
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -110,10 +110,7 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
                         if (res.msg) {
                           setShowSubscribe(false);
                           toast.success("Agency Deleted Successfully");
-                          let temp = agencies?.filter((e) => {
-                            return e?.agency_id != id;
-                          });
-                          setAgencies(temp);
+                          getAgencies();
                         }
                       })
                       .catch((err) => {

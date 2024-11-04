@@ -1,13 +1,13 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
+import Context from "@/app/Context/Context";
 
 const UserDetailBlock = ({ status, data }) => {
+  const { selectedUsers, setSelectedUsers, userData } = useContext(Context);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
-  const history = useRouter();
 
   return (
     <>
@@ -22,12 +22,23 @@ const UserDetailBlock = ({ status, data }) => {
         userData={data}
       />
       <div className="py-4 px-7 border-gray-200/5 border-y grid userBlockGrid items-center cursor-pointer text-textGrey text-sm min-[1600px]:text-base">
-        <div className="inline-flex items-start">
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            if (selectedUsers?.includes(data?.id)) {
+              setSelectedUsers(selectedUsers?.filter((e) => e != data?.id));
+            } else {
+              setSelectedUsers([...selectedUsers, data?.id]);
+            }
+          }}
+          className="inline-flex items-start"
+        >
           <label className="relative flex items-center cursor-pointer">
             <input
               type="checkbox"
               className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
               id="check"
+              checked={selectedUsers?.includes(data?.id)}
             />
             <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
               <svg
@@ -72,7 +83,9 @@ const UserDetailBlock = ({ status, data }) => {
             <p className="mainText14 text-[#85888E]">{data?.email}</p>
           </div>
         </div>
-        <h5 className="text-center">{data?.role}</h5>
+        <h5 className="text-center">
+          {data?.role[0].toUpperCase() + data?.role.slice(1)}
+        </h5>
         <div className="w-full flex items-center justify-center">
           <div
             className={`status-${status?.toLowerCase()} flex items-center gap-x-2 w-fit px-3 border-2 py-0.5 rounded-2xl`}
@@ -90,6 +103,7 @@ const UserDetailBlock = ({ status, data }) => {
           {new Date(data?.updated_at).toString().slice(4, 21)}
         </p>
         <div className="flex items-center justify-end">
+          {/* {userData?.role != "superadmin" && ( */}
           <div className="mr-4">
             <svg
               className="w-4 min-[1600px]:w-5 h-4 min-[1600px]:h-5"
@@ -110,6 +124,7 @@ const UserDetailBlock = ({ status, data }) => {
               />
             </svg>
           </div>
+          {/* )} */}
           <div>
             <svg
               className="w-4 min-[1600px]:w-5 h-4 min-[1600px]:h-5"

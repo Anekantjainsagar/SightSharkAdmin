@@ -251,6 +251,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                       .then((responses) => {
                         toast.success("Tables added successfully!");
                         setShowSubscribe(false);
+                        getAgencyDataSources(original_data?.agency_id);
                       })
                       .catch((error) => {
                         console.error("Error adding tables", error);

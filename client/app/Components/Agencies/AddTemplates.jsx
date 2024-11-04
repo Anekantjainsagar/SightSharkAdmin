@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Required from "../Utils/Required";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
+import Context from "@/app/Context/Context";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -24,17 +25,19 @@ const customStyles = {
 };
 
 const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
+  const { getTemplates } = useContext(Context);
   const [data, setData] = useState({
     template_name: "",
     template_link: "",
     profile_picture: null,
   });
+  const [file, setFile] = useState("");
   const fileInputRef = React.useRef(null);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file.name);
+      setFile(URL.createObjectURL(file));
       setData({ ...data, profile_picture: file });
     }
   };
@@ -77,13 +80,11 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
                     +
                   </div>
                   <Image
-                    src={
-                      data?.profile ? data?.profile : "/Agency/temp_logo.png"
-                    }
+                    src={file || "/Agency/temp_logo.png"}
                     alt="Agency Img"
                     width={1000}
                     height={1000}
-                    className="w-[6vw] min-[1600px]:w-[8vw] rounded-full"
+                    className="w-[6vw] aspect-square object-cover min-[1600px]:w-[8vw] rounded-full"
                   />
                 </div>
               </div>
@@ -169,6 +170,7 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
                         if (res.msg) {
                           toast.success("Template added successfully");
                           setShowSubscribe(false);
+                          getTemplates(original_data?.agency_id);
                         } else if (res.detail) {
                           toast.error(res.detail);
                         }

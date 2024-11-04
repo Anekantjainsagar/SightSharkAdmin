@@ -1,13 +1,23 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DeleteAgency from "../Agencies/DeleteAgency";
+import Context from "@/app/Context/Context";
 
-const AgencyDetailsBlock = ({ status, percentage, data }) => {
+const AgencyDetailsBlock = ({ data }) => {
+  const { selectedAgencies, setSelectedAgencies } = useContext(Context);
   const history = useRouter();
+  const [percentage, setPercentage] = useState(0);
   const [deleteAgency, setDeleteAgency] = useState(false);
-
   let name = data?.agency_name?.replaceAll(" ", "-");
+
+  useEffect(() => {
+    if (data?.current_number_of_clients && data?.license_limit) {
+      setPercentage(
+        parseInt((data?.current_number_of_clients / data?.license_limit) * 100)
+      );
+    }
+  }, [data]);
 
   return (
     <>
@@ -23,12 +33,25 @@ const AgencyDetailsBlock = ({ status, percentage, data }) => {
         }}
         className="py-4 px-7 border-gray-200/5 border-y grid agencyBlockGrid items-center cursor-pointer text-textGrey text-sm min-[1600px]:text-base"
       >
-        <div className="inline-flex items-start">
+        <div
+          className="inline-flex items-start"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (selectedAgencies?.includes(data?.agency_id)) {
+              setSelectedAgencies(
+                selectedAgencies?.filter((e) => e != data?.agency_id)
+              );
+            } else {
+              setSelectedAgencies([...selectedAgencies, data?.agency_id]);
+            }
+          }}
+        >
           <label className="relative flex items-center cursor-pointer">
             <input
               type="checkbox"
               className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
               id="check"
+              checked={selectedAgencies?.includes(data?.agency_id)}
             />
             <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
               <svg

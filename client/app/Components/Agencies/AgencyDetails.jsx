@@ -197,7 +197,18 @@ const AgencyDetails = ({ data }) => {
                 {e?.title == "Status" && (
                   <div className="w-[10px] mr-2 h-[10px] rounded-full bg-[#12B76A]"></div>
                 )}
-                <span>{e?.value}</span>
+                {e?.title === "Website" ? (
+                  <span
+                    className="hover:underline cursor-pointer transition-all"
+                    onClick={() => {
+                      window.open(e?.value, "__blank");
+                    }}
+                  >
+                    {e?.value?.slice(0, 25) + "..."}
+                  </span>
+                ) : (
+                  <span>{e?.value}</span>
+                )}
               </div>
             </div>
           );
@@ -252,7 +263,7 @@ const AgencyDetails = ({ data }) => {
         </h5>
         <div className="w-4/12 mx-auto my-4 relative">
           <p className="text-center text-sm min-[1600px]:text-xl absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 font-semibold">
-            1{" "}
+            {data?.current_number_of_clients}{" "}
             <span className="text-xs min-[1600px]:text-sm font-normal">
               out of
             </span>{" "}

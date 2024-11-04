@@ -27,14 +27,13 @@ const customStyles = {
 
 const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
   let maxPage = 1;
-  const { setUsers, users } = useContext(Context);
-  const [showPassword, setShowPassword] = useState(false);
+  const { getUsers } = useContext(Context);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    access: "guest",
+    access: "admin",
     profile: "",
     phone: "",
     postal_code: "",
@@ -42,6 +41,7 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
     password: "",
     profile: "",
   });
+  const [file, setFile] = useState("");
   const fileInputRef = React.useRef(null);
 
   useEffect(() => {
@@ -51,12 +51,13 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
       lastName: userData?.last_name,
       access: userData?.role,
     });
+    setFile(userData?.profile_picture);
   }, [userData]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     if (file) {
+      setFile(URL.createObjectURL(file));
       setData({ ...data, profile: file });
     }
   };
@@ -82,9 +83,9 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
       let formdata = new FormData();
 
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
-        formdata.append("file_content", data?.profile); // The file itself
-        formdata.append("filename", data?.profile.name); // The filename
-        formdata.append("content_type", data?.profile.type); // The MIME type
+        formdata.append("profile_picture", data?.profile); // The file itself
+        formdata.append("profile_picture_filename", data?.profile.name); // The filename
+        formdata.append("profile_picture_content_type", data?.profile.type); // The MIME type
       } else {
         console.log(
           "Profile picture is not a valid file or blob, skipping upload."
@@ -106,8 +107,7 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
           })
           .then((res) => {
             if (res.msg) {
-              let temp = users?.data?.filter((e) => e?.id != userData?.id);
-              setUsers({ ...users, data: [...temp, res.data] });
+              getUsers();
               toast.success("User updated successfully");
               closeModal();
             }
@@ -162,11 +162,11 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
                   +
                 </div>
                 <Image
-                  src={data?.profile ? data?.profile : "/Agency/temp_logo.png"}
+                  src={file || "/Agency/temp_logo.png"}
                   alt="Agency Img"
                   width={1000}
                   height={1000}
-                  className="w-[6vw] min-[1600px]:w-[4vw] rounded-full"
+                  className="w-[6vw] aspect-squre min-[1600px]:w-[4vw] rounded-full"
                 />
               </div>
             </div>
@@ -242,10 +242,10 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
                     setData({ ...data, access: e.target.value });
                   }}
                 >
-                  {["admin", "superadmin", "guest"].map((e, i) => {
+                  {["admin", "superadmin"].map((e, i) => {
                     return (
                       <option value={e} key={i} className="bg-main">
-                        {e}
+                        {e[0]?.toUpperCase() + e.slice(1)}
                       </option>
                     );
                   })}

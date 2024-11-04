@@ -13,6 +13,8 @@ const State = (props) => {
   const [datasources, setDatasources] = useState();
   const [selectedDataSources, setSelectedDataSources] = useState([]);
   const [agencyDatasources, setAgencyDatasources] = useState();
+  const [selectedAgencies, setSelectedAgencies] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
   const checkToken = () => {
     let cookie = getCookie("token");
@@ -271,6 +273,10 @@ const State = (props) => {
         selectedDataSources,
         getAgencyDataSources,
         agencyDatasources,
+        setSelectedAgencies,
+        selectedAgencies,
+        selectedUsers,
+        setSelectedUsers,
       }}
     >
       {props.children}
