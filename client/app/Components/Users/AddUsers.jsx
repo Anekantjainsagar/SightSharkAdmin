@@ -35,7 +35,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
     firstName: "",
     lastName: "",
     email: "",
-    access: "guest",
+    access: "admin",
     profile: "",
     phone: "",
     postal_code: "",
@@ -48,7 +48,6 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file);
       setFile(URL.createObjectURL(file));
       setData({ ...data, profile: file }); // Update `data` state with the selected file
     } else {

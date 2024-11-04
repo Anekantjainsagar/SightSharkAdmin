@@ -80,8 +80,9 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
         status: data?.status || "active",
       }).toString();
 
-      let formdata = new FormData();
+      console.log(data);
 
+      let formdata = new FormData();
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
         formdata.append("profile_picture", data?.profile); // The file itself
         formdata.append("profile_picture_filename", data?.profile.name); // The filename
