@@ -40,25 +40,25 @@ const State = (props) => {
     }
   };
 
-  const getUsers = (grow, order_by) => {
+  const getUsers = (grow, order_by = "created_at", type = "asc") => {
     let cookie = getCookie("token");
     let page = users?.current_page ? users?.current_page : 1;
     let limit = users?.limit ? users?.limit : 7;
-    let order = users?.order == "asc" ? "desc" : "asc";
-    let sort_by = "created_at";
-
     if (grow == "inc") {
       page++;
     } else if (grow == "dec") {
       page--;
     }
+
     if (cookie?.length > 5) {
       try {
         axios
           .get(
             `${BACKEND_URI}/user/users?offset=${
               (page - 1) * limit
-            }&limit=${limit}&sort_by=${sort_by}&order=${order}`,
+            }&limit=${limit}&sort_by=${order_by}&order=${
+              type ? "asc" : "desc"
+            }`,
             {
               headers: {
                 Accept: "application/json",

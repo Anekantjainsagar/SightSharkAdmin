@@ -9,10 +9,14 @@ import { CSVLink } from "react-csv";
 import Context from "../Context/Context";
 
 let sort_by_options = [
-  "Created Ascending",
-  "Created Descending",
+  "Created Date Ascending",
+  "Created Date Descending",
   "Agency Name Ascending",
   "Agency Name Descending",
+  "Status Ascending",
+  "Status Descending",
+  "Deployment Date Ascending",
+  "Deployment Date Descending",
 ];
 
 const Overview = () => {
@@ -108,7 +112,7 @@ const Overview = () => {
                   </svg>
                   Sort By
                   {showSortBy && (
-                    <div className="absolute right-0 top-[56px] rounded-xl w-[15vw] bg-main">
+                    <div className="absolute right-0 top-[56px] rounded-xl w-[15vw] bg-main z-50 small-scroller h-[20vh] overflow-y-auto">
                       {sort_by_options?.map((e, i) => {
                         return (
                           <p
@@ -123,6 +127,14 @@ const Overview = () => {
                                 getAgencies(null, "agency_name", true);
                               } else if (e === sort_by_options[3]) {
                                 getAgencies(null, "agency_name", false);
+                              } else if (e === sort_by_options[4]) {
+                                getAgencies(null, "status", true);
+                              } else if (e === sort_by_options[5]) {
+                                getAgencies(null, "status", false);
+                              } else if (e === sort_by_options[6]) {
+                                getAgencies(null, "deployment_date", true);
+                              } else if (e === sort_by_options[7]) {
+                                getAgencies(null, "deployment_date", false);
                               }
                               setShowSortBy(false);
                             }}
