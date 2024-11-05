@@ -81,7 +81,7 @@ const State = (props) => {
     }
   };
 
-  const getAgencies = (grow) => {
+  const getAgencies = (grow, order_by = "created_at", type = "asc") => {
     let cookie = getCookie("token");
     let page = agencies?.current_page ? agencies?.current_page : 1;
     let limit = agencies?.limit ? agencies?.limit : 8;
@@ -90,13 +90,16 @@ const State = (props) => {
     } else if (grow == "dec") {
       page--;
     }
+
     if (cookie?.length > 5) {
       try {
         axios
           .get(
             `${BACKEND_URI}/agency/agencies?offset=${
               (page - 1) * limit
-            }&limit=${limit}`,
+            }&limit=${limit}&sort_by=${order_by}&order=${
+              type ? "asc" : "desc"
+            }`,
             {
               headers: {
                 Accept: "application/json",

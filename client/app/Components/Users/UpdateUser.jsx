@@ -27,6 +27,7 @@ const customStyles = {
 
 const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
   let maxPage = 1;
+  const context = useContext(Context);
   const { getUsers } = useContext(Context);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
@@ -40,7 +41,9 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
     country: "India",
     password: "",
     profile: "",
+    status: "",
   });
+  const [availableRoles, setAvailableRoles] = useState([]);
   const [file, setFile] = useState("");
   const fileInputRef = React.useRef(null);
 
@@ -53,6 +56,19 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
     });
     setFile(userData?.profile_picture);
   }, [userData]);
+
+  useEffect(() => {
+    if (context?.userData?.role == "superadmin") {
+      setAvailableRoles(["admin", "guest"]);
+      setData({ ...data, access: "admin" });
+    } else if (context?.userData?.role == "admin") {
+      setAvailableRoles(["guest"]);
+      setData({ ...data, access: "guest" });
+    } else if (context?.userData?.role == "owner") {
+      setAvailableRoles(["superadmin", "admin", "guest"]);
+      setData({ ...data, access: "superadmin" });
+    }
+  }, [context?.userData]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
@@ -82,13 +98,13 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
 
       let formdata = new FormData();
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
-        formdata.append("profile_picture", data?.profile); // The file itself
-        formdata.append("profile_picture_filename", data?.profile.name); // The filename
-        formdata.append("profile_picture_content_type", data?.profile.type); // The MIME type
+        formdata.append("profile_picture", data?.profile);
+        formdata.append("profile_picture_filename", data?.profile.name);
+        formdata.append("profile_picture_content_type", data?.profile.type);
       } else {
-        formdata.append("profile_picture", null); // The file itself
-        formdata.append("profile_picture_filename", ""); // The filename
-        formdata.append("profile_picture_content_type", ""); // The MIME type
+        formdata.append("profile_picture", "");
+        formdata.append("profile_picture_filename", "");
+        formdata.append("profile_picture_content_type", "");
       }
 
       try {
@@ -241,7 +257,7 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
                     setData({ ...data, access: e.target.value });
                   }}
                 >
-                  {["admin", "superadmin"].map((e, i) => {
+                  {availableRoles?.map((e, i) => {
                     return (
                       <option value={e} key={i} className="bg-main">
                         {e[0]?.toUpperCase() + e.slice(1)}
@@ -333,6 +349,30 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
                   placeholder="Enter Country"
                   className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="status"
+                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                >
+                  Status
+                </label>
+                <select
+                  id="status"
+                  value={data?.status}
+                  onChange={(e) => {
+                    setData({ ...data, status: e.target.value });
+                  }}
+                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                >
+                  {["active", "inactive"].map((e, i) => {
+                    return (
+                      <option key={i} className="bg-main" value={e}>
+                        {e[0]?.toUpperCase() + e.slice(1)}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             </div>
           </div>

@@ -21,6 +21,7 @@ let databar = [
   "Agency Details",
   "Key Contact Information",
   "Portal Deployment",
+  "Credentials",
 ];
 
 const Overview = ({ params }) => {
@@ -77,6 +78,7 @@ const Overview = ({ params }) => {
         acc2: temp?.service_account_api,
       },
     });
+    setStatus(temp?.status);
   }, [name, agencies]);
 
   const handleFileChangeProfile = (event) => {
@@ -291,10 +293,10 @@ const Overview = ({ params }) => {
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                           >
-                            {["Active", "Offline", "On Hold"].map((e, i) => {
+                            {["active", "offline", "hold"].map((e, i) => {
                               return (
                                 <option value={e} key={i} className="bg-main">
-                                  {e}
+                                  {e[0]?.toUpperCase() + e.slice(1)}
                                 </option>
                               );
                             })}
@@ -450,7 +452,7 @@ const Overview = ({ params }) => {
                         </div>
                       </div>
                     </div>
-                  ) : (
+                  ) : selected === databar[2] ? (
                     <div className="flex flex-col items-start justify-between mt-4 px-3">
                       <div className="w-full mb-5">
                         <div className="flex flex-col mb-5">
@@ -502,7 +504,10 @@ const Overview = ({ params }) => {
                           ></textarea>
                         </div>
                       </div>{" "}
-                      <div className="grid grid-cols-2 w-full gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-start justify-between mt-4 px-3">
+                      <div className="w-full">
                         <div className="flex flex-col">
                           <label
                             htmlFor="emailKey"
@@ -527,7 +532,7 @@ const Overview = ({ params }) => {
                             className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                           />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col mt-8 min-[1600px]:mt-6">
                           <label
                             htmlFor="passwordKey"
                             className="mb-1.5 text-sm min-[1600px]:text-base"
@@ -609,6 +614,7 @@ const Overview = ({ params }) => {
                             key_contact_phone: data?.keyContact?.phone,
                             service_account_cloud: data?.serviceAcc?.acc1,
                             service_account_api: data?.serviceAcc?.acc2,
+                            status,
                           }).toString();
 
                           try {

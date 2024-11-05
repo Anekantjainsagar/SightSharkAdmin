@@ -38,7 +38,9 @@ const AgencyDetails = ({ data }) => {
               </svg>
             ),
             title: "Status",
-            value: "Active",
+            value:
+              data?.status &&
+              data?.status[0]?.toUpperCase() + data?.status.slice(1),
           },
           {
             img: (
@@ -191,11 +193,15 @@ const AgencyDetails = ({ data }) => {
               </div>
               <div
                 className={`${
-                  e?.title == "Status" ? "text-[#12B76A]" : "text-[#ECECED]"
+                  e?.title == "Status"
+                    ? `status-text-${e?.value?.toLowerCase()}`
+                    : "text-[#ECECED]"
                 } flex items-center text-sm min-[1600px]:text-base`}
               >
                 {e?.title == "Status" && (
-                  <div className="w-[10px] mr-2 h-[10px] rounded-full bg-[#12B76A]"></div>
+                  <div
+                    className={`w-[10px] mr-2 h-[10px] rounded-full status-${e?.value?.toLowerCase()}`}
+                  ></div>
                 )}
                 {e?.title === "Website" ? (
                   <span

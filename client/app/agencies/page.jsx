@@ -5,14 +5,21 @@ import Navbar from "@/app/Components/Utils/Navbar";
 import AgencyDetailsBlock from "@/app/Components/Utils/AgencyDetails";
 import AddAgency from "@/app/Components/Agencies/AddAgency";
 import { FaPlus } from "react-icons/fa";
-import { CSVLink, CSVDownload } from "react-csv";
-
+import { CSVLink } from "react-csv";
 import Context from "../Context/Context";
+
+let sort_by_options = [
+  "Created Ascending",
+  "Created Descending",
+  "Agency Name Ascending",
+  "Agency Name Descending",
+];
 
 const Overview = () => {
   const { agencies, getAgencies, setSelectedAgencies, selectedAgencies } =
     useContext(Context);
   const [addAgency, setAddAgency] = useState(false);
+  const [showSortBy, setShowSortBy] = useState(false);
 
   const showNextPage = () => {
     getAgencies("inc");
@@ -78,7 +85,12 @@ const Overview = () => {
                     </button>
                   </CSVLink>
                 )}
-                <button className="glass px-6 py-2.5 min-[1600px]:py-3 rounded-xl ml-4 text-sm min-[1600px]:text-base flex items-center gap-x-2 border border-gray-200/5">
+                <button
+                  className="bg-gray-700 relative px-6 py-2.5 min-[1600px]:py-3 rounded-xl ml-4 text-sm min-[1600px]:text-base flex items-center gap-x-2 border border-gray-200/5"
+                  onClick={(e) => {
+                    setShowSortBy(!showSortBy);
+                  }}
+                >
                   <svg
                     width="20"
                     height="20"
@@ -95,6 +107,33 @@ const Overview = () => {
                     />
                   </svg>
                   Sort By
+                  {showSortBy && (
+                    <div className="absolute right-0 top-[56px] rounded-xl w-[15vw] bg-main">
+                      {sort_by_options?.map((e, i) => {
+                        return (
+                          <p
+                            key={i}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              if (e == sort_by_options[0]) {
+                                getAgencies(null, "created_by", true);
+                              } else if (e == sort_by_options[1]) {
+                                getAgencies(null, "created_by", false);
+                              } else if (e === sort_by_options[2]) {
+                                getAgencies(null, "agency_name", true);
+                              } else if (e === sort_by_options[3]) {
+                                getAgencies(null, "agency_name", false);
+                              }
+                              setShowSortBy(false);
+                            }}
+                            className="text-gray-200 py-2 hover:text-gray-300 rounded-xl transition-all hover:bg-gray-700/40"
+                          >
+                            {e}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  )}
                 </button>
               </div>
             </div>
