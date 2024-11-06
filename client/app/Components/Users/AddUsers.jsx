@@ -9,7 +9,6 @@ import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import Context from "@/app/Context/Context";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { SiAzuredataexplorer } from "react-icons/si";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -29,7 +28,7 @@ const customStyles = {
 const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 1;
   const fileInputRef = React.useRef(null);
-  const { setUsers, users, userData } = useContext(Context);
+  const { setUsers, users, userData, getUsers } = useContext(Context);
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
   const [file, setFile] = useState();
@@ -120,7 +119,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
             if (res.msg) {
               toast.success("User created successfully");
               closeModal();
-              setUsers({ ...users, data: [...users.data, res.data] });
+              getUsers();
             } else if (res.detail) {
               toast.error(res.detail);
             }

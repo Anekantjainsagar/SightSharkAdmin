@@ -120,9 +120,9 @@ const Overview = () => {
                             onClick={(event) => {
                               event.stopPropagation();
                               if (e == sort_by_options[0]) {
-                                getAgencies(null, "created_by", true);
+                                getAgencies(null, "created_at", true);
                               } else if (e == sort_by_options[1]) {
-                                getAgencies(null, "created_by", false);
+                                getAgencies(null, "created_at", false);
                               } else if (e === sort_by_options[2]) {
                                 getAgencies(null, "agency_name", true);
                               } else if (e === sort_by_options[3]) {
