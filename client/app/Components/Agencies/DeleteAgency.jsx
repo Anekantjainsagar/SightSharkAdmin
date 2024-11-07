@@ -23,7 +23,7 @@ const customStyles = {
 
 const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
   const [value, setValue] = useState("");
-  const { agencies, setAgencies, getAgencies } = useContext(Context);
+  const { getAgencies } = useContext(Context);
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -88,7 +88,7 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
             <button
               className={`bg-red-600 w-full py-1.5 min-[1600px]:py-2 rounded-lg text-center`}
               onClick={() => {
-                if (value == name) {
+                if (value.trim() == name) {
                   try {
                     fetch(`${BACKEND_URI}/agency/delete/${id}`, {
                       method: "DELETE",
