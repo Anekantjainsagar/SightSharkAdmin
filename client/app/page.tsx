@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,11 +11,30 @@ import axios from "axios";
 
 const App = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showOtp, setShowOtp] = useState(false);
   const [user, setUser] = useState({ password: "", email: "" });
+  const [showOtp, setShowOtp] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const handleRememberMe = () => {
+    localStorage.setItem("email", user?.email);
+    localStorage.setItem("password", user?.password);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      setRememberMe(true);
+    }
+    setUser({
+      email: localStorage.getItem("email"),
+      password: localStorage.getItem("password"),
+    });
+  }, []);
 
   const onLogin = () => {
     if (user?.email && user?.password) {
+      if (rememberMe) {
+        handleRememberMe();
+      }
       try {
         const loginData = new URLSearchParams({
           username: user?.email,
@@ -35,15 +54,15 @@ const App = () => {
           .then((res) => {
             if (res.detail) {
               toast.error(res.detail);
-            }
-            if (res.msg === "Verification code sent to your email") {
+            } else {
               toast.success("Login Successfully check otp for verification");
               setShowOtp(true);
             }
           })
           .catch((err) => {
-            console.log(err);
-            toast.error(err.msg);
+            if (err.status == 401) {
+              toast.error("Invalid credentials");
+            }
           });
       } catch (error) {
         console.log(error);
@@ -55,7 +74,7 @@ const App = () => {
 
   return (
     <div className="bg-[#091022] w-full flex items-start justify-between h-[100vh]">
-      <Toaster />
+      <Toaster />{" "}
       <LoginOtp
         showSubscribe={showOtp}
         setShowSubscribe={setShowOtp}
@@ -78,7 +97,9 @@ const App = () => {
           <h1 className="text-3xl min-[1600px]:text-[40px] font-semibold">
             Welcome Back
           </h1>
-          <p className="mainText18 text-white/80">Login into your account</p>
+          <p className="mainText18 text-white/80 mt-2">
+            Login into your account
+          </p>
           <div className="w-11/12 min-[1600px]:mt-4">
             <div className="flex flex-col mt-5 min-[1600px]:mt-10 mb-3 min-[1600px]:mb-6">
               <label
@@ -133,6 +154,8 @@ const App = () => {
                       type="checkbox"
                       className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
                       id="check"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
                     />
                     <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                       <svg
