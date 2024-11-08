@@ -1,15 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
-import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
-import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { AiOutlineClose } from "react-icons/ai";
 
-const RecentActivites = () => {
+const RecentActivites = ({ params }) => {
+  const { name } = params;
   const history = useRouter();
 
   return (
@@ -32,7 +29,7 @@ const RecentActivites = () => {
                     </h4>
                     <p
                       className="text-white flex items-center cursor-pointer text-xl"
-                      onClick={() => history.push("/agencies/alpha-solutions")}
+                      onClick={() => history.push(`/agencies/${name}`)}
                     >
                       <AiOutlineClose />
                     </p>

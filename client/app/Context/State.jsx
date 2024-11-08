@@ -15,6 +15,7 @@ const State = (props) => {
   const [agencyDatasources, setAgencyDatasources] = useState();
   const [selectedAgencies, setSelectedAgencies] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [clickedUsers, setClickedUsers] = useState();
 
   const checkToken = () => {
     let cookie = getCookie("token");
@@ -90,7 +91,7 @@ const State = (props) => {
     } else if (grow == "dec") {
       page--;
     }
-    
+
     if (cookie?.length > 5) {
       try {
         axios
@@ -280,6 +281,8 @@ const State = (props) => {
         selectedAgencies,
         selectedUsers,
         setSelectedUsers,
+        setClickedUsers,
+        clickedUsers,
       }}
     >
       {props.children}

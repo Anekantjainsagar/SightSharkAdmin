@@ -21,7 +21,6 @@ let databar = [
   "Agency Details",
   "Key Contact Information",
   "Portal Deployment",
-  "Credentials",
 ];
 
 const Overview = ({ params }) => {
@@ -30,6 +29,7 @@ const Overview = ({ params }) => {
   const [selected, setSelected] = useState("Agency Details");
   const [deleteAgency, setDeleteAgency] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [original_data, setOriginal_data] = useState();
   const [data, setData] = useState({
     name: "",
     profile: "",
@@ -59,6 +59,7 @@ const Overview = ({ params }) => {
     let temp = agencies?.data?.find((e) => {
       return e?.agency_name?.replaceAll(" ", "-") == name;
     });
+    setOriginal_data(temp);
     setData({
       name: temp?.agency_name,
       website: temp?.website,
@@ -112,7 +113,7 @@ const Overview = ({ params }) => {
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex flex-row-reverse items-start justify-between px-6">
-            <AgencyDetails data={data} />
+            <AgencyDetails data={original_data} />
             <div className="w-[69%] min-[1600px]:h-[82vh] h-fit">
               <AgencyDetailsTopbar name={name} />
               <div className="border border-gray-500/5 min-[1600px]:h-[83vh] h-fit w-full rounded-lg p-3 min-[1600px]:p-4 flex flex-col justify-between">
@@ -323,136 +324,105 @@ const Overview = ({ params }) => {
                       </div>
                     </div>
                   ) : selected === databar[1] ? (
-                    <div className="flex items-start justify-between mt-4 px-3">
-                      <div className="flex items-center w-1/12">
-                        <div className="relative flex items-center justify-center">
-                          <div
-                            onClick={() => {
-                              fileInputRefAgent.current.click();
-                            }}
-                            className="absolute bg-newBlue text-xl py-1.5 px-1.5 -bottom-1 cursor-pointer -right-1 rounded-full"
-                          >
-                            <BiPencil />
-                          </div>{" "}
-                          <input
-                            type="file"
-                            ref={fileInputRefAgent}
-                            style={{ display: "none" }}
-                            onChange={handleFileChangeAgent}
-                          />
-                          <Image
-                            src={
-                              data?.keyContact?.profile
-                                ? data?.keyContact?.profile
-                                : "/Agency/individual/agent.png"
-                            }
-                            alt="Agency Img"
-                            width={1000}
-                            height={1000}
-                            className="rounded-full border border-gray-300/30"
-                          />
-                        </div>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-6 mt-4 px-3">
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="namekey"
+                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                        >
+                          Name
+                        </label>
+                        <input
+                          id="namekey"
+                          value={data?.keyContact?.name}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                name: e.target.value,
+                              },
+                            });
+                          }}
+                          type="text"
+                          placeholder="Enter Name"
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
                       </div>
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-6 w-11/12 pl-[2vw]">
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="namekey"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Name
-                          </label>
-                          <input
-                            id="namekey"
-                            value={data?.keyContact?.name}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  name: e.target.value,
-                                },
-                              });
-                            }}
-                            type="text"
-                            placeholder="Enter Name"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="designation"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Designation
-                          </label>
-                          <input
-                            id="designation"
-                            value={data?.keyContact?.designation}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  designation: e.target.value,
-                                },
-                              });
-                            }}
-                            type="text"
-                            placeholder="Enter Designation"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="email"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Email Address
-                          </label>
-                          <input
-                            id="email"
-                            value={data?.keyContact?.email}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  email: e.target.value,
-                                },
-                              });
-                            }}
-                            type="email"
-                            placeholder="Enter Email Address"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="phone"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Phone no.
-                          </label>
-                          <input
-                            id="phone"
-                            value={data?.keyContact?.phone}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  phone: e.target.value,
-                                },
-                              });
-                            }}
-                            type="number"
-                            placeholder="Enter Phone no."
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="designation"
+                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                        >
+                          Designation
+                        </label>
+                        <input
+                          id="designation"
+                          value={data?.keyContact?.designation}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                designation: e.target.value,
+                              },
+                            });
+                          }}
+                          type="text"
+                          placeholder="Enter Designation"
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="email"
+                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                        >
+                          Email Address
+                        </label>
+                        <input
+                          id="email"
+                          value={data?.keyContact?.email}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                email: e.target.value,
+                              },
+                            });
+                          }}
+                          type="email"
+                          placeholder="Enter Email Address"
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="phone"
+                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                        >
+                          Phone no.
+                        </label>
+                        <input
+                          id="phone"
+                          value={data?.keyContact?.phone}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                phone: e.target.value,
+                              },
+                            });
+                          }}
+                          type="number"
+                          placeholder="Enter Phone no."
+                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
                       </div>
                     </div>
-                  ) : selected === databar[2] ? (
+                  ) : (
                     <div className="flex flex-col items-start justify-between mt-4 px-3">
                       <div className="w-full mb-5">
                         <div className="flex flex-col mb-5">
@@ -502,70 +472,6 @@ const Overview = ({ params }) => {
                             placeholder="Service Account 2"
                             className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                           ></textarea>
-                        </div>
-                      </div>{" "}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-start justify-between mt-4 px-3">
-                      <div className="w-full">
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="emailKey"
-                            className="mb-1.5 text-sm min-[1600px]:text-base"
-                          >
-                            Email
-                          </label>
-                          <input
-                            id="emailKey"
-                            value={data?.credentials?.email}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                credentials: {
-                                  ...data?.credentials,
-                                  email: e.target.value,
-                                },
-                              });
-                            }}
-                            type="text"
-                            placeholder="Enter Email"
-                            className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                          />
-                        </div>
-                        <div className="flex flex-col mt-8 min-[1600px]:mt-6">
-                          <label
-                            htmlFor="passwordKey"
-                            className="mb-1.5 text-sm min-[1600px]:text-base"
-                          >
-                            Password
-                          </label>
-                          <div className="w-full relative">
-                            <input
-                              type={showPassword ? "text" : "password"}
-                              id="passwordKey"
-                              value={data?.credentials?.password}
-                              onChange={(e) => {
-                                setData({
-                                  ...data,
-                                  credentials: {
-                                    ...data?.credentials,
-                                    password: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="Enter Password"
-                              className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                            />
-                            <div
-                              className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setShowPassword(!showPassword);
-                              }}
-                            >
-                              {showPassword ? <LuEye /> : <LuEyeOff />}
-                            </div>
-                          </div>
                         </div>
                       </div>{" "}
                     </div>

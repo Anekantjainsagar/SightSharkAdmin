@@ -4,8 +4,9 @@ import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import Context from "@/app/Context/Context";
 
-const UserDetailBlock = ({ status, data }) => {
-  const { selectedUsers, setSelectedUsers, userData } = useContext(Context);
+const UserDetailBlock = ({ data }) => {
+  const { selectedUsers, setSelectedUsers, userData, setClickedUsers } =
+    useContext(Context);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
 
@@ -19,7 +20,6 @@ const UserDetailBlock = ({ status, data }) => {
       <UpdateUser
         showSubscribe={showUpdatePopup}
         setShowSubscribe={setShowUpdatePopup}
-        userData={data}
       />
       <div className="py-4 px-7 border-gray-200/5 border-y grid userBlockGrid items-center cursor-pointer text-textGrey text-sm min-[1600px]:text-base">
         <div
@@ -57,7 +57,7 @@ const UserDetailBlock = ({ status, data }) => {
               </svg>
             </span>
           </label>
-        </div>{" "}
+        </div>
         <div className="flex items-start min-[1600px]:ml-0 ml-2">
           {!data?.profile_picture ? (
             <Image
@@ -112,6 +112,7 @@ const UserDetailBlock = ({ status, data }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 onClick={(e) => {
                   e.stopPropagation();
+                  setClickedUsers(data);
                   setShowUpdatePopup(!showUpdatePopup);
                 }}
               >

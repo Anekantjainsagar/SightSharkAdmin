@@ -25,10 +25,10 @@ const customStyles = {
   },
 };
 
-const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
+const UpdateUser = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 1;
   const context = useContext(Context);
-  const { getUsers } = useContext(Context);
+  const { getUsers, clickedUsers } = useContext(Context);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     firstName: "",
@@ -49,26 +49,26 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
 
   useEffect(() => {
     setData({
-      ...userData,
-      firstName: userData?.first_name,
-      lastName: userData?.last_name,
-      access: userData?.role,
+      firstName: clickedUsers?.first_name,
+      lastName: clickedUsers?.last_name,
+      access: clickedUsers?.role,
+      ...clickedUsers,
     });
-    setFile(userData?.profile_picture);
-  }, [userData]);
+    setFile(clickedUsers?.profile_picture);
+  }, [clickedUsers]);
 
   useEffect(() => {
-    if (context?.userData?.role == "superadmin") {
+    if (context?.clickedUsers?.role == "superadmin") {
       setAvailableRoles(["admin", "guest"]);
       setData({ ...data, access: "admin" });
-    } else if (context?.userData?.role == "admin") {
+    } else if (context?.clickedUsers?.role == "admin") {
       setAvailableRoles(["guest"]);
       setData({ ...data, access: "guest" });
-    } else if (context?.userData?.role == "owner") {
+    } else if (context?.clickedUsers?.role == "owner") {
       setAvailableRoles(["superadmin", "admin", "guest"]);
       setData({ ...data, access: "superadmin" });
     }
-  }, [context?.userData]);
+  }, [context?.clickedUsers]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
@@ -108,7 +108,7 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, userData }) => {
       }
 
       try {
-        fetch(`${BACKEND_URI}/user/update/${userData?.id}?${queryParams}`, {
+        fetch(`${BACKEND_URI}/user/update/${clickedUsers?.id}?${queryParams}`, {
           headers: {
             Accept:
               "application/json, application/xml, text/plain, text/html, *.*",

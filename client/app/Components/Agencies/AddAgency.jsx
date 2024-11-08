@@ -6,7 +6,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import Info from "@/app/Components/Login/Info";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 import Required from "../Utils/Required";
 import { LuEye, LuEyeOff } from "react-icons/lu";
@@ -31,6 +30,7 @@ const customStyles = {
 
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
+  const fileInputRef = React.useRef(null);
   const { setAgencies, agencies, getAgencies } = useContext(Context);
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -54,8 +54,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     credentials: { email: "", password: "", cpassword: "" },
     dataSources: [],
   });
-  const fileInputRef = React.useRef(null);
-  const fileInputRefAgent = React.useRef(null);
 
   const handleSave = () => {
     if (
@@ -138,10 +136,51 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     }
   };
 
-  const handleFileChangeAgent = (event) => {
+  const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      console.log("Selected file:", file.name);
+    if (file && file.type === "application/json") {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          setData({
+            ...data,
+            serviceAcc: { ...data.serviceAcc, acc1: JSON.stringify(content) },
+          });
+        } catch (error) {
+          console.error("Invalid JSON:", error);
+          alert("Invalid JSON file.");
+        }
+      };
+
+      reader.readAsText(file);
+    } else {
+      toast.error("Please upload a valid JSON file.");
+    }
+  };
+
+  const handleFileUpload2 = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "application/json") {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          setData({
+            ...data,
+            serviceAcc: { ...data.serviceAcc, acc2: JSON.stringify(content) },
+          });
+        } catch (error) {
+          console.error("Invalid JSON:", error);
+          alert("Invalid JSON file.");
+        }
+      };
+
+      reader.readAsText(file);
+    } else {
+      toast.error("Please upload a valid JSON file.");
     }
   };
 
@@ -363,184 +402,138 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 </div>
               </div>
             ) : page == 2 ? (
-              <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="relative">
-                    <input
-                      type="file"
-                      ref={fileInputRefAgent}
-                      style={{ display: "none" }}
-                      onChange={handleFileChangeAgent}
-                    />
-                    <div
-                      onClick={() => {
-                        fileInputRefAgent.current.click();
-                      }}
-                      className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
-                    >
-                      +
-                    </div>
-                    <Image
-                      src={"/Agency/temp_logo.png"}
-                      alt="Agency Img"
-                      width={1000}
-                      height={1000}
-                      className="w-[4vw] rounded-full"
-                    />
-                  </div>
+              <div className="px-[4vw] min-[1600px]:px-[8vw] w-full grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="namekey"
+                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="namekey"
+                    value={data?.keyContact?.name}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          name: e.target.value,
+                        },
+                      });
+                    }}
+                    type="text"
+                    placeholder="Enter Name"
+                    className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
-                  <div className="flex flex-col">
-                    <label
-                      htmlFor="namekey"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
-                    >
-                      Name
-                    </label>
-                    <input
-                      id="namekey"
-                      value={data?.keyContact?.name}
-                      onChange={(e) => {
-                        setData({
-                          ...data,
-                          keyContact: {
-                            ...data?.keyContact,
-                            name: e.target.value,
-                          },
-                        });
-                      }}
-                      type="text"
-                      placeholder="Enter Name"
-                      className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label
-                      htmlFor="designation"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
-                    >
-                      Designation
-                    </label>
-                    <input
-                      id="designation"
-                      value={data?.keyContact?.designation}
-                      onChange={(e) => {
-                        setData({
-                          ...data,
-                          keyContact: {
-                            ...data?.keyContact,
-                            designation: e.target.value,
-                          },
-                        });
-                      }}
-                      type="text"
-                      placeholder="Enter Designation"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label
-                      htmlFor="email"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
-                    >
-                      Email Address
-                      <Required />
-                    </label>
-                    <input
-                      id="email"
-                      value={data?.keyContact?.email}
-                      onChange={(e) => {
-                        setData({
-                          ...data,
-                          keyContact: {
-                            ...data?.keyContact,
-                            email: e.target.value,
-                          },
-                        });
-                      }}
-                      type="email"
-                      placeholder="Enter Email Address"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label
-                      htmlFor="phone"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
-                    >
-                      Phone no.
-                    </label>
-                    <input
-                      id="phone"
-                      value={data?.keyContact?.phone}
-                      onChange={(e) => {
-                        setData({
-                          ...data,
-                          keyContact: {
-                            ...data?.keyContact,
-                            phone: e.target.value,
-                          },
-                        });
-                      }}
-                      type="number"
-                      placeholder="Enter Phone no."
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                    />
-                  </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="designation"
+                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                  >
+                    Designation
+                  </label>
+                  <input
+                    id="designation"
+                    value={data?.keyContact?.designation}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          designation: e.target.value,
+                        },
+                      });
+                    }}
+                    type="text"
+                    placeholder="Enter Designation"
+                    className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="email"
+                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                  >
+                    Email Address
+                    <Required />
+                  </label>
+                  <input
+                    id="email"
+                    value={data?.keyContact?.email}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          email: e.target.value,
+                        },
+                      });
+                    }}
+                    type="email"
+                    placeholder="Enter Email Address"
+                    className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="phone"
+                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                  >
+                    Phone no.
+                  </label>
+                  <input
+                    id="phone"
+                    value={data?.keyContact?.phone}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        keyContact: {
+                          ...data?.keyContact,
+                          phone: e.target.value,
+                        },
+                      });
+                    }}
+                    type="number"
+                    placeholder="Enter Phone no."
+                    className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                  />
                 </div>
               </div>
             ) : page == 3 ? (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
-                <div className="w-full mb-10">
-                  <div className="flex flex-col mb-5">
-                    <label
-                      htmlFor="switchAcc1"
-                      className="mb-1.5 text-base flex items-center"
-                    >
-                      Service Account 1<Info />
-                    </label>
-                    <textarea
-                      id="switchAcc1"
-                      value={data?.serviceAcc?.acc1}
-                      onChange={(e) => {
-                        setData({
-                          ...data,
-                          serviceAcc: {
-                            ...data?.serviceAcc,
-                            acc1: e.target.value,
-                          },
-                        });
-                      }}
-                      rows={4}
-                      placeholder="Service Account 1"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                    ></textarea>
-                  </div>
-                  <div className="flex flex-col">
-                    <label
-                      htmlFor="switchAcc2"
-                      className="mb-1.5 text-base flex items-center"
-                    >
-                      Service Account 2 <Info />
-                    </label>
-                    <textarea
-                      id="switchAcc2"
-                      value={data?.serviceAcc?.acc2}
-                      onChange={(e) => {
-                        setData({
-                          ...data,
-                          serviceAcc: {
-                            ...data?.serviceAcc,
-                            acc2: e.target.value,
-                          },
-                        });
-                      }}
-                      rows={4}
-                      placeholder="Service Account 2"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                    ></textarea>
-                  </div>
-                </div>{" "}
+                <div className="flex items-center justify-between mb-3">
+                  <label
+                    htmlFor="switchAcc1"
+                    className="mb-1.5 text-base flex items-center"
+                  >
+                    Service Account 1<Info />
+                  </label>
+                  <input
+                    type="file"
+                    id="switchAcc1"
+                    onChange={handleFileUpload}
+                    className="border border-gray-300/20 p-1 rounded-md"
+                  />
+                </div>
+                <p className="mb-6 px-1">{data?.serviceAcc?.acc1}</p>
+                <div className="h-[1px] w-full bg-gray-600/40 mb-6"></div>
+                <div className="flex items-center justify-between mb-3">
+                  <label
+                    htmlFor="switchAcc2"
+                    className="mb-1.5 text-base flex items-center"
+                  >
+                    Service Account 2<Info />
+                  </label>
+                  <input
+                    type="file"
+                    id="switchAcc2"
+                    onChange={handleFileUpload2}
+                    className="border border-gray-300/20 p-1 rounded-md"
+                  />
+                </div>
+                <p className="mb-6 px-1">{data?.serviceAcc?.acc2}</p>
               </div>
             ) : (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">

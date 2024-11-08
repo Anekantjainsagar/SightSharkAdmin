@@ -137,12 +137,10 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                               height={1000}
                               className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2 aspect-squre object-contain"
                             />
-                            <label
-                              htmlFor={e?.name}
-                              className="text-[13px] min-[1600px]:text-base cursor-pointer"
-                            >
-                              {e?.name}
-                            </label>
+                            <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+                              {e?.name[0].toUpperCase() +
+                                e?.name?.slice(1)?.replaceAll("_", " ")}
+                            </p>
                           </div>
                           <div className="inline-flex items-start mr-1">
                             <label className="relative flex items-center cursor-pointer">
@@ -173,7 +171,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                                 checked={selectedDataSources?.find(
                                   (el) => el?.name == e?.name
                                 )}
-                                className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                                className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-gray-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
                               />
                               <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                 <svg
@@ -328,7 +326,10 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
                 height={1000}
                 className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
               />
-              <h6 className="mt-2 text-lg">{e?.name}</h6>
+              <h6 className="mt-2 text-lg">
+                {e?.name[0].toUpperCase() +
+                  e?.name?.slice(1)?.replaceAll("_", " ")}
+              </h6>
             </div>
             <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
             <div className="w-[70%]">

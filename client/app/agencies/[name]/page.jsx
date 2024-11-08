@@ -93,12 +93,10 @@ const Overview = ({ params }) => {
                                 className="object-contain"
                               />
                             </div>
-                            <label
-                              htmlFor={e?.name}
-                              className="text-sm min-[1600px]:text-base"
-                            >
-                              {e?.name}
-                            </label>
+                            <p className="text-sm min-[1600px]:text-base">
+                              {e?.name[0].toUpperCase() +
+                                e?.name?.slice(1)?.replaceAll("_", " ")}
+                            </p>
                           </div>
                         );
                       })}
@@ -112,7 +110,17 @@ const Overview = ({ params }) => {
                 </div>
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="min-[1600px]:text-xl">Templates </h4>
+                    <h4 className="min-[1600px]:text-xl relative">
+                      Templates{" "}
+                      <div
+                        className="absolute top-1/2 -translate-y-1/2 -right-8 cursor-pointer border border-white p-1 text-sm rounded-full"
+                        onClick={() => {
+                          setShowDeleteTemplate(!showDeleteTemplate);
+                        }}
+                      >
+                        {showDeleteTemplate ? <AiOutlineClose /> : <GoPencil />}
+                      </div>
+                    </h4>
                     <button
                       onClick={() => {
                         setAddTemplates(!addTemplates);
@@ -124,15 +132,7 @@ const Overview = ({ params }) => {
                   </div>{" "}
                   <div className="gradient-line my-4"></div>
                   {agency_templates?.length > 0 ? (
-                    <div className="grid grid-cols-5 gap-x-4 mt-2 relative">
-                      <div
-                        className="absolute right-0 -top-7 cursor-pointer border border-white p-1 text-sm rounded-full"
-                        onClick={() => {
-                          setShowDeleteTemplate(!showDeleteTemplate);
-                        }}
-                      >
-                        {showDeleteTemplate ? <AiOutlineClose /> : <GoPencil />}
-                      </div>
+                    <div className="grid grid-cols-5 gap-x-4 mt-2">
                       {agency_templates?.map((e, i) => {
                         return (
                           <TemplateBlock

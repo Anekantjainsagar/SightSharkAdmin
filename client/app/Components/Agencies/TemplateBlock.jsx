@@ -16,9 +16,9 @@ const TemplateBlock = ({
 
   return (
     <div
-      className="border border-gray-400/20 rounded-xl p-1 relative"
+      className="border border-gray-400/20 hover:border-white rounded-xl p-1 relative cursor-pointer hover:scale-105 transition-all"
       onClick={() => {
-        window.open(e?.template_link, "__blank");
+        window.open(data?.template_link, "__blank");
       }}
     >
       {data?.template_image && (
@@ -27,13 +27,13 @@ const TemplateBlock = ({
           alt={data?.template_image?.src}
           width={1000}
           height={1000}
-          className="rounded-md cursor-pointer h-[10vh] object-cover"
+          className="rounded-md h-[10vh] object-cover"
         />
       )}
       <p className="text-center text-sm my-1 mx-auto">{data?.template_name}</p>
       {showDeleteTemplate && (
         <div
-          className="absolute w-full h-full flex items-center justify-center top-0 text-3xl left-0 bg-red-400/20 rounded-xl cursor-pointer"
+          className="absolute w-full h-full flex items-center justify-center top-0 text-3xl left-0 bg-red-400/10 rounded-xl cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
             let check = confirm(`You're sure deleting ${data?.template_name}`);
