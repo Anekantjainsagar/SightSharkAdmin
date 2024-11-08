@@ -1,14 +1,18 @@
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import Context from "@/app/Context/Context";
 
 const UserDetailBlock = ({ data }) => {
-  const { selectedUsers, setSelectedUsers, userData, setClickedUsers } =
-    useContext(Context);
+  const { selectedUsers, setSelectedUsers, userData } = useContext(Context);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+  const [userClickedData, setUserClickedData] = useState();
+
+  useEffect(() => {
+    setUserClickedData(data);
+  }, [data]);
 
   return (
     <>
@@ -20,6 +24,7 @@ const UserDetailBlock = ({ data }) => {
       <UpdateUser
         showSubscribe={showUpdatePopup}
         setShowSubscribe={setShowUpdatePopup}
+        clickedUsers={userClickedData}
       />
       <div className="py-4 px-7 border-gray-200/5 border-y grid userBlockGrid items-center cursor-pointer text-textGrey text-sm min-[1600px]:text-base">
         <div
@@ -112,7 +117,7 @@ const UserDetailBlock = ({ data }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setClickedUsers(data);
+                  setUserClickedData(data);
                   setShowUpdatePopup(!showUpdatePopup);
                 }}
               >

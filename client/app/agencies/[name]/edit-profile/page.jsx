@@ -9,13 +9,12 @@ import { BiPencil } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import DeleteAgency from "@/app/Components/Agencies/DeleteAgency";
 import Info from "@/app/Components/Login/Info";
-import { LuEye, LuEyeOff } from "react-icons/lu";
-import Context from "@/app/Context/Context";
 import { useRouter } from "next/navigation";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import Required from "@/app/Components/Utils/Required";
+import Context from "@/app/Context/Context";
 
 let databar = [
   "Agency Details",
@@ -28,8 +27,8 @@ const Overview = ({ params }) => {
   const [comment, setComment] = useState("");
   const [selected, setSelected] = useState("Agency Details");
   const [deleteAgency, setDeleteAgency] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [original_data, setOriginal_data] = useState();
+  const [file, setFile] = useState("");
   const [data, setData] = useState({
     name: "",
     profile: "",
@@ -50,16 +49,11 @@ const Overview = ({ params }) => {
     agency_id: "",
   });
   const fileInputRef = React.useRef(null);
-  const fileInputRefAgent = React.useRef(null);
   const { agencies, getAgencies } = useContext(Context);
   const { name } = params;
   const history = useRouter();
 
-  useEffect(() => {
-    let temp = agencies?.data?.find((e) => {
-      return e?.agency_name?.replaceAll(" ", "-") == name;
-    });
-    setOriginal_data(temp);
+  const setDetails = (temp) => {
     setData({
       name: temp?.agency_name,
       website: temp?.website,
@@ -80,19 +74,24 @@ const Overview = ({ params }) => {
       },
     });
     setStatus(temp?.status);
+    setFile(temp?.profile_picture);
+  };
+
+  useEffect(() => {
+    let temp = agencies?.data?.find((e) => {
+      return e?.agency_name?.replaceAll(" ", "-") == name;
+    });
+    setOriginal_data(temp);
+    setDetails(temp);
   }, [name, agencies]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file.name);
-    }
-  };
-
-  const handleFileChangeAgent = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      console.log("Selected file:", file.name);
+      setFile(URL.createObjectURL(file));
+      setData({ ...data, profile: file });
+    } else {
+      console.log("No file selected");
     }
   };
 
@@ -155,11 +154,7 @@ const Overview = ({ params }) => {
                             onChange={handleFileChangeProfile}
                           />
                           <Image
-                            src={
-                              data?.profile
-                                ? data?.profile
-                                : "/Agency/individual/logo.png"
-                            }
+                            src={file ? file : "/Agency/individual/logo.png"}
                             alt="Agency Img"
                             width={1000}
                             height={1000}
@@ -491,7 +486,8 @@ const Overview = ({ params }) => {
                     <button
                       className={`bg-[#898989]/15 min-[1600px]:font-semibold min-[1600px]:px-8 px-5 py-2 min-[1600px]:text-base text-sm rounded-xl min-[1600px]:rounded-xl ml-4`}
                       onClick={() => {
-                        history.push(`/agencies/`);
+                        setDetails(original_data);
+                        toast.success("Details Discarded");
                       }}
                     >
                       Discard

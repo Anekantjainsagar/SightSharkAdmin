@@ -25,16 +25,16 @@ const customStyles = {
   },
 };
 
-const UpdateUser = ({ showSubscribe, setShowSubscribe }) => {
+const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
   let maxPage = 1;
   const context = useContext(Context);
-  const { getUsers, clickedUsers } = useContext(Context);
+  const { getUsers } = useContext(Context);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
-    email: "",
     access: "admin",
+    email: "",
     profile: "",
     phone: "",
     postal_code: "",
@@ -58,17 +58,17 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe }) => {
   }, [clickedUsers]);
 
   useEffect(() => {
-    if (context?.clickedUsers?.role == "superadmin") {
+    if (context?.userData?.role == "superadmin") {
       setAvailableRoles(["admin", "guest"]);
       setData({ ...data, access: "admin" });
-    } else if (context?.clickedUsers?.role == "admin") {
+    } else if (context?.userData?.role == "admin") {
       setAvailableRoles(["guest"]);
       setData({ ...data, access: "guest" });
-    } else if (context?.clickedUsers?.role == "owner") {
+    } else if (context?.userData?.role == "owner") {
       setAvailableRoles(["superadmin", "admin", "guest"]);
       setData({ ...data, access: "superadmin" });
     }
-  }, [context?.clickedUsers]);
+  }, [context?.userData]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];

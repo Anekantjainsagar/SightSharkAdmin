@@ -15,7 +15,6 @@ const State = (props) => {
   const [agencyDatasources, setAgencyDatasources] = useState();
   const [selectedAgencies, setSelectedAgencies] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [clickedUsers, setClickedUsers] = useState();
 
   const checkToken = () => {
     let cookie = getCookie("token");
@@ -281,8 +280,7 @@ const State = (props) => {
         selectedAgencies,
         selectedUsers,
         setSelectedUsers,
-        setClickedUsers,
-        clickedUsers,
+        setUserData,
       }}
     >
       {props.children}

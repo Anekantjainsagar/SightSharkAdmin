@@ -1,19 +1,23 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import { BACKEND_URI } from "./utils/url";
 import LoginOtp from "@/app/Components/LoginOtp";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import axios from "axios";
+import Context from "./Context/Context";
+import { useRouter } from "next/navigation";
 
 const App = () => {
+  const history = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ password: "", email: "" });
   const [showOtp, setShowOtp] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const { checkToken } = useContext(Context);
 
   const handleRememberMe = () => {
     localStorage.setItem("email", user?.email);
@@ -53,6 +57,11 @@ const App = () => {
           .then((res) => {
             if (res.detail) {
               toast.error(res.detail);
+            } else if (res.access_token) {
+              setCookie("token", res.access_token);
+              checkToken();
+              history.push("/overview");
+              toast.success("Login Successfully");
             } else {
               toast.success("Login Successfully check otp for verification");
               setShowOtp(true);
