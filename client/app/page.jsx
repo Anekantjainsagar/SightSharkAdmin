@@ -24,10 +24,9 @@ const App = () => {
     if (localStorage.getItem("email")) {
       setRememberMe(true);
     }
-    setUser({
-      email: localStorage.getItem("email"),
-      password: localStorage.getItem("password"),
-    });
+    let email = localStorage.getItem("email");
+    let password = localStorage.getItem("password");
+    setUser({ email, password });
   }, []);
 
   const onLogin = () => {
