@@ -487,7 +487,7 @@ const Overview = ({ params }) => {
                       className={`bg-[#898989]/15 min-[1600px]:font-semibold min-[1600px]:px-8 px-5 py-2 min-[1600px]:text-base text-sm rounded-xl min-[1600px]:rounded-xl ml-4`}
                       onClick={() => {
                         setDetails(original_data);
-                        toast.success("Details Discarded");
+                        toast.success("Changes Discarded");
                       }}
                     >
                       Discard
@@ -503,7 +503,7 @@ const Overview = ({ params }) => {
                           data?.keyContact?.email
                         ) {
                           const queryParams = new URLSearchParams({
-                            agency_name: data?.name,
+                            agency_name: data?.name.trim(),
                             website: data?.website,
                             location: data?.location,
                             warranty_period: parseInt(data?.warrenty),
@@ -538,7 +538,11 @@ const Overview = ({ params }) => {
                                 if (res.msg) {
                                   getAgencies();
                                   toast.success("Agency updated successfully");
-                                  history.push("/agencies");
+                                  history.push(
+                                    `/agencies/${data?.name
+                                      .trim()
+                                      ?.replaceAll(" ", "-")}/edit-profile`
+                                  );
                                 }
                                 if (res.detail) {
                                   toast.error(res.detail);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Info = () => {
   return (
@@ -25,11 +25,30 @@ const Info = () => {
 
 const PopoverComponent = ({ children, placement = "top" }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const popoverRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" ref={popoverRef}>
       <div onClick={handleClick} className="cursor-pointer">
         {children}
       </div>

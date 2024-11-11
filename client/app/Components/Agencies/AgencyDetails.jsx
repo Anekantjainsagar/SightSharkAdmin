@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import toast from "react-hot-toast";
 import { PieChart } from "react-minimal-pie-chart";
 
 const AgencyDetails = ({ data }) => {
@@ -207,7 +208,11 @@ const AgencyDetails = ({ data }) => {
                   <span
                     className="hover:underline cursor-pointer transition-all"
                     onClick={() => {
-                      window.open(e?.value, "__blank");
+                      if (e?.value?.includes("http")) {
+                        window.open(e?.value, "__blank");
+                      } else {
+                        toast.error("Invalid url");
+                      }
                     }}
                   >
                     {e?.value?.slice(0, 25) + "..."}
