@@ -89,13 +89,6 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
               closeModal();
             }}
           />
-          <Image
-            src="/forgot.png"
-            alt="Forgot"
-            width={1000}
-            height={1000}
-            className=""
-          />
           <div className="flex flex-col items-center">
             <h4 className="mainText20 w-11/12 text-center mb-1 mt-5">
               Enter Otp for Verification
@@ -134,8 +127,8 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
             />
             <div className="flex items-center justify-end w-full mt-2">
               <p>
-                Didn&apos;t got the code?{" "}
-                <span className="text-newBlue cursor-pointer">Resend</span>
+                Didn&apos;t received the code?{" "}
+                <span className="text-newBlue cursor-pointer">Resend OTP</span>
               </p>
             </div>
             <button

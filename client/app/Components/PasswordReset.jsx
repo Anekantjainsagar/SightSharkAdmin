@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Modal from "react-modal";
-import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -23,6 +22,7 @@ const customStyles = {
 };
 
 const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
+  const [sent, setSent] = useState(false);
   const [email, setEmail] = useState("");
 
   function closeModal() {
@@ -45,19 +45,14 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
               closeModal();
             }}
           />
-          <Image
-            src="/forgot.png"
-            alt="Forgot"
-            width={1000}
-            height={1000}
-            className=""
-          />
           <div>
             <h4 className="mainText20 w-11/12 text-center mb-1.5 mt-5">
               Forgot your Password?
             </h4>
             <p className="w-10/12 mx-auto text-center">
-              Enter your Email an we&apos;&apos;ll help you reset your password.
+              {sent
+                ? "Password reset email sent."
+                : "Enter your Email an we'll help you reset your password."}
             </p>
             <div className="flex flex-col mt-4">
               <input
@@ -65,6 +60,7 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="text"
+                disabled={sent}
                 placeholder="Enter Email"
                 className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
               />
@@ -87,6 +83,7 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
                     .then((res) => {
                       if (res.status == 200) {
                         toast.success("Password reset email sent");
+                        setSent(true);
                       }
                     })
                     .catch((err) => {
