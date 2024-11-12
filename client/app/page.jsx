@@ -10,9 +10,11 @@ import { getCookie, setCookie } from "cookies-next";
 import axios from "axios";
 import Context from "./Context/Context";
 import { useRouter } from "next/navigation";
+import PasswordReset from "@/app/Components/PasswordReset";
 
 const App = () => {
   const history = useRouter();
+  const [recoverPassword, setRecoverPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ password: "", email: "" });
   const [showOtp, setShowOtp] = useState(false);
@@ -83,6 +85,10 @@ const App = () => {
   return (
     <div className="bg-[#091022] w-full flex items-start justify-between h-[100vh]">
       <Toaster />{" "}
+      <PasswordReset
+        showSubscribe={recoverPassword}
+        setShowSubscribe={setRecoverPassword}
+      />
       <LoginOtp
         showSubscribe={showOtp}
         setShowSubscribe={setShowOtp}
@@ -189,7 +195,7 @@ const App = () => {
               </div>
               <button
                 onClick={() => {
-                  setShowOtp(true);
+                  setRecoverPassword(true);
                 }}
                 className="text-[#F04438] mainText18"
               >
