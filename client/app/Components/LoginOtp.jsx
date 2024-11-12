@@ -3,13 +3,12 @@ import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import OtpInput from "react-otp-input";
 import Context from "../Context/Context";
 import { BACKEND_URI } from "../utils/url";
-import { getCookie, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -97,10 +96,14 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
             height={1000}
             className=""
           />
-          <div>
-            <h4 className="mainText20 w-11/12 text-center mb-5 mt-5">
+          <div className="flex flex-col items-center">
+            <h4 className="mainText20 w-11/12 text-center mb-1 mt-5">
               Enter Otp for Verification
             </h4>
+            <p className="w-11/12 mx-auto text-center mb-5">
+              Please enter the OTP (One-Time Password) sent to your registered
+              email/phone number to complete your verification.
+            </p>
             <OtpInput
               value={otpVal}
               onChange={(val) => {
@@ -129,11 +132,17 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
                 outline: "none",
               }}
             />
+            <div className="flex items-center justify-end w-full mt-2">
+              <p>
+                Didn&apos;t got the code?{" "}
+                <span className="text-newBlue cursor-pointer">Resend</span>
+              </p>
+            </div>
             <button
               onClick={onCheckOtp}
               className={`bg-newBlue w-full py-2 mt-5 rounded-lg text-sm min-[1600px]:text-base text-center`}
             >
-              Recover Password
+              Verify
             </button>
           </div>
         </div>
