@@ -189,31 +189,7 @@ const App = () => {
               </div>
               <button
                 onClick={() => {
-                  if (user?.email) {
-                    const formData = new URLSearchParams();
-                    formData.append("email", user.email);
-
-                    axios
-                      .post(`${BACKEND_URI}/user/recover-password`, formData, {
-                        headers: {
-                          Accept: "application/json",
-                          "Content-Type": "application/x-www-form-urlencoded",
-                          Authorization: `Bearer ${getCookie("token")}`,
-                        },
-                      })
-                      .then((res) => {
-                        if (res.status == 200) {
-                          toast.success("Password reset email sent");
-                        }
-                      })
-                      .catch((err) => {
-                        if (err.response.status === 404) {
-                          toast.error("User not found");
-                        }
-                      });
-                  } else {
-                    toast.error("Please enter an email address");
-                  }
+                  setShowOtp(true);
                 }}
                 className="text-[#F04438] mainText18"
               >
