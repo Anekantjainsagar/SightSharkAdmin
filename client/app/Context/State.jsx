@@ -41,7 +41,7 @@ const State = (props) => {
     }
   };
 
-  const getUsers = (page = 1, order_by = "created_at", type = "asc") => {
+  const getUsers = (page = 1, order_by = "created_at", type = true) => {
     let cookie = getCookie("token");
     let limit = users?.limit ? users?.limit : 7;
 
