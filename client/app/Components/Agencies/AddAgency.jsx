@@ -251,11 +251,24 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 {page > 5 ? <IoMdCheckmark /> : maxPage}
               </div>
             </div>
-            <div className="flex items-center grid grid-cols-4 text-sm min-[1600px]:text-base px-10 mt-2">
-              <p className="text-center">Agency Details</p>
-              <p className="text-center">Key Contact Details</p>
-              <p className="text-center">Portal Deployment</p>
-              <p className="text-center">Credentials</p>
+            <div className="items-center grid grid-cols-4 text-sm min-[1600px]:text-base px-10 mt-2">
+              {[
+                "Agency Details",
+                "Key Contact Details",
+                "Portal Deployment",
+                "Credentials",
+              ].map((e, i) => {
+                return (
+                  <p
+                    className={`text-center ${
+                      i + 1 == page ? "" : "opacity-0"
+                    }`}
+                    key={i}
+                  >
+                    {e}
+                  </p>
+                );
+              })}
             </div>
           </div>
           <div className="h-[45vh] min-[1600px]:h-[40vh]">
@@ -653,7 +666,23 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 if (page == maxPage) {
                   handleSave();
                 } else {
-                  setPage(page + 1);
+                  if (
+                    page == 1 &&
+                    data?.name &&
+                    data?.website &&
+                    data?.warrenty &&
+                    data?.license
+                  ) {
+                    setPage(page + 1);
+                  } else {
+                    if (page == 2 && data?.keyContact?.email) {
+                      setPage(page + 1);
+                    } else if (page == 3 || page == 4) {
+                      setPage(page + 1);
+                    } else {
+                      toast.error("Please fill all the details");
+                    }
+                  }
                 }
               }}
               className={`text-white text-base min-[1600px]:text-lg bg-newBlue w-[150px] min-[1600px]:w-[170px] h-10 min-[1600px]:h-12 rounded-lg`}

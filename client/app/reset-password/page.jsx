@@ -39,15 +39,17 @@ export default function ResetPassword() {
               },
             })
             .then((res) => {
+              if (res.status === 400) {
+                toast.error("User not found");
+              }
               if (res.status == 200) {
                 toast.success("Password reset successfully");
                 history.push("/");
               }
             })
             .catch((err) => {
-              if (err.status === 400) {
-                toast.error("User not found");
-              }
+              toast.error("User not found");
+              history.push("/");
             });
         } catch (error) {
           console.log(error);
