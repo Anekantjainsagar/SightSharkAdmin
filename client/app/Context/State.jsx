@@ -4,18 +4,19 @@ import Context from "./Context";
 import axios from "axios";
 import { BACKEND_URI } from "../utils/url";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 const State = (props) => {
-  const [userData, setUserData] = useState();
+  const history = useRouter();
   const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState();
   const [agencies, setAgencies] = useState([]);
-  const [agency_templates, setAgency_templates] = useState([]);
   const [datasources, setDatasources] = useState();
-  const [selectedDataSources, setSelectedDataSources] = useState([]);
-  const [agencyDatasources, setAgencyDatasources] = useState();
-  const [selectedAgencies, setSelectedAgencies] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [sortAgencies, setSortAgencies] = useState("");
+  const [agency_templates, setAgency_templates] = useState([]);
+  const [selectedAgencies, setSelectedAgencies] = useState([]);
+  const [agencyDatasources, setAgencyDatasources] = useState();
+  const [selectedDataSources, setSelectedDataSources] = useState([]);
 
   const checkToken = () => {
     let cookie = getCookie("token");
@@ -33,7 +34,10 @@ const State = (props) => {
             setUserData(res.data);
           })
           .catch((err) => {
-            console.log(err);
+            if (err.status) {
+              toast.error("Login Error Occured Please try again");
+              history.push("/");
+            }
           });
       } catch (error) {
         console.log(error);
