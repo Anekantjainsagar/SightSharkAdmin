@@ -142,7 +142,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                                 e?.name?.slice(1)?.replaceAll("_", " ")}
                             </p>
                           </div>
-                          <div className="inline-flex items-start mr-1 w-3/12 justify-end border">
+                          <div className="inline-flex items-start mr-1 w-3/12 justify-end">
                             <label className="relative flex items-center cursor-pointer">
                               <input
                                 type="checkbox"

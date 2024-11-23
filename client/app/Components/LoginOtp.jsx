@@ -125,9 +125,9 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
                 outline: "none",
               }}
             />
-            <div className="flex items-center justify-start w-full mt-2">
+            <div className="flex items-center justify-start w-full mt-4">
               <p>
-                Didn&apos;t received the code?{" "}
+                Didn&apos;t receive the code?{" "}
                 <span className="text-newBlue cursor-pointer">Resend OTP</span>
               </p>
             </div>

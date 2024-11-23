@@ -217,6 +217,19 @@ const AgencyDetails = ({ data }) => {
                   >
                     {e?.value?.slice(0, 25) + "..."}
                   </span>
+                ) : e?.title?.includes("Portal Link") ? (
+                  <span
+                    className="hover:underline cursor-pointer hover:text-blue-400 transition-all"
+                    onClick={() => {
+                      if (e?.value?.includes("http")) {
+                        window.open(e?.value, "__blank");
+                      } else {
+                        toast.error("Invalid url");
+                      }
+                    }}
+                  >
+                    View Portal
+                  </span>
                 ) : (
                   <span>{e?.value}</span>
                 )}

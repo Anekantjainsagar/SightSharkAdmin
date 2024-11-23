@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Context from "./Context";
 import axios from "axios";
-import { BACKEND_URI } from "../utils/url";
+import Context from "./Context";
 import { getCookie } from "cookies-next";
+import { BACKEND_URI } from "../utils/url";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const State = (props) => {
   const history = useRouter();
@@ -45,7 +45,7 @@ const State = (props) => {
     }
   };
 
-  const getUsers = (page = 1, order_by = "created_at", type = true) => {
+  const getUsers = (page = 1, order_by = "created_at", type = false) => {
     let cookie = getCookie("token");
     let limit = users?.limit ? users?.limit : 7;
 
@@ -80,7 +80,7 @@ const State = (props) => {
     }
   };
 
-  const getAgencies = (page = 1, order_by = "created_at", type = true) => {
+  const getAgencies = (page = 1, order_by = "created_at", type = false) => {
     let cookie = getCookie("token");
     let limit = agencies?.limit ? agencies?.limit : 8;
 

@@ -140,50 +140,55 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
                   }).toString();
 
                   const formData = new FormData();
-                  if (data.profile_picture) {
-                    formData.append("profile_picture", data.profile_picture);
-                    formData.append(
-                      "profile_picture_filename",
-                      data.profile_picture.name
-                    );
-                    formData.append(
-                      "profile_picture_content_type",
-                      data.profile_picture.type
-                    );
-                  }
+                  formData.append(
+                    "profile_picture",
+                    data?.profile_picture || ""
+                  );
+                  formData.append(
+                    "profile_picture_filename",
+                    data?.profile_picture?.name || ""
+                  );
+                  formData.append(
+                    "profile_picture_content_type",
+                    data?.profile_picture?.type || ""
+                  );
 
-                  try {
-                    fetch(
-                      `${BACKEND_URI}/template/add/template?${queryParams}`,
-                      {
-                        headers: {
-                          Accept:
-                            "application/json, application/xml, text/plain, text/html, *.*",
-                          Authorization: `Bearer ${getCookie("token")}`,
-                        },
-                        method: "POST",
-                        body: formData,
-                      }
-                    )
-                      .then((res) => res.json())
-                      .then((res) => {
-                        if (res.msg) {
-                          toast.success("Template added successfully");
-                          setShowSubscribe(false);
-                          getTemplates(original_data?.agency_id);
-                        } else if (res.detail) {
-                          toast.error(res.detail);
+                  if (data?.profile_picture?.name) {
+                    try {
+                      fetch(
+                        `${BACKEND_URI}/template/add/template?${queryParams}`,
+                        {
+                          headers: {
+                            Accept:
+                              "application/json, application/xml, text/plain, text/html, *.*",
+                            Authorization: `Bearer ${getCookie("token")}`,
+                          },
+                          method: "POST",
+                          body: formData,
                         }
-                      })
-                      .catch((err) => {
-                        console.error("Error creating user:", err);
-                        toast.error(
-                          "An error occurred while creating the user"
-                        );
-                      });
-                  } catch (error) {
-                    console.error("Unexpected error:", error);
-                    toast.error("An unexpected error occurred");
+                      )
+                        .then((res) => res.json())
+                        .then((res) => {
+                          if (res.msg) {
+                            toast.success("Template added successfully");
+                            setShowSubscribe(false);
+                            getTemplates(original_data?.agency_id);
+                          } else if (res.detail) {
+                            toast.error(res.detail);
+                          }
+                        })
+                        .catch((err) => {
+                          console.error("Error creating user:", err);
+                          toast.error(
+                            "An error occurred while creating the user"
+                          );
+                        });
+                    } catch (error) {
+                      console.error("Unexpected error:", error);
+                      toast.error("An unexpected error occurred");
+                    }
+                  } else {
+                    toast.error("Please select a Template Image");
                   }
                 } else {
                   toast.error("Please fill all the required details");

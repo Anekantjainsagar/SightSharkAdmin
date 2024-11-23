@@ -110,7 +110,8 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
         })
         .then((response) => {
           const res = response.data;
-          if (res.msg) {
+          console.log(response);
+          if (res.status == 200) {
             toast.success("Agency created successfully");
             setAgencies([...agencies, res.data]);
             getAgencies();
@@ -121,16 +122,9 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           }
         })
         .catch((error) => {
-          console.error("Error creating user:", error);
+          console.error(error);
           setShowSave(true);
-          if (error.response && error.response.data) {
-            toast.error(
-              error.response.data.detail ||
-                "An error occurred while creating the user"
-            );
-          } else {
-            toast.error("An error occurred while creating the user");
-          }
+          toast.error(error.message);
         });
     } else {
       toast.error("Please fill all the required details");
@@ -154,15 +148,31 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
       const reader = new FileReader();
 
       reader.onload = (e) => {
+        const result = e.target.result;
+
         try {
-          const content = JSON.parse(e.target.result);
-          setData({
-            ...data,
-            serviceAcc: { ...data.serviceAcc, acc1: JSON.stringify(content) },
-          });
+          // Check if the file content is not empty before parsing
+          if (result) {
+            const content = JSON.parse(result);
+            setData((prevData) => ({
+              ...prevData,
+              serviceAcc: {
+                ...prevData.serviceAcc,
+                acc1: JSON.stringify(content),
+              },
+            }));
+          } else {
+            throw new Error("Empty file content");
+          }
         } catch (error) {
           console.error("Invalid JSON:", error);
+          toast.error("Invalid JSON file. Please check the file format.");
         }
+      };
+
+      reader.onerror = () => {
+        console.error("File reading error:", reader.error);
+        toast.error("An error occurred while reading the file.");
       };
 
       reader.readAsText(file);
@@ -178,15 +188,31 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
       const reader = new FileReader();
 
       reader.onload = (e) => {
+        const result = e.target.result;
+
         try {
-          const content = JSON.parse(e.target.result);
-          setData({
-            ...data,
-            serviceAcc: { ...data.serviceAcc, acc2: JSON.stringify(content) },
-          });
+          // Check if the file content is not empty before parsing
+          if (result) {
+            const content = JSON.parse(result);
+            setData((prevData) => ({
+              ...prevData,
+              serviceAcc: {
+                ...prevData.serviceAcc,
+                acc2: JSON.stringify(content),
+              },
+            }));
+          } else {
+            throw new Error("Empty file content");
+          }
         } catch (error) {
           console.error("Invalid JSON:", error);
+          toast.error("Invalid JSON file. Please check the file format.");
         }
+      };
+
+      reader.onerror = () => {
+        console.error("File reading error:", reader.error);
+        toast.error("An error occurred while reading the file.");
       };
 
       reader.readAsText(file);
@@ -443,7 +469,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       htmlFor="deployment"
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
-                      Deployment Date
+                      Deployment Date <Required />
                     </label>
                     <input
                       id="deployment"
@@ -637,7 +663,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     />
                   </div>
                 </div>{" "}
-                <div className="flex items-center justify-between mt-8">
+                <div className="flex items-center justify-between mt-12">
                   <label
                     htmlFor="switchAcc1"
                     className="mb-1.5 text-base flex items-center w-fit relative"
@@ -714,8 +740,8 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       htmlFor="emailKey"
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
-                      Email
-                      <Required /> <Info text="Login Email" />
+                      Portal Owner Email
+                      <Required /> <Info text="Portal Owner Email" />
                     </label>
                     <input
                       id="emailKey"
@@ -740,7 +766,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Password <Required />
-                      <Info text="Login Password" />
+                      <Info text="Portal Owner Password" />
                     </label>
                     <div className="w-full relative">
                       <input
@@ -776,7 +802,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Confirm Password <Required />
-                      <Info text="Login Confirm Password" />
+                      <Info text="Portal Owner Confirm Password" />
                     </label>
                     <div className="w-full relative">
                       <input
@@ -850,6 +876,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     data?.name &&
                     data?.website &&
                     data?.warrenty &&
+                    data?.deployment &&
                     data?.license
                   ) {
                     setPage(page + 1);
