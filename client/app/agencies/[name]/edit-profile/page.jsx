@@ -7,6 +7,7 @@ import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { BiPencil } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 import DeleteAgency from "@/app/Components/Agencies/DeleteAgency";
 import Info from "@/app/Components/Login/Info";
 import { useRouter } from "next/navigation";
