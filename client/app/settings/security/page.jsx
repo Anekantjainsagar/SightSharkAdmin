@@ -89,7 +89,7 @@ const Settings = () => {
                     <div className="flex flex-col">
                       <label
                         htmlFor="currentPass"
-                        className="mb-1.5 text-sm min-[1600px]:text-base"
+                        className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                       >
                         Current Password <Required />
                       </label>
@@ -118,7 +118,7 @@ const Settings = () => {
                     <div className="flex flex-col">
                       <label
                         htmlFor="newPass"
-                        className="mb-1.5 text-sm min-[1600px]:text-base"
+                        className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                       >
                         New Password
                         <Required />
@@ -148,7 +148,7 @@ const Settings = () => {
                     <div className="flex flex-col">
                       <label
                         htmlFor="retypeNewPassword"
-                        className="mb-1.5 text-sm min-[1600px]:text-base"
+                        className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                       >
                         Retype New Password
                         <Required />

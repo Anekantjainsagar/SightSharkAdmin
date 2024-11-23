@@ -396,7 +396,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="location"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Location
                     </label>
@@ -441,7 +441,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="deployment"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Deployment Date
                     </label>
@@ -482,7 +482,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 <div className="flex flex-col">
                   <label
                     htmlFor="namekey"
-                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                    className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                   >
                     Name
                   </label>
@@ -506,7 +506,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 <div className="flex flex-col">
                   <label
                     htmlFor="designation"
-                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                    className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                   >
                     Designation
                   </label>
@@ -555,7 +555,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 <div className="flex flex-col">
                   <label
                     htmlFor="phone"
-                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                    className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                   >
                     Phone no.
                   </label>

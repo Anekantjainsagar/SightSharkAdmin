@@ -185,7 +185,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="name"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   First Name
                   <Required />
@@ -204,7 +204,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="lastName"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Last Name
                   <Required />
@@ -223,7 +223,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="email"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Email
                   <Required />
@@ -295,7 +295,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="phone"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Phone
                 </label>
@@ -313,7 +313,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="postal_code"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Postal Code
                 </label>
@@ -331,7 +331,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="country"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Country
                 </label>
