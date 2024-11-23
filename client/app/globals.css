@@ -26,6 +26,30 @@
   @apply text-[18px] min-[1600px]:text-[20px];
 }
 
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  /* Remove the default arrow */
+  appearance: none; /* For most browsers */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+  padding-right: 30px; /* Add padding for the custom arrow */
+}
+
+.custom-select-wrapper::after {
+  content: "▼"; /* Custom arrow, you can change it to any icon */
+  font-size: 12px; /* Adjust as needed */
+  color: #fff; /* Arrow color */
+  position: absolute;
+  right: 20px; /* Adjust this to move the arrow left or right */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Make sure the arrow is not clickable */
+}
+
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }

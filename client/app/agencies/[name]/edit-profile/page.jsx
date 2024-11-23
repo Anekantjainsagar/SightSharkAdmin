@@ -34,7 +34,7 @@ const Overview = ({ params }) => {
     profile: "",
     website: "",
     location: "",
-    warrenty: "",
+    warrenty: 3,
     deployment: "",
     license: "",
     keyContact: {
@@ -47,8 +47,14 @@ const Overview = ({ params }) => {
     dataSources: [],
     serviceAcc: { acc1: "", acc2: "" },
     agency_id: "",
+    project_id: "",
+    region: "",
+    project_number: "",
   });
   const fileInputRef = React.useRef(null);
+  const fileInputRef2 = React.useRef(null);
+  const [serviceAcc1, setserviceAcc1] = useState();
+  const [serviceAcc2, setserviceAcc2] = useState();
   const { agencies, getAgencies } = useContext(Context);
   const { name } = params;
   const history = useRouter();
@@ -62,6 +68,9 @@ const Overview = ({ params }) => {
       license: temp?.license_limit,
       deployment: temp?.deployment_date,
       agency_id: temp?.agency_id,
+      project_id: temp?.project_id,
+      region: temp?.region,
+      project_number: temp?.project_number,
       keyContact: {
         name: temp?.key_contact_name,
         designation: temp?.key_contact_designation,
@@ -92,6 +101,88 @@ const Overview = ({ params }) => {
       setData({ ...data, profile: file });
     } else {
       console.log("No file selected");
+    }
+  };
+
+  const handleClearFile = () => {
+    setserviceAcc1(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setData({
+      ...data,
+      serviceAcc: {
+        ...data.serviceAcc,
+        acc1: "",
+      },
+    });
+  };
+
+  const handleClearFile2 = () => {
+    setserviceAcc2(null);
+    if (fileInputRef2.current) {
+      fileInputRef2.current.value = "";
+    }
+    setData({
+      ...data,
+      serviceAcc: {
+        ...data.serviceAcc,
+        acc2: "",
+      },
+    });
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    setserviceAcc1(file);
+    if (file && file.type === "application/json") {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          setData({
+            ...data,
+            serviceAcc: {
+              ...data.serviceAcc,
+              acc1: JSON.stringify(content),
+            },
+          });
+        } catch (error) {
+          console.error("Invalid JSON:", error);
+        }
+      };
+
+      reader.readAsText(file);
+    } else {
+      toast.error("Please upload a valid JSON file.");
+    }
+  };
+
+  const handleFileUpload2 = (event) => {
+    const file = event.target.files[0];
+    setserviceAcc2(file);
+    if (file && file.type === "application/json") {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          setData({
+            ...data,
+            serviceAcc: {
+              ...data.serviceAcc,
+              acc2: JSON.stringify(content),
+            },
+          });
+        } catch (error) {
+          console.error("Invalid JSON:", error);
+        }
+      };
+
+      reader.readAsText(file);
+    } else {
+      toast.error("Please upload a valid JSON file.");
     }
   };
 
@@ -166,7 +257,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="name"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Agency Name
                             <Required />
@@ -185,7 +276,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="website"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Website <Required />
                           </label>
@@ -203,7 +294,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="location"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Location
                           </label>
@@ -221,25 +312,32 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="warrenty"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Warranty Period <Required />
                           </label>
-                          <input
-                            id="warrenty"
-                            value={data?.warrenty}
-                            onChange={(e) => {
-                              setData({ ...data, warrenty: e.target.value });
-                            }}
-                            type="text"
-                            placeholder="Enter Warranty Period"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
+                          <div className="custom-select-wrapper w-full">
+                            <select
+                              value={data?.warrenty}
+                              onChange={(e) => {
+                                setData({ ...data, warrenty: e.target.value });
+                              }}
+                              className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                            >
+                              {[3, 6, 9, 12, 15, 18, 21, 24].map((e, i) => {
+                                return (
+                                  <option value={e} key={i} className="bg-main">
+                                    {e} Months
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
                         </div>
                         <div className="flex flex-col">
                           <label
                             htmlFor="deployment"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Deployment Date <Required />
                           </label>
@@ -260,7 +358,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="license"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             License Limit
                           </label>
@@ -278,7 +376,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="status"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Status
                           </label>
@@ -301,7 +399,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="comment"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Comment
                           </label>
@@ -323,7 +421,7 @@ const Overview = ({ params }) => {
                       <div className="flex flex-col">
                         <label
                           htmlFor="namekey"
-                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                         >
                           Name
                         </label>
@@ -347,7 +445,7 @@ const Overview = ({ params }) => {
                       <div className="flex flex-col">
                         <label
                           htmlFor="designation"
-                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                         >
                           Designation
                         </label>
@@ -371,7 +469,7 @@ const Overview = ({ params }) => {
                       <div className="flex flex-col">
                         <label
                           htmlFor="email"
-                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                         >
                           Email Address
                         </label>
@@ -395,7 +493,7 @@ const Overview = ({ params }) => {
                       <div className="flex flex-col">
                         <label
                           htmlFor="phone"
-                          className="mb-1.5 min-[1600px]:text-base text-sm"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                         >
                           Phone no.
                         </label>
@@ -419,13 +517,14 @@ const Overview = ({ params }) => {
                     </div>
                   ) : (
                     <div className="flex flex-col items-start justify-between mt-4 px-3">
-                      <div className="w-full mb-5">
+                      {/* <div className="w-full mb-5">
                         <div className="flex flex-col mb-5">
                           <label
                             htmlFor="switchAcc1"
                             className="mb-1.5 text-base flex items-center"
                           >
-                            Service Account 1<Info />
+                            Service Account 1
+                            <Info text="Manages internal google cloud services" />
                           </label>
                           <textarea
                             id="switchAcc1"
@@ -449,7 +548,8 @@ const Overview = ({ params }) => {
                             htmlFor="switchAcc2"
                             className="mb-1.5 text-base flex items-center"
                           >
-                            Service Account 2 <Info />
+                            Service Account 2{" "}
+                            <Info text="Manages internal google cloud services" />
                           </label>
                           <textarea
                             id="switchAcc2"
@@ -468,7 +568,139 @@ const Overview = ({ params }) => {
                             className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
                           ></textarea>
                         </div>
-                      </div>{" "}
+                      </div>{" "} */}
+                      <div className="w-full">
+                        <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="project_number"
+                              className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                            >
+                              Project Number
+                              <Required />
+                            </label>
+                            <input
+                              id="project_number"
+                              value={data?.project_number}
+                              onChange={(e) => {
+                                setData({
+                                  ...data,
+                                  project_number: e.target.value,
+                                });
+                              }}
+                              type="text"
+                              placeholder="Enter Project Number"
+                              className="bg-[#898989]/15 outline-none border border-gray-500/20 h-[45px] text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="project_id"
+                              className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                            >
+                              Project ID
+                              <Required />
+                            </label>
+                            <input
+                              id="project_id"
+                              value={data?.project_id}
+                              onChange={(e) => {
+                                setData({
+                                  ...data,
+                                  project_id: e.target.value,
+                                });
+                              }}
+                              type="text"
+                              placeholder="Enter Project ID"
+                              className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="region"
+                              className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                            >
+                              Region <Required />
+                            </label>
+                            <input
+                              id="region"
+                              value={data?.region}
+                              onChange={(e) => {
+                                setData({ ...data, region: e.target.value });
+                              }}
+                              type="text"
+                              placeholder="Enter Region"
+                              className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                            />
+                          </div>
+                        </div>{" "}
+                        <div className="flex items-center justify-between mt-8">
+                          <label
+                            htmlFor="switchAcc1"
+                            className="mb-1.5 text-base flex items-center"
+                          >
+                            Service Account 1
+                            <Info text="Manages internal google cloud services" />
+                          </label>
+                          <div className="flex items-center">
+                            {/* Custom File Input */}
+                            <label
+                              className={`border border-gray-300/20 py-1 ${
+                                serviceAcc1 ? "px-4" : "px-1"
+                              } rounded-md cursor-pointer`}
+                            >
+                              {serviceAcc1 && serviceAcc1?.name}
+                              {!serviceAcc1 && (
+                                <input
+                                  type="file"
+                                  onChange={handleFileUpload}
+                                  ref={fileInputRef}
+                                />
+                              )}
+                            </label>
+
+                            {serviceAcc1 && (
+                              <AiOutlineClose
+                                className="text-lg cursor-pointer ml-2"
+                                onClick={handleClearFile}
+                              />
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between mt-5">
+                          <label
+                            htmlFor="switchAcc2"
+                            className="mb-1.5 text-base flex items-center"
+                          >
+                            Service Account 2
+                            <Info text="Manages internal google cloud services" />
+                          </label>
+                          <div className="flex items-center">
+                            {/* Custom File Input */}
+                            <label
+                              className={`border border-gray-300/20 py-1 ${
+                                serviceAcc2 ? "px-4" : "px-1"
+                              } rounded-md cursor-pointer`}
+                            >
+                              {serviceAcc2 && serviceAcc2?.name}
+                              {!serviceAcc2 && (
+                                <input
+                                  type="file"
+                                  onChange={handleFileUpload2}
+                                  ref={fileInputRef2}
+                                />
+                              )}
+                            </label>
+
+                            {serviceAcc2 && (
+                              <AiOutlineClose
+                                className="text-lg cursor-pointer ml-2"
+                                onClick={handleClearFile2}
+                              />
+                            )}
+                          </div>
+                        </div>{" "}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -504,8 +736,6 @@ const Overview = ({ params }) => {
                         ) {
                           const queryParams = new URLSearchParams({
                             agency_name: data?.name.trim(),
-                            website: data?.website,
-                            location: data?.location,
                             warranty_period: parseInt(data?.warrenty),
                             deployment_date: data?.deployment,
                             license_limit: data?.license,
@@ -517,6 +747,7 @@ const Overview = ({ params }) => {
                             service_account_cloud: data?.serviceAcc?.acc1,
                             service_account_api: data?.serviceAcc?.acc2,
                             status,
+                            ...data,
                           }).toString();
 
                           try {

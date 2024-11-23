@@ -31,16 +31,21 @@ const customStyles = {
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
   const fileInputRef = React.useRef(null);
+  const fileInputRef2 = React.useRef(null);
   const { setAgencies, agencies, getAgencies } = useContext(Context);
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showSave, setShowSave] = useState(true);
   const [page, setPage] = useState(1);
+  const [serviceAcc1, setserviceAcc1] = useState();
+  const [serviceAcc2, setserviceAcc2] = useState();
   const [data, setData] = useState({
     name: "",
     profile: "",
     website: "",
     location: "",
-    warrenty: "",
+    warrenty: 3,
     deployment: "",
     license: "",
     keyContact: {
@@ -53,9 +58,13 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     serviceAcc: { acc1: "", acc2: "" },
     credentials: { email: "", password: "", cpassword: "" },
     dataSources: [],
+    project_id: "",
+    region: "",
+    project_number: "",
   });
 
   const handleSave = () => {
+    setShowSave(false);
     if (
       data?.name &&
       data?.website &&
@@ -80,8 +89,8 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
         service_account_cloud: data?.serviceAcc?.acc1 || "",
         service_account_api: data?.serviceAcc?.acc2 || "",
         region: data?.region || "",
-        project_id: data?.projectId || "",
-        project_number: data?.projectNumber || "",
+        project_id: data?.project_id || "",
+        project_number: data?.project_number || "",
         status: data?.status || "active",
       }).toString();
 
@@ -103,15 +112,17 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           const res = response.data;
           if (res.msg) {
             toast.success("Agency created successfully");
-            setShowSubscribe(false);
             setAgencies([...agencies, res.data]);
             getAgencies();
+            setShowSubscribe(false);
           } else if (res.detail) {
+            setShowSave(true);
             toast.error(res.detail);
           }
         })
         .catch((error) => {
           console.error("Error creating user:", error);
+          setShowSave(true);
           if (error.response && error.response.data) {
             toast.error(
               error.response.data.detail ||
@@ -138,6 +149,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    setserviceAcc1(file);
     if (file && file.type === "application/json") {
       const reader = new FileReader();
 
@@ -150,7 +162,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           });
         } catch (error) {
           console.error("Invalid JSON:", error);
-          alert("Invalid JSON file.");
         }
       };
 
@@ -162,6 +173,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
 
   const handleFileUpload2 = (event) => {
     const file = event.target.files[0];
+    setserviceAcc2(file);
     if (file && file.type === "application/json") {
       const reader = new FileReader();
 
@@ -174,7 +186,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           });
         } catch (error) {
           console.error("Invalid JSON:", error);
-          alert("Invalid JSON file.");
         }
       };
 
@@ -184,13 +195,51 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     }
   };
 
+  const handleClearProfile = () => {
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setData({
+      ...data,
+      profile: "",
+    });
+  };
+
+  const handleClearFile = () => {
+    setserviceAcc1(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setData({
+      ...data,
+      serviceAcc: {
+        ...data.serviceAcc,
+        acc1: "",
+      },
+    });
+  };
+
+  const handleClearFile2 = () => {
+    setserviceAcc2(null);
+    if (fileInputRef2.current) {
+      fileInputRef2.current.value = "";
+    }
+    setData({
+      ...data,
+      serviceAcc: {
+        ...data.serviceAcc,
+        acc2: "",
+      },
+    });
+  };
+
   function closeModal() {
     setShowSubscribe(false);
   }
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
@@ -259,12 +308,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 "Credentials",
               ].map((e, i) => {
                 return (
-                  <p
-                    className={`text-center ${
-                      i + 1 == page ? "" : "opacity-0"
-                    }`}
-                    key={i}
-                  >
+                  <p className={`text-center`} key={i}>
                     {e}
                   </p>
                 );
@@ -274,7 +318,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           <div className="h-[45vh] min-[1600px]:h-[40vh]">
             {page === 1 ? (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
-                <div className="flex items-center justify-center mb-6">
+                <div className="flex flex-col items-center justify-center mb-6">
                   <div className="relative">
                     <input
                       type="file"
@@ -284,26 +328,37 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     />
                     <div
                       onClick={() => {
-                        fileInputRef.current.click();
+                        if (data?.profile) {
+                          handleClearProfile();
+                        } else {
+                          fileInputRef.current.click();
+                        }
                       }}
-                      className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -bottom-2 cursor-pointer -right-2 rounded-full"
+                      className="absolute bg-newBlue flex items-center justify-center text-2xl w-[1.6vw] aspect-square -bottom-2 cursor-pointer -right-2 rounded-full"
                     >
-                      +
+                      {data?.profile ? (
+                        <AiOutlineClose className="text-sm" />
+                      ) : (
+                        "+"
+                      )}
                     </div>
                     <Image
                       src={file ? file : "/Agency/temp_logo.png"}
                       alt="Agency Img"
                       width={1000}
                       height={1000}
-                      className="w-[4vw] rounded-full"
+                      className="w-[4vw] aspect-square object-cover rounded-full"
                     />
                   </div>
+                  <p className="text-center mt-3 text-gray-300">
+                    {data?.profile?.name}
+                  </p>
                 </div>
                 <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
                   <div className="flex flex-col">
                     <label
                       htmlFor="name"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Agency Name
                       <Required />
@@ -322,7 +377,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="website"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Website
                       <Required />
@@ -335,7 +390,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Website"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -353,27 +408,35 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter Location"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label
                       htmlFor="warrenty"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Warranty Period
                       <Required />
                     </label>
-                    <input
-                      id="warrenty"
-                      value={data?.warrenty}
-                      onChange={(e) => {
-                        setData({ ...data, warrenty: e.target.value });
-                      }}
-                      type="text"
-                      placeholder="Enter Warranty Period"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                    />
+
+                    <div className="custom-select-wrapper w-full">
+                      <select
+                        value={data?.warrenty}
+                        onChange={(e) => {
+                          setData({ ...data, warrenty: e.target.value });
+                        }}
+                        className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                      >
+                        {[3, 6, 9, 12, 15, 18, 21, 24].map((e, i) => {
+                          return (
+                            <option value={e} key={i} className="bg-main">
+                              {e} Months
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
                   </div>
                   <div className="flex flex-col">
                     <label
@@ -390,13 +453,13 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       onChange={(e) => {
                         setData({ ...data, deployment: e.target.value });
                       }}
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label
                       htmlFor="license"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       License Limit
                       <Required />
@@ -409,7 +472,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       }}
                       type="text"
                       placeholder="Enter License Limit"
-                      className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                      className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
                   </div>
                 </div>
@@ -461,13 +524,13 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     }}
                     type="text"
                     placeholder="Enter Designation"
-                    className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col">
                   <label
                     htmlFor="email"
-                    className="mb-1.5 text-sm min-[1600px]:text-base"
+                    className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                   >
                     Email Address
                     <Required />
@@ -486,7 +549,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     }}
                     type="email"
                     placeholder="Enter Email Address"
-                    className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col">
@@ -510,43 +573,136 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     }}
                     type="number"
                     placeholder="Enter Phone no."
-                    className="bg-[#898989]/15 outline-none border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                   />
                 </div>
               </div>
             ) : page == 3 ? (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
-                <div className="flex items-center justify-between mb-3">
+                <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="project_number"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                    >
+                      Project Number
+                      <Required />
+                    </label>
+                    <input
+                      id="project_number"
+                      value={data?.project_number}
+                      onChange={(e) => {
+                        setData({ ...data, project_number: e.target.value });
+                      }}
+                      type="text"
+                      placeholder="Enter Project Number"
+                      className="bg-[#898989]/15 outline-none border border-gray-500/20 h-[45px] text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="project_id"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                    >
+                      Project ID
+                      <Required />
+                    </label>
+                    <input
+                      id="project_id"
+                      value={data?.project_id}
+                      onChange={(e) => {
+                        setData({ ...data, project_id: e.target.value });
+                      }}
+                      type="text"
+                      placeholder="Enter Project ID"
+                      className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="region"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                    >
+                      Region <Required />
+                    </label>
+                    <input
+                      id="region"
+                      value={data?.region}
+                      onChange={(e) => {
+                        setData({ ...data, region: e.target.value });
+                      }}
+                      type="text"
+                      placeholder="Enter Region"
+                      className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                    />
+                  </div>
+                </div>{" "}
+                <div className="flex items-center justify-between mt-8">
                   <label
                     htmlFor="switchAcc1"
                     className="mb-1.5 text-base flex items-center"
                   >
-                    Service Account 1<Info />
+                    Service Account 1
+                    <Info text="Manages internal google cloud services" />
                   </label>
-                  <input
-                    type="file"
-                    id="switchAcc1"
-                    onChange={handleFileUpload}
-                    className="border border-gray-300/20 p-1 rounded-md"
-                  />
+                  <div className="flex items-center">
+                    {/* Custom File Input */}
+                    <label
+                      className={`border border-gray-300/20 py-1 ${
+                        serviceAcc1 ? "px-4" : "px-1"
+                      } rounded-md cursor-pointer`}
+                    >
+                      {serviceAcc1 && serviceAcc1?.name}
+                      {!serviceAcc1 && (
+                        <input
+                          type="file"
+                          onChange={handleFileUpload}
+                          ref={fileInputRef}
+                        />
+                      )}
+                    </label>
+
+                    {serviceAcc1 && (
+                      <AiOutlineClose
+                        className="text-lg cursor-pointer ml-2"
+                        onClick={handleClearFile}
+                      />
+                    )}
+                  </div>
                 </div>
-                <p className="mb-6 px-1">{data?.serviceAcc?.acc1}</p>
-                <div className="h-[1px] w-full bg-gray-600/40 mb-6"></div>
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mt-5">
                   <label
                     htmlFor="switchAcc2"
                     className="mb-1.5 text-base flex items-center"
                   >
-                    Service Account 2<Info />
+                    Service Account 2
+                    <Info text="Manages internal google cloud services" />
                   </label>
-                  <input
-                    type="file"
-                    id="switchAcc2"
-                    onChange={handleFileUpload2}
-                    className="border border-gray-300/20 p-1 rounded-md"
-                  />
-                </div>
-                <p className="mb-6 px-1">{data?.serviceAcc?.acc2}</p>
+                  <div className="flex items-center">
+                    {/* Custom File Input */}
+                    <label
+                      className={`border border-gray-300/20 py-1 ${
+                        serviceAcc2 ? "px-4" : "px-1"
+                      } rounded-md cursor-pointer`}
+                    >
+                      {serviceAcc2 && serviceAcc2?.name}
+                      {!serviceAcc2 && (
+                        <input
+                          type="file"
+                          onChange={handleFileUpload2}
+                          ref={fileInputRef2}
+                        />
+                      )}
+                    </label>
+
+                    {serviceAcc2 && (
+                      <AiOutlineClose
+                        className="text-lg cursor-pointer ml-2"
+                        onClick={handleClearFile2}
+                      />
+                    )}
+                  </div>
+                </div>{" "}
               </div>
             ) : (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
@@ -554,9 +710,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="emailKey"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Email
+                      <Required /> <Info text="Login Email" />
                     </label>
                     <input
                       id="emailKey"
@@ -578,9 +735,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="passwordKey"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
-                      Password
+                      Password <Required />
+                      <Info text="Login Password" />
                     </label>
                     <div className="w-full relative">
                       <input
@@ -613,13 +771,14 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="passwordKeyConfirm"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
-                      Confirm Password
+                      Confirm Password <Required />
+                      <Info text="Login Confirm Password" />
                     </label>
                     <div className="w-full relative">
                       <input
-                        type={showPassword ? "text" : "password"}
+                        type={showConfirmPassword ? "text" : "password"}
                         id="passwordKeyConfirm"
                         value={data?.credentials?.cpassword}
                         onChange={(e) => {
@@ -638,10 +797,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                         className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
                         onClick={(e) => {
                           e.preventDefault();
-                          setShowPassword(!showPassword);
+                          setShowConfirmPassword(!showConfirmPassword);
                         }}
                       >
-                        {showPassword ? <LuEye /> : <LuEyeOff />}
+                        {showConfirmPassword ? <LuEye /> : <LuEyeOff />}
                       </div>
                     </div>
                   </div>
@@ -664,7 +823,25 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             <button
               onClick={() => {
                 if (page == maxPage) {
-                  handleSave();
+                  if (
+                    page == 4 &&
+                    data?.credentials?.email &&
+                    data?.credentials?.password &&
+                    data?.credentials?.cpassword
+                  ) {
+                    if (
+                      data?.credentials?.password ===
+                      data?.credentials?.cpassword
+                    ) {
+                      handleSave();
+                    } else {
+                      toast.error(
+                        "Both password didn't match please check again"
+                      );
+                    }
+                  } else {
+                    toast.error("Please fill all the details");
+                  }
                 } else {
                   if (
                     page == 1 &&
@@ -677,7 +854,12 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   } else {
                     if (page == 2 && data?.keyContact?.email) {
                       setPage(page + 1);
-                    } else if (page == 3 || page == 4) {
+                    } else if (
+                      page == 3 &&
+                      data?.project_id &&
+                      data?.project_number &&
+                      data?.region
+                    ) {
                       setPage(page + 1);
                     } else {
                       toast.error("Please fill all the details");
@@ -685,7 +867,10 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   }
                 }
               }}
-              className={`text-white text-base min-[1600px]:text-lg bg-newBlue w-[150px] min-[1600px]:w-[170px] h-10 min-[1600px]:h-12 rounded-lg`}
+              className={`text-white ${
+                !showSave ? "bg-[#898989]/15" : "bg-newBlue cursor-pointer"
+              } text-base min-[1600px]:text-lg w-[150px] min-[1600px]:w-[170px] h-10 min-[1600px]:h-12 rounded-lg`}
+              disabled={!showSave}
             >
               {page == maxPage ? "Submit" : "Next"}
             </button>

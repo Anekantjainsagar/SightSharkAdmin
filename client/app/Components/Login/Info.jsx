@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Info = () => {
+const Info = ({ text }) => {
   return (
-    <PopoverComponent>
+    <PopoverComponent content={text}>
       <svg
         width="15"
         height="16"
@@ -23,11 +23,12 @@ const Info = () => {
   );
 };
 
-const PopoverComponent = ({ children, placement = "top" }) => {
+const PopoverComponent = ({ children, placement = "top", content }) => {
   const [isOpen, setIsOpen] = useState(false);
   const popoverRef = useRef(null);
 
   const handleClickOutside = (event) => {
+    event.stopPropagation();
     if (popoverRef.current && !popoverRef.current.contains(event.target)) {
       setIsOpen(false);
     }
@@ -59,7 +60,7 @@ const PopoverComponent = ({ children, placement = "top" }) => {
           isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0"
         }`}
       >
-        Manages internal google cloud services
+        {content}
       </div>
     </div>
   );

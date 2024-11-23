@@ -11,9 +11,9 @@ import AddTemplates from "../../Components/Agencies/AddTemplates";
 import AddDataSouces from "../../Components/Agencies/AddDataSources";
 import { useRouter } from "next/navigation";
 import Context from "@/app/Context/Context";
-import { GoPencil } from "react-icons/go";
 import TemplateBlock from "@/app/Components/Agencies/TemplateBlock";
 import { AiOutlineClose } from "react-icons/ai";
+import { BsPencilSquare } from "react-icons/bs";
 
 const Overview = ({ params }) => {
   const history = useRouter();
@@ -113,12 +113,16 @@ const Overview = ({ params }) => {
                     <h4 className="min-[1600px]:text-xl relative">
                       Templates{" "}
                       <div
-                        className="absolute top-1/2 -translate-y-1/2 -right-8 cursor-pointer border border-white p-1 text-sm rounded-full"
+                        className="absolute top-1/2 -translate-y-1/2 -right-8 cursor-pointer p-1 text-lg rounded-full"
                         onClick={() => {
                           setShowDeleteTemplate(!showDeleteTemplate);
                         }}
                       >
-                        {showDeleteTemplate ? <AiOutlineClose /> : <GoPencil />}
+                        {showDeleteTemplate ? (
+                          <AiOutlineClose />
+                        ) : (
+                          <BsPencilSquare />
+                        )}
                       </div>
                     </h4>
                     <button
