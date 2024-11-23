@@ -90,12 +90,12 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
             }}
           />
           <div className="flex flex-col items-center">
-            <h4 className="mainText20 w-11/12 text-center mb-1 mt-5">
-              Enter Otp for Verification
+            <h4 className="mainText20 font-semibold w-11/12 text-center mb-1 mt-5">
+              Enter OTP for Verification
             </h4>
             <p className="w-11/12 mx-auto text-center mb-5">
               Please enter the OTP (One-Time Password) sent to your registered
-              email/phone number to complete your verification.
+              email address.
             </p>
             <OtpInput
               value={otpVal}
@@ -125,7 +125,7 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
                 outline: "none",
               }}
             />
-            <div className="flex items-center justify-end w-full mt-2">
+            <div className="flex items-center justify-start w-full mt-2">
               <p>
                 Didn&apos;t received the code?{" "}
                 <span className="text-newBlue cursor-pointer">Resend OTP</span>
