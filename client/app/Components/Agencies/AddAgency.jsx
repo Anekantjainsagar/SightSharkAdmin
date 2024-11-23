@@ -640,10 +640,11 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 <div className="flex items-center justify-between mt-8">
                   <label
                     htmlFor="switchAcc1"
-                    className="mb-1.5 text-base flex items-center"
+                    className="mb-1.5 text-base flex items-center w-fit relative"
                   >
                     Service Account 1
-                    <Info text="Manages internal google cloud services" />
+                    <Info text="Manages internal google cloud services" />{" "}
+                    <Required />
                   </label>
                   <div className="flex items-center">
                     {/* Custom File Input */}
@@ -673,10 +674,11 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 <div className="flex items-center justify-between mt-5">
                   <label
                     htmlFor="switchAcc2"
-                    className="mb-1.5 text-base flex items-center"
+                    className="mb-1.5 text-base flex items-center w-fit relative"
                   >
                     Service Account 2
-                    <Info text="Manages internal google cloud services" />
+                    <Info text="Manages internal google cloud services" />{" "}
+                    <Required />
                   </label>
                   <div className="flex items-center">
                     {/* Custom File Input */}
@@ -858,7 +860,9 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       page == 3 &&
                       data?.project_id &&
                       data?.project_number &&
-                      data?.region
+                      data?.region &&
+                      data?.serviceAcc?.acc1 &&
+                      data?.serviceAcc?.acc2
                     ) {
                       setPage(page + 1);
                     } else {
