@@ -28,7 +28,7 @@ const customStyles = {
 const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 1;
   const fileInputRef = React.useRef(null);
-  const { setUsers, users, userData, getUsers } = useContext(Context);
+  const { userData, getUsers } = useContext(Context);
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
   const [file, setFile] = useState();
@@ -152,9 +152,9 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
             onClick={closeModal}
             className="absolute top-2 right-2 px-2 cursor-pointer"
           />
-          <div className="mb-5 text-center">
-            <h1 className="mainLogoSize font-semibold">User Details</h1>
-          </div>
+          <h1 className="mainLogoSize font-semibold text-center mb-5">
+            User Details
+          </h1>
           <div className="h-fit px-[8vw] w-full">
             <div className="flex items-center justify-center mb-6">
               <div className="relative">
@@ -217,7 +217,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Last Name"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>
               <div className="flex flex-col">
@@ -236,18 +236,21 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Email"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>{" "}
               <div className="flex flex-col">
-                <label htmlFor="access" className="mb-1.5">
+                <label
+                  htmlFor="access"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                >
                   Access
                   <Required />
                 </label>
                 <select
                   name="access"
                   id="access"
-                  className="glass outline-none border border-gray-500/5 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="glass outline-none border border-gray-500/5 min-[1600px]:h-[45px] px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                   value={data?.access}
                   onChange={(e) => {
                     setData({ ...data, access: e.target.value });
@@ -266,7 +269,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                 {" "}
                 <label
                   htmlFor="password"
-                  className="text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Password <Required />
                 </label>
@@ -279,7 +282,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                       setData({ ...data, password: e.target.value });
                     }}
                     placeholder="Enter Password"
-                    className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                    className="bg-[#898989]/15 w-full outline-none min-[1600px]:h-[45px] border border-gray-500/20 px-4 py-2 rounded-md"
                   />
                   <div
                     className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
@@ -307,7 +310,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Phone"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>{" "}
               <div className="flex flex-col">
@@ -325,7 +328,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Postal Code"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>
               <div className="flex flex-col">
@@ -343,7 +346,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Country"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>
             </div>

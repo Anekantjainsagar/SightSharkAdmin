@@ -244,7 +244,10 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
                 />
               </div>{" "}
               <div className="flex flex-col">
-                <label htmlFor="access" className="mb-1.5">
+                <label
+                  htmlFor="access"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                >
                   Access
                   <Required />
                 </label>
