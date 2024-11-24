@@ -219,7 +219,7 @@ const AgencyDetails = ({ data }) => {
                   </span>
                 ) : e?.title?.includes("Portal Link") ? (
                   <span
-                    className="hover:underline cursor-pointer hover:text-blue-400 transition-all"
+                    className="underline cursor-pointer hover:text-blue-400 transition-all"
                     onClick={() => {
                       if (e?.value?.includes("http")) {
                         window.open(e?.value, "_blank");
