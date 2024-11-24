@@ -222,7 +222,7 @@ const AgencyDetails = ({ data }) => {
                     className="hover:underline cursor-pointer hover:text-blue-400 transition-all"
                     onClick={() => {
                       if (e?.value?.includes("http")) {
-                        window.open(e?.value, "__blank");
+                        window.open(e?.value, "_blank");
                       } else {
                         toast.error("Invalid url");
                       }
