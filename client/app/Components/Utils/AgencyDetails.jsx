@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import DeleteAgency from "../Agencies/DeleteAgency";
@@ -82,16 +81,9 @@ const AgencyDetailsBlock = ({ data }) => {
             className={`status-${data?.status?.toLowerCase()} w-fit p-2 border-2 rounded-2xl`}
           ></div>
         </div>
-        <div className="flex items-center justify-start pl-10">
-          <Image
-            src="/Agency/Avatar.png"
-            width={1000}
-            height={1000}
-            className="w-7 min-[1600px]:w-9 aspect-square rounded-full"
-            alt="Key contact"
-          />
-          <p className="ml-2 min-[1600px]:ml-4">{data?.key_contact_name}</p>
-        </div>
+        <p className="flex items-center justify-center">
+          {data?.key_contact_name}
+        </p>
         <p className="break-words w-full text-center">
           {data?.key_contact_email_address}
         </p>

@@ -250,7 +250,7 @@ const Overview = ({ params }) => {
                             alt="Agency Img"
                             width={1000}
                             height={1000}
-                            className="rounded-full border border-gray-300/30"
+                            className="rounded-full aspect-square object-cover border border-gray-300/30"
                           />
                         </div>
                       </div>

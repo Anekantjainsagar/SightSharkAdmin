@@ -26,6 +26,14 @@ const customStyles = {
   },
 };
 
+function formatName(input) {
+  return input
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
   let maxPage = 2;
   const {
@@ -33,6 +41,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
     setSelectedDataSources,
     selectedDataSources,
     agencyDatasources,
+    getAgencyDataSources,
   } = useContext(Context);
   const [checkedTables, setCheckedTables] = useState();
   const [search, setSearch] = useState("");
@@ -73,7 +82,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
             size={40}
             onClick={closeModal}
             className="absolute top-2 right-2 px-2 cursor-pointer"
-          />{" "}
+          />
           <div className="flex items-center px-[10vw]">
             <div className="bg-newBlue w-[3vw] aspect-square rounded-full flex items-center justify-center text-[20px]">
               {page > 1 ? <IoMdCheckmark /> : "1"}
@@ -138,8 +147,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                               className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2 aspect-squre object-contain"
                             />
                             <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                              {e?.name[0].toUpperCase() +
-                                e?.name?.slice(1)?.replaceAll("_", " ")}
+                              {formatName(e?.name)}
                             </p>
                           </div>
                           <div className="inline-flex items-start mr-1 w-3/12 justify-end">
@@ -226,7 +234,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
 
                   if (combined?.length > 0 && agencyId) {
                     let cookie = getCookie("token");
-                    // Use Promise.all to send requests for each item in the combined array
+
                     Promise.all(
                       combined.map((item) => {
                         const platformName = item.name; // Assuming `item.name` represents the platform name
@@ -246,7 +254,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                         );
                       })
                     )
-                      .then((responses) => {
+                      .then(() => {
                         toast.success("Tables added successfully!");
                         setShowSubscribe(false);
                         getAgencyDataSources(original_data?.agency_id);
@@ -280,10 +288,13 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
     const platformName = selectedDataSources[sourceIndex].name;
 
     setCheckedTables((prevCheckedTables) => {
-      // Clone the previous state
       const newCheckedTables = { ...prevCheckedTables };
 
-      // Add or remove the table based on isChecked
+      // Ensure newCheckedTables[platformName] is initialized as an array
+      if (!Array.isArray(newCheckedTables[platformName])) {
+        newCheckedTables[platformName] = [];
+      }
+
       if (isChecked) {
         newCheckedTables[platformName] = [
           ...newCheckedTables[platformName],
@@ -326,10 +337,7 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
                 height={1000}
                 className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
               />
-              <h6 className="mt-2 text-lg">
-                {e?.name[0].toUpperCase() +
-                  e?.name?.slice(1)?.replaceAll("_", " ")}
-              </h6>
+              <h6 className="mt-2 text-lg">{formatName(e?.name)}</h6>
             </div>
             <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
             <div className="w-[70%]">
@@ -348,7 +356,7 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
                       className="w-full flex justify-between items-center rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-400"
                     >
                       <label htmlFor={table} className="cursor-pointer">
-                        {table}
+                        {formatName(table)}
                       </label>
                       <div className="inline-flex items-start">
                         <label className="relative flex items-center cursor-pointer">
