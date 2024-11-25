@@ -50,9 +50,14 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
               Forgot your Password?
             </h4>
             <p className="w-10/12 mx-auto text-center">
-              {sent
-                ? "Password reset email sent."
-                : "Enter your Email an we'll help you reset your password."}
+              {sent ? (
+                <>
+                  Password Reset Email Sent. <br /> Please check your inbox for
+                  the password reset link.
+                </>
+              ) : (
+                "Enter your Email and we'll help you reset your password."
+              )}
             </p>
             <div className="flex flex-col mt-4">
               <input
@@ -68,35 +73,39 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
             <button
               className={`bg-newBlue w-full py-2 mt-5 rounded-lg text-sm min-[1600px]:text-base text-center`}
               onClick={() => {
-                if (email) {
-                  const formData = new URLSearchParams();
-                  formData.append("email", email);
-
-                  axios
-                    .post(`${BACKEND_URI}/user/recover-password`, formData, {
-                      headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        Authorization: `Bearer ${getCookie("token")}`,
-                      },
-                    })
-                    .then((res) => {
-                      if (res.status == 200) {
-                        toast.success("Password reset email sent");
-                        setSent(true);
-                      }
-                    })
-                    .catch((err) => {
-                      if (err.response.status === 404) {
-                        toast.error("User not found");
-                      }
-                    });
+                if (sent) {
+                  setShowSubscribe(false);
                 } else {
-                  toast.error("Please enter an email address");
+                  if (email) {
+                    const formData = new URLSearchParams();
+                    formData.append("email", email);
+
+                    axios
+                      .post(`${BACKEND_URI}/user/recover-password`, formData, {
+                        headers: {
+                          Accept: "application/json",
+                          "Content-Type": "application/x-www-form-urlencoded",
+                          Authorization: `Bearer ${getCookie("token")}`,
+                        },
+                      })
+                      .then((res) => {
+                        if (res.status == 200) {
+                          toast.success("Password reset email sent");
+                          setSent(true);
+                        }
+                      })
+                      .catch((err) => {
+                        if (err.response.status === 404) {
+                          toast.error("User not found");
+                        }
+                      });
+                  } else {
+                    toast.error("Please enter an email address");
+                  }
                 }
               }}
             >
-              Submit
+              {sent ? "Ok" : "Submit"}
             </button>{" "}
           </div>
         </div>

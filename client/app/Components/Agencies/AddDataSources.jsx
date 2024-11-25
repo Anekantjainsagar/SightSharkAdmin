@@ -230,6 +230,12 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                     ...item,
                     tables: checkedTables[item.name] || item.tables,
                   }));
+                  const difference = agencyDatasources.filter(
+                    (selected) =>
+                      !selectedDataSources.some(
+                        (agency) => agency.name === selected.name
+                      )
+                  );
                   const agencyId = original_data?.agency_id; // Make sure `original_data` is the correct variable for agency_id
 
                   if (combined?.length > 0 && agencyId) {
@@ -265,6 +271,35 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                       });
                   } else {
                     toast.error("Please select at least 1 data source");
+                  }
+                  if (difference?.length > 0 && agencyId) {
+                    let cookie = getCookie("token");
+
+                    Promise.all(
+                      difference.map((item) => {
+                        const platformName = item.name;
+
+                        return axios.post(
+                          `${BACKEND_URI}/assign_script/remove_platform?agency_id=${agencyId}&platform_name=${platformName}`,
+                          {
+                            headers: {
+                              Accept: "application/json",
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${cookie}`,
+                            },
+                          }
+                        );
+                      })
+                    )
+                      .then(() => {
+                        toast.success("Tables removed successfully!");
+                        setShowSubscribe(false);
+                        getAgencyDataSources(original_data?.agency_id);
+                      })
+                      .catch((error) => {
+                        console.error("Error adding tables", error);
+                        toast.error("Error adding tables");
+                      });
                   }
                 } else {
                   setPage(page + 1);

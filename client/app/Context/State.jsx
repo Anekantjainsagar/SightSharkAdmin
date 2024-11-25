@@ -3,10 +3,12 @@ import axios from "axios";
 import Context from "./Context";
 import { getCookie } from "cookies-next";
 import { BACKEND_URI } from "../utils/url";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const State = (props) => {
+  const pathname = usePathname();
   const history = useRouter();
   const [users, setUsers] = useState([]);
   const [userData, setUserData] = useState();
@@ -35,8 +37,10 @@ const State = (props) => {
           })
           .catch((err) => {
             if (err.status) {
-              toast.error("Login Error Occured Please try again");
-              history.push("/");
+              if (pathname != "/reset-password") {
+                toast.error("Login Error Occured Please try again");
+                history.push("/");
+              }
             }
           });
       } catch (error) {
@@ -44,6 +48,13 @@ const State = (props) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (pathname == "/" && userData?.id) {
+      history.push("/overview");
+      toast.success("Logged in Successfully");
+    }
+  }, [userData]);
 
   const getUsers = (page = 1, order_by = "created_at", type = false) => {
     let cookie = getCookie("token");
@@ -82,7 +93,7 @@ const State = (props) => {
 
   const getAgencies = (page = 1, order_by = "created_at", type = false) => {
     let cookie = getCookie("token");
-    let limit = agencies?.limit ? agencies?.limit : 8;
+    let limit = agencies?.limit ? agencies?.limit : 9;
 
     if (cookie?.length > 5) {
       try {
