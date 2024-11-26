@@ -46,18 +46,13 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
             }}
           />
           <div>
-            <h4 className="mainText20 w-11/12 text-center mb-1.5 mt-5">
-              Forgot your Password?
+            <h4 className="mainText20 text-center mb-1.5 mt-5">
+              {!sent ? "Forgot your Password?" : "Password Reset Email Sent."}
             </h4>
             <p className="w-10/12 mx-auto text-center">
-              {sent ? (
-                <>
-                  Password Reset Email Sent. <br /> Please check your inbox for
-                  the password reset link.
-                </>
-              ) : (
-                "Enter the email address associated with your account to recover your password."
-              )}
+              {sent
+                ? "Please check your inbox for the password reset link."
+                : "Enter the email address associated with your account to recover your password."}
             </p>
             {!sent && (
               <div className="flex flex-col mt-4">

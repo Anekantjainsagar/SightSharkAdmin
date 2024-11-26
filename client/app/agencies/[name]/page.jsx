@@ -155,7 +155,7 @@ const Overview = ({ params }) => {
                     </div>
                   )}
                 </div>
-                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[27vh]">
+                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[23vh]">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="min-[1600px]:text-xl">Recent Activity </h4>
                     <p
@@ -175,7 +175,7 @@ const Overview = ({ params }) => {
                         14 August 2024
                       </span>
                       <div className="mt-4">
-                        {[1, 2, 3]?.map((e, i) => {
+                        {[1, 2]?.map((e, i) => {
                           return (
                             <div
                               key={i}

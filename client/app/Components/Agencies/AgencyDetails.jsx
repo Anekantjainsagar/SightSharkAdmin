@@ -176,7 +176,16 @@ const AgencyDetails = ({ data }) => {
               </svg>
             ),
             title: "Warranty Period",
-            value: `${data?.warranty_period} months`,
+            value: `${data?.warranty_period} months (${Math.ceil(
+              (new Date(
+                new Date(data?.deployment_date).setMonth(
+                  new Date(data?.deployment_date).getMonth() +
+                    data?.warranty_period
+                )
+              ) -
+                new Date()) /
+                (1000 * 60 * 60 * 24)
+            )} days left)`,
           },
         ].map((e, i) => {
           return (

@@ -51,11 +51,10 @@ const RightSide = memo(() => {
         height={1000}
         className="absolute top-0 left-0 object-cover w-full h-full"
       />
-      <div className="p-[1.5vw] glass rounded-xl text-white text-xl min-[1600px]:text-[24px] w-full">
+      <div className="p-[1.5vw] glass rounded-xl text-white text-lg min-[1600px]:text-[22px] w-full">
         <Swiper
           slidesPerView={1}
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-          pagination={{ clickable: true }}
           loop={true}
           autoplay={{
             delay: 5000,
@@ -70,7 +69,7 @@ const RightSide = memo(() => {
             return (
               <SwiperSlide key={i}>
                 <div className="w-full flex flex-col justify-end">
-                  <p className="text-white leading-[32px]">{e}</p>
+                  <p className="text-white leading-[29px]">{e}</p>
                   <span className="text-base mt-1 text-right">
                     Anekant, Frontend Developer, Prowiz Analytics
                   </span>
