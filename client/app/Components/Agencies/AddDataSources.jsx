@@ -280,7 +280,8 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                         const platformName = item.name;
 
                         return axios.post(
-                          `${BACKEND_URI}/assign_script/remove_platform?agency_id=${agencyId}&platform_name=${platformName}`,
+                          `${BACKEND_URI}/assign_script/remove_platform?agency_id=${agencyId.trim()}&platform_name=${platformName.trim()}`,
+                          {},
                           {
                             headers: {
                               Accept: "application/json",
@@ -297,8 +298,14 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                         getAgencyDataSources(original_data?.agency_id);
                       })
                       .catch((error) => {
-                        console.error("Error adding tables", error);
-                        toast.error("Error adding tables");
+                        if (error.response && error.response.status === 401) {
+                          toast.error(
+                            "Authentication failed. Please log in again."
+                          );
+                        } else {
+                          console.error("Error adding tables", error);
+                          toast.error("Error adding tables");
+                        }
                       });
                   }
                 } else {

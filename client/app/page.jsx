@@ -6,8 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import { BACKEND_URI } from "./utils/url";
 import LoginOtp from "@/app/Components/LoginOtp";
-import { getCookie, setCookie } from "cookies-next";
-import axios from "axios";
+import { setCookie } from "cookies-next";
 import Context from "./Context/Context";
 import { useRouter } from "next/navigation";
 import PasswordReset from "@/app/Components/PasswordReset";
@@ -65,7 +64,7 @@ const App = () => {
               history.push("/overview");
               toast.success("Login Successfully");
             } else {
-              toast.success("Login Successfully check otp for verification");
+              toast.success("OTP sent to your registered email address");
               setShowOtp(true);
             }
           })
@@ -233,21 +232,6 @@ const App = () => {
                   className="w-5 aspect-square mr-3"
                 />
                 <p>Sign in with Google</p>
-              </button>
-              <button
-                onClick={() => {
-                  window.open(`${BACKEND_URI}/auth/facebook/login`, "__blank");
-                }}
-                className="w-full bg-[#898989]/15 rounded-[10px] flex items-center justify-center h-12"
-              >
-                <Image
-                  src="/login/facebook.png"
-                  width={1000}
-                  height={1000}
-                  alt="Facebook icon"
-                  className="w-5 aspect-square mr-3"
-                />
-                <p>Sign in with Facebook</p>
               </button>
             </div>
           </div>

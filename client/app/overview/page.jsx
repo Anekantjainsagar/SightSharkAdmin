@@ -109,7 +109,7 @@ const Overview = () => {
                 <p
                   className="text-white text-sm min-[1600px]:text-base flex items-center cursor-pointer"
                   onClick={() => {
-                    history.push("/alerts");
+                    history.push("/overview/critical-notifications");
                   }}
                 >
                   View All

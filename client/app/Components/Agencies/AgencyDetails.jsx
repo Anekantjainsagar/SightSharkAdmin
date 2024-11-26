@@ -176,7 +176,7 @@ const AgencyDetails = ({ data }) => {
               </svg>
             ),
             title: "Warranty Period",
-            value: data?.warranty_period,
+            value: `${data?.warranty_period} months`,
           },
         ].map((e, i) => {
           return (
@@ -255,7 +255,7 @@ const AgencyDetails = ({ data }) => {
           },
           {
             img: "/Agency/individual/icons/location.png",
-            title: "Email Address",
+            title: "Email",
             value: data?.key_contact_email_address,
           },
           {
@@ -267,7 +267,7 @@ const AgencyDetails = ({ data }) => {
           return (
             <div
               key={i}
-              className="w-full flex items-center justify-between px-4 my-2.5"
+              className="w-full flex items-center justify-between px-4 my-2"
             >
               <h6 className="text-textGrey text-sm min-[1600px]:text-base">
                 {e?.title}
@@ -283,7 +283,7 @@ const AgencyDetails = ({ data }) => {
       </div>
       <div className="border rounded-xl w-full border-gray-500/15 mt-4">
         <h5 className="w-full p-3 border-b text-sm min-[1600px]:text-base border-b-gray-500/15">
-          License Limit
+          License Usage
         </h5>
         <div className="w-4/12 mx-auto my-4 relative">
           <p className="text-center text-sm min-[1600px]:text-xl absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 font-semibold">

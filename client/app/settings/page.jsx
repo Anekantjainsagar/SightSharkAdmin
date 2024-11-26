@@ -54,7 +54,7 @@ const Settings = () => {
           })
           .then((res) => {
             if (res.msg) {
-              toast.success("Super Admin updated successfully");
+              toast.success("User updated successfully");
               checkToken();
             }
             if (res.detail) {

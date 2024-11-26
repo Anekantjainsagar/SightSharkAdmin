@@ -77,12 +77,12 @@ const Overview = ({ params }) => {
                   </div>
                   <div className="gradient-line my-4"></div>
                   {agencyDatasources?.length > 0 ? (
-                    <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4">
+                    <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4 min-h-[12vh]">
                       {agencyDatasources?.map((e, i) => {
                         return (
                           <div
                             key={i}
-                            className="flex items-center px-2 py-1 rounded-full"
+                            className="flex h-fit items-center px-2 py-1 rounded-full"
                           >
                             <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/50 from-[75%] w-7 min-[1600px]:w-8 aspect-square p-1.5 mr-3">
                               <Image
@@ -136,7 +136,7 @@ const Overview = ({ params }) => {
                   </div>{" "}
                   <div className="gradient-line my-4"></div>
                   {agency_templates?.length > 0 ? (
-                    <div className="grid grid-cols-5 gap-x-4 mt-2">
+                    <div className="grid grid-cols-4 gap-x-4 mt-2">
                       {agency_templates?.map((e, i) => {
                         return (
                           <TemplateBlock
@@ -155,7 +155,7 @@ const Overview = ({ params }) => {
                     </div>
                   )}
                 </div>
-                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[33vh]">
+                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[27vh]">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="min-[1600px]:text-xl">Recent Activity </h4>
                     <p

@@ -16,6 +16,7 @@ import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import Required from "@/app/Components/Utils/Required";
 import Context from "@/app/Context/Context";
+import axios from "axios";
 
 let databar = [
   "Agency Details",
@@ -50,6 +51,7 @@ const Overview = ({ params }) => {
     agency_id: "",
     project_id: "",
     region: "",
+    profile_picture: "",
     project_number: "",
   });
   const fileInputRef = React.useRef(null);
@@ -99,7 +101,7 @@ const Overview = ({ params }) => {
     const file = event.target.files[0];
     if (file) {
       setFile(URL.createObjectURL(file));
-      setData({ ...data, profile: file });
+      setData({ ...data, profile_picture: file });
     } else {
       console.log("No file selected");
     }
@@ -518,58 +520,6 @@ const Overview = ({ params }) => {
                     </div>
                   ) : (
                     <div className="flex flex-col items-start justify-between mt-4 px-3">
-                      {/* <div className="w-full mb-5">
-                        <div className="flex flex-col mb-5">
-                          <label
-                            htmlFor="switchAcc1"
-                            className="mb-1.5 text-base flex items-center"
-                          >
-                            Service Account 1
-                            <Info text="Manages internal google cloud services" />
-                          </label>
-                          <textarea
-                            id="switchAcc1"
-                            value={data?.serviceAcc?.acc1}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                serviceAcc: {
-                                  ...data?.serviceAcc,
-                                  acc1: e.target.value,
-                                },
-                              });
-                            }}
-                            rows={2}
-                            placeholder="Service Account 1"
-                            className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                          ></textarea>
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="switchAcc2"
-                            className="mb-1.5 text-base flex items-center"
-                          >
-                            Service Account 2{" "}
-                            <Info text="Manages internal google cloud services" />
-                          </label>
-                          <textarea
-                            id="switchAcc2"
-                            value={data?.serviceAcc?.acc2}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                serviceAcc: {
-                                  ...data?.serviceAcc,
-                                  acc2: e.target.value,
-                                },
-                              });
-                            }}
-                            rows={2}
-                            placeholder="Service Account 2"
-                            className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                          ></textarea>
-                        </div>
-                      </div>{" "} */}
                       <div className="w-full">
                         <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
                           <div className="flex flex-col">
@@ -650,14 +600,14 @@ const Overview = ({ params }) => {
                                 serviceAcc1 ? "px-4" : "px-1"
                               } rounded-md cursor-pointer`}
                             >
-                              {serviceAcc1 && serviceAcc1?.name}
-                              {!serviceAcc1 && (
-                                <input
-                                  type="file"
-                                  onChange={handleFileUpload}
-                                  ref={fileInputRef}
-                                />
-                              )}
+                              {/* Show file name or "Replace file" */}
+                              {serviceAcc1 ? serviceAcc1.name : "Replace file"}
+                              <input
+                                type="file"
+                                onChange={handleFileUpload}
+                                ref={fileInputRef}
+                                style={{ display: "none" }} // Hide the input
+                              />
                             </label>
 
                             {serviceAcc1 && (
@@ -683,14 +633,14 @@ const Overview = ({ params }) => {
                                 serviceAcc2 ? "px-4" : "px-1"
                               } rounded-md cursor-pointer`}
                             >
-                              {serviceAcc2 && serviceAcc2?.name}
-                              {!serviceAcc2 && (
-                                <input
-                                  type="file"
-                                  onChange={handleFileUpload2}
-                                  ref={fileInputRef2}
-                                />
-                              )}
+                              {/* Show file name or "Replace file" */}
+                              {serviceAcc2 ? serviceAcc2.name : "Replace file"}
+                              <input
+                                type="file"
+                                onChange={handleFileUpload2}
+                                ref={fileInputRef2}
+                                style={{ display: "none" }} // Hide the input
+                              />
                             </label>
 
                             {serviceAcc2 && (
@@ -700,7 +650,7 @@ const Overview = ({ params }) => {
                               />
                             )}
                           </div>
-                        </div>{" "}
+                        </div>
                       </div>
                     </div>
                   )}
@@ -751,23 +701,43 @@ const Overview = ({ params }) => {
                             ...data,
                           }).toString();
 
+                          console.log(data?.profile_picture);
+
+                          const formData = new FormData();
+                          formData.append(
+                            "profile_picture",
+                            data?.profile_picture ? data?.profile_picture : ""
+                          );
+                          formData.append(
+                            "profile_picture_filename",
+                            data?.profile_picture?.name
+                              ? data?.profile_picture?.name
+                              : ""
+                          );
+                          formData.append(
+                            "profile_picture_content_type",
+                            data?.profile_picture?.type
+                              ? data?.profile_picture?.type
+                              : ""
+                          );
+
                           try {
-                            fetch(
-                              `${BACKEND_URI}/agency/update/${data?.agency_id}?${queryParams}`,
-                              {
-                                headers: {
-                                  Accept:
-                                    "application/json, application/xml, text/plain, text/html, *.*",
-                                  Authorization: `Bearer ${getCookie("token")}`,
-                                },
-                                method: "PUT",
-                              }
-                            )
+                            axios
+                              .put(
+                                `${BACKEND_URI}/agency/update/${data?.agency_id}?${queryParams}`,
+                                formData,
+                                {
+                                  headers: {
+                                    Accept:
+                                      "application/json, application/xml, text/plain, text/html, *.*",
+                                    Authorization: `Bearer ${getCookie(
+                                      "token"
+                                    )}`,
+                                  },
+                                }
+                              )
                               .then((res) => {
-                                return res.json();
-                              })
-                              .then((res) => {
-                                if (res.msg) {
+                                if (res.data.msg) {
                                   getAgencies();
                                   toast.success("Agency updated successfully");
                                   history.push(

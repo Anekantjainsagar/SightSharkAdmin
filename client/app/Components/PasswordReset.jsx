@@ -56,20 +56,22 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
                   the password reset link.
                 </>
               ) : (
-                "Enter your Email and we'll help you reset your password."
+                "Enter the email address associated with your account to recover your password."
               )}
             </p>
-            <div className="flex flex-col mt-4">
-              <input
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="text"
-                disabled={sent}
-                placeholder="Enter Email"
-                className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-              />
-            </div>
+            {!sent && (
+              <div className="flex flex-col mt-4">
+                <input
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  disabled={sent}
+                  placeholder="Enter Email"
+                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                />
+              </div>
+            )}
             <button
               className={`bg-newBlue w-full py-2 mt-5 rounded-lg text-sm min-[1600px]:text-base text-center`}
               onClick={() => {
