@@ -385,7 +385,7 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
             <div className="w-[70%]">
               <div className="flex justify-between items-center w-full px-4 py-1">
                 <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                  {e?.name}
+                  {formatName(e?.name)}
                 </p>
                 <p>Track</p>
               </div>

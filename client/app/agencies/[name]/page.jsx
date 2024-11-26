@@ -15,6 +15,14 @@ import TemplateBlock from "@/app/Components/Agencies/TemplateBlock";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsPencilSquare } from "react-icons/bs";
 
+function formatName(input) {
+  return input
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 const Overview = ({ params }) => {
   const history = useRouter();
   const [showDeleteTemplate, setShowDeleteTemplate] = useState(false);
@@ -94,8 +102,7 @@ const Overview = ({ params }) => {
                               />
                             </div>
                             <p className="text-sm min-[1600px]:text-base">
-                              {e?.name[0].toUpperCase() +
-                                e?.name?.slice(1)?.replaceAll("_", " ")}
+                              {formatName(e?.name)}
                             </p>
                           </div>
                         );
