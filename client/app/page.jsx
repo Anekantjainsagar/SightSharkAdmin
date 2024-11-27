@@ -62,7 +62,7 @@ const App = () => {
               setCookie("token", res.access_token);
               checkToken();
               history.push("/overview");
-              toast.success("Login Successfully");
+              toast.success("Logged in successfully");
             } else {
               toast.success("OTP sent to your registered email address");
               setShowOtp(true);
