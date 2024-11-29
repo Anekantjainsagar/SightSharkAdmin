@@ -491,12 +491,12 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       <Required />
                     </label>
                     <input
+                      type="number"
                       id="license"
                       value={data?.license}
                       onChange={(e) => {
                         setData({ ...data, license: e.target.value });
                       }}
-                      type="text"
                       placeholder="Enter License Limit"
                       className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />

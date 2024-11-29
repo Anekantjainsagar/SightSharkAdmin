@@ -57,7 +57,7 @@ const DataSources = () => {
                             key={i}
                             className="border border-gray-400/20 rounded-2xl p-2"
                           >
-                            <div className="py-10 border border-gray-400/20 rounded-2xl hover:rounded-xl hover:scale-105 transition-all cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
+                            <div className="py-10 border border-gray-400/20 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
                               <Image
                                 src={e?.img_link}
                                 alt={e?.img_link?.src}
