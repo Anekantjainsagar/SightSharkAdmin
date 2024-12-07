@@ -69,7 +69,7 @@ const RightSide = memo(() => {
             return (
               <SwiperSlide key={i}>
                 <div className="w-full flex flex-col justify-end">
-                  <p className="text-white leading-[29px]">"{e}"</p>
+                  <p className="text-white leading-[29px]">&quot;{e}&quot;</p>
                   <span className="text-base mt-1 text-right">
                     Anekant, Frontend Developer, Prowiz Analytics
                   </span>
