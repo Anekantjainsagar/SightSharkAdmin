@@ -12,6 +12,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import Context from "@/app/Context/Context";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -439,20 +440,20 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                   </div>
                   <div className="flex flex-col">
                     <label
-                      htmlFor="warrenty"
+                      htmlFor="warranty"
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Warranty Period
                       <Required />
                     </label>
 
-                    <div className="custom-select-wrapper w-full">
+                    <div className="relative w-full">
                       <select
                         value={data?.warrenty}
                         onChange={(e) => {
                           setData({ ...data, warrenty: e.target.value });
                         }}
-                        className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                        className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 pr-10 rounded-md appearance-none"
                       >
                         {[3, 6, 9, 12, 15, 18, 21, 24].map((e, i) => {
                           return (
@@ -462,14 +463,19 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                           );
                         })}
                       </select>
+                      {/* Custom dropdown icon */}
+                      <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                        <MdKeyboardArrowDown />
+                      </span>
                     </div>
                   </div>
+
                   <div className="flex flex-col">
                     <label
                       htmlFor="deployment"
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
-                      Deployment Date <Required />
+                      Deployment Date
                     </label>
                     <input
                       id="deployment"
@@ -876,7 +882,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     data?.name &&
                     data?.website &&
                     data?.warrenty &&
-                    data?.deployment &&
                     data?.license
                   ) {
                     setPage(page + 1);

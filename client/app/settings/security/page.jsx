@@ -10,6 +10,7 @@ import axios from "axios";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
+import Info from "@/app/Components/Login/Info";
 
 const Settings = () => {
   const { userData, setUserData } = useContext(Context);
@@ -92,7 +93,8 @@ const Settings = () => {
                         htmlFor="currentPass"
                         className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                       >
-                        Current Password <Required />
+                        Current Password <Required />{" "}
+                        <Info text="Current Password" />
                       </label>
                       <div className="w-full relative mt-1">
                         <input
@@ -122,7 +124,7 @@ const Settings = () => {
                         className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                       >
                         New Password
-                        <Required />
+                        <Required /> <Info text="New Password" />
                       </label>
                       <div className="w-full relative mt-1">
                         <input
@@ -153,6 +155,7 @@ const Settings = () => {
                       >
                         Confirm New Password
                         <Required />
+                        <Info text="Confirmed New Password" />
                       </label>
                       <div className="w-full relative mt-1">
                         <input

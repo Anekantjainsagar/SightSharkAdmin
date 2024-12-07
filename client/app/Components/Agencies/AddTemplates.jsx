@@ -48,7 +48,6 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}

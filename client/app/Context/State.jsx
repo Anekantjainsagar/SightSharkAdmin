@@ -20,6 +20,19 @@ const State = (props) => {
   const [agencyDatasources, setAgencyDatasources] = useState();
   const [selectedDataSources, setSelectedDataSources] = useState([]);
 
+  const password_params = [
+    "hasUppercase",
+    "hasLowercase",
+    "hasNumber",
+    "hasSpecialChar",
+  ];
+  const tooltips = {
+    hasUppercase: "Password must have at least one uppercase letter.",
+    hasLowercase: "Password must have at least one lowercase letter.",
+    hasNumber: "Password must have at least one number.",
+    hasSpecialChar: "Password must have at least one special character.",
+  };
+
   const checkToken = () => {
     let cookie = getCookie("token");
     if (cookie?.length > 5) {
@@ -47,6 +60,15 @@ const State = (props) => {
         console.log(error);
       }
     }
+  };
+
+  const checkPasswordCriteria = (password) => {
+    return {
+      hasUppercase: /[A-Z]/.test(password),
+      hasLowercase: /[a-z]/.test(password),
+      hasNumber: /[0-9]/.test(password),
+      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    };
   };
 
   useEffect(() => {
@@ -93,7 +115,7 @@ const State = (props) => {
 
   const getAgencies = (page = 1, order_by = "created_at", type = false) => {
     let cookie = getCookie("token");
-    let limit = agencies?.limit ? agencies?.limit : 9;
+    let limit = agencies?.limit ? agencies?.limit : 7;
 
     if (cookie?.length > 5) {
       try {
@@ -285,6 +307,9 @@ const State = (props) => {
         selectedUsers,
         setSelectedUsers,
         setUserData,
+        checkPasswordCriteria,
+        tooltips,
+        password_params,
       }}
     >
       {props.children}

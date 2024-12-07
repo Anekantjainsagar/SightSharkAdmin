@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
@@ -22,6 +22,7 @@ const customStyles = {
 };
 
 const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
+  const [timeLeft, setTimeLeft] = useState(null);
   const [sent, setSent] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -29,9 +30,29 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
     setShowSubscribe(false);
   }
 
+  useEffect(() => {
+    if (timeLeft === null) return;
+
+    if (timeLeft <= 0) {
+      setTimeLeft(null); // Stop the timer
+      if (onComplete) {
+        setSent(false);
+      }
+      return;
+    }
+
+    const timerId = setTimeout(() => setTimeLeft((prev) => prev - 1), 1000);
+    return () => clearTimeout(timerId); // Cleanup on unmount
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
@@ -67,6 +88,11 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
                 />
               </div>
             )}
+            {timeLeft !== null && (
+              <p className="text-lg text-gray-300 mt-2 text-center">
+                Resend link in {formatTime(timeLeft)} mins
+              </p>
+            )}
             <button
               className={`bg-newBlue w-full py-2 mt-5 rounded-lg text-sm min-[1600px]:text-base text-center`}
               onClick={() => {
@@ -89,6 +115,7 @@ const PasswordReset = ({ showSubscribe, setShowSubscribe }) => {
                         if (res.status == 200) {
                           toast.success("Password reset email sent");
                           setSent(true);
+                          setTimeLeft(5 * 60);
                         }
                       })
                       .catch((err) => {

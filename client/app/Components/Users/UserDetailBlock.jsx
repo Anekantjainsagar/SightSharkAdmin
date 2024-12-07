@@ -27,7 +27,7 @@ const UserDetailBlock = ({ data }) => {
         clickedUsers={userClickedData}
       />
       <div className="py-4 px-7 border-gray-200/5 border-y grid userBlockGrid items-center cursor-pointer text-textGrey text-sm min-[1600px]:text-base">
-        <div
+        {/* <div
           onClick={(e) => {
             e.stopPropagation();
             if (selectedUsers?.includes(data?.id)) {
@@ -62,7 +62,7 @@ const UserDetailBlock = ({ data }) => {
               </svg>
             </span>
           </label>
-        </div>
+        </div> */}
         <div className="flex items-start min-[1600px]:ml-0 ml-2">
           {!data?.profile_picture ? (
             <Image

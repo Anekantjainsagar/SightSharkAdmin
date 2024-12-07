@@ -4,6 +4,27 @@ import toast from "react-hot-toast";
 import { PieChart } from "react-minimal-pie-chart";
 
 const AgencyDetails = ({ data }) => {
+  let days_left =
+    Math.ceil(
+      (new Date(
+        new Date(data?.deployment_date).setMonth(
+          new Date(data?.deployment_date).getMonth() + data?.warranty_period
+        )
+      ) -
+        new Date()) /
+        (1000 * 60 * 60 * 24)
+    ) >= 0
+      ? Math.ceil(
+          (new Date(
+            new Date(data?.deployment_date).setMonth(
+              new Date(data?.deployment_date).getMonth() + data?.warranty_period
+            )
+          ) -
+            new Date()) /
+            (1000 * 60 * 60 * 24)
+        )
+      : -1;
+
   return (
     <div className="border border-gray-500/15 min-[1600px]:h-[88vh] p-4 w-[30%] rounded-lg flex flex-col items-center justify-center">
       <Image
@@ -176,16 +197,9 @@ const AgencyDetails = ({ data }) => {
               </svg>
             ),
             title: "Warranty Period",
-            value: `${data?.warranty_period} months (${Math.ceil(
-              (new Date(
-                new Date(data?.deployment_date).setMonth(
-                  new Date(data?.deployment_date).getMonth() +
-                    data?.warranty_period
-                )
-              ) -
-                new Date()) /
-                (1000 * 60 * 60 * 24)
-            )} days left)`,
+            value: `${data?.warranty_period} months ${
+              days_left != -1 ? `(${days_left} days left)` : "(Expired)"
+            }`,
           },
         ].map((e, i) => {
           return (

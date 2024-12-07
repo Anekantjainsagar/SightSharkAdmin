@@ -21,9 +21,9 @@ const customStyles = {
   },
 };
 
-const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
+const DeleteTemplate = ({ showSubscribe, setShowSubscribe, name, id }) => {
   const [value, setValue] = useState("");
-  const { getAgencies } = useContext(Context);
+  const { getTemplates } = useContext(Context);
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -36,7 +36,10 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <div className="relative rounded-lg bg-[#0C111D] py-6 border border-gray-500/40 px-4 text-white flex flex-col items-center justify-center">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative rounded-lg bg-[#0C111D] py-6 border border-gray-500/40 px-4 text-white flex flex-col items-center justify-center"
+        >
           <div className="bg-[#FEE4E2] w-16 aspect-square rounded-full flex items-center justify-center">
             <svg
               width="41"
@@ -55,14 +58,14 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
             </svg>
           </div>
           <h4 className="min-[1600px]:text-xl text-center mt-5">
-            Are you sure you want to delete the Agency?
+            Are you sure you want to delete the Template?
           </h4>
-          <p className="bg-[#171C2A] p-3 text-[#ECECED] text-center text-sm min-[1600px]:text-base my-2.5">
+          {/* <p className="bg-[#171C2A] p-3 text-[#ECECED] text-center text-sm min-[1600px]:text-base my-2.5">
             All Dashboards, Data sources and Templates will be lost and
             permanently deleted.
-          </p>
+          </p> */}
           <p className="text-[#B2B4BA] text-sm min-[1600px]:text-base my-2">
-            This action can’t be undone.
+            This action can&apos;t be undone.
           </p>
           <p className="mainText18 mb-2 text-[#B2B4BA]">
             Type <span className="font-semibold text-white">{name}</span> to
@@ -78,7 +81,8 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
           <div className="flex items-center gap-x-4 w-full text-sm min-[1600px]:text-base">
             <button
               className={`bg-[#898989]/15 w-full py-1.5 min-[1600px]:py-2 rounded-lg text-center`}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 closeModal();
               }}
             >
@@ -86,17 +90,21 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
             </button>
             <button
               className={`bg-red-600 w-full py-1.5 min-[1600px]:py-2 rounded-lg text-center`}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 if (value.trim() == name) {
                   try {
-                    fetch(`${BACKEND_URI}/agency/delete/${id}`, {
-                      method: "DELETE",
-                      headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${getCookie("token")}`,
-                      },
-                    })
+                    fetch(
+                      `${BACKEND_URI}/template/remove/template?agency_id=${id}&template_name=${name}`,
+                      {
+                        method: "POST",
+                        headers: {
+                          Accept: "application/json",
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${getCookie("token")}`,
+                        },
+                      }
+                    )
                       .then((response) => {
                         if (!response.ok) {
                           throw new Error(
@@ -107,9 +115,9 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
                       })
                       .then((res) => {
                         if (res.msg) {
+                          toast.success("Template Deleted Successfully");
+                          getTemplates(id);
                           setShowSubscribe(false);
-                          toast.success("Agency Deleted Successfully");
-                          getAgencies();
                         }
                       })
                       .catch((err) => {
@@ -132,4 +140,4 @@ const DeleteAgency = ({ showSubscribe, setShowSubscribe, name, id }) => {
   );
 };
 
-export default DeleteAgency;
+export default DeleteTemplate;

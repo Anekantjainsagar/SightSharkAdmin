@@ -1,10 +1,7 @@
-import Context from "@/app/Context/Context";
-import { BACKEND_URI } from "@/app/utils/url";
-import { getCookie } from "cookies-next";
+import React, { useState } from "react";
 import Image from "next/image";
-import React, { useContext } from "react";
-import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
+import DeleteTemplate from "@/app/Components/Agencies/DeleteTemplate";
 
 const TemplateBlock = ({
   data,
@@ -12,7 +9,7 @@ const TemplateBlock = ({
   setShowDeleteTemplate,
   original_data,
 }) => {
-  const { getTemplates } = useContext(Context);
+  const [deleteTemplate, setDeleteTemplate] = useState(false);
 
   return (
     <div
@@ -21,6 +18,12 @@ const TemplateBlock = ({
         window.open(data?.template_link, "__blank");
       }}
     >
+      <DeleteTemplate
+        showSubscribe={deleteTemplate}
+        setShowSubscribe={setDeleteTemplate}
+        name={data?.template_name}
+        id={original_data?.agency_id}
+      />
       {data?.template_image && (
         <Image
           src={data?.template_image}
@@ -36,42 +39,8 @@ const TemplateBlock = ({
           className="absolute w-full h-full flex items-center justify-center top-0 text-3xl left-0 bg-red-400/10 rounded-xl cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
-            let check = confirm(`You're sure deleting ${data?.template_name}`);
-            if (check) {
-              try {
-                fetch(
-                  `${BACKEND_URI}/template/remove/template?agency_id=${original_data?.agency_id}&template_name=${data?.template_name}`,
-                  {
-                    method: "POST",
-                    headers: {
-                      Accept: "application/json",
-                      "Content-Type": "application/json",
-                      Authorization: `Bearer ${getCookie("token")}`,
-                    },
-                  }
-                )
-                  .then((response) => {
-                    if (!response.ok) {
-                      throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                  })
-                  .then((res) => {
-                    if (res.msg) {
-                      toast.success("Template Deleted Successfully");
-                      getTemplates(original_data?.agency_id);
-                      setShowDeleteTemplate(false);
-                    }
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              } catch (error) {
-                console.log(error);
-              }
-            } else {
-              setShowDeleteTemplate(false);
-            }
+            setDeleteTemplate(true);
+            setShowDeleteTemplate(false);
           }}
         >
           <MdDelete />

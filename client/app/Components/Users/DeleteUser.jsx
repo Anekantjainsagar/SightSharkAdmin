@@ -29,7 +29,7 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
   }
 
   const deleteUser = () => {
-    if (val == `${data?.first_name} ${data?.last_name}`) {
+    if (val.trim() == `${data?.first_name} ${data?.last_name}`) {
       try {
         fetch(`${BACKEND_URI}/user/delete/${data?.id}`, {
           method: "DELETE",
@@ -68,7 +68,6 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}

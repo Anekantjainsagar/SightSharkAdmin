@@ -6,7 +6,7 @@ import Image from "next/image";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { BiPencil } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import DeleteAgency from "@/app/Components/Agencies/DeleteAgency";
 import Info from "@/app/Components/Login/Info";
@@ -314,18 +314,18 @@ const Overview = ({ params }) => {
                         </div>
                         <div className="flex flex-col">
                           <label
-                            htmlFor="warrenty"
+                            htmlFor="warranty"
                             className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Warranty Period <Required />
                           </label>
-                          <div className="custom-select-wrapper w-full">
+                          <div className="relative w-full">
                             <select
                               value={data?.warrenty}
                               onChange={(e) => {
                                 setData({ ...data, warrenty: e.target.value });
                               }}
-                              className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                              className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 pr-10 rounded-md appearance-none"
                             >
                               {[3, 6, 9, 12, 15, 18, 21, 24].map((e, i) => {
                                 return (
@@ -335,6 +335,10 @@ const Overview = ({ params }) => {
                                 );
                               })}
                             </select>
+                            {/* Custom dropdown icon */}
+                            <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                              <MdKeyboardArrowDown />
+                            </span>
                           </div>
                         </div>
                         <div className="flex flex-col">
@@ -383,21 +387,27 @@ const Overview = ({ params }) => {
                           >
                             Status
                           </label>
-                          <select
-                            name="status"
-                            id="status"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
-                          >
-                            {["active", "offline", "hold"].map((e, i) => {
-                              return (
-                                <option value={e} key={i} className="bg-main">
-                                  {e[0]?.toUpperCase() + e.slice(1)}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <div className="relative w-full">
+                            <select
+                              name="status"
+                              id="status"
+                              className="glass h-[45px] w-full outline-none border border-gray-500/5 px-4 py-2 pr-10 rounded-md min-[1600px]:text-base text-sm appearance-none"
+                              value={status}
+                              onChange={(e) => setStatus(e.target.value)}
+                            >
+                              {["active", "offline", "hold"].map((e, i) => {
+                                return (
+                                  <option value={e} key={i} className="bg-main">
+                                    {e[0]?.toUpperCase() + e.slice(1)}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                            {/* Custom dropdown icon */}
+                            <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                              <MdKeyboardArrowDown />
+                            </span>
+                          </div>
                         </div>
                         <div className="flex flex-col">
                           <label

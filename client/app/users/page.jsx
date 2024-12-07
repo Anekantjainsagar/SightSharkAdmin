@@ -7,6 +7,12 @@ import { FaPlus } from "react-icons/fa";
 import AddUsers from "@/app/Components/Users/AddUsers";
 import Context from "../Context/Context";
 import SortByButton from "../Components/Users/SortByButton";
+import {
+  MdOutlineChevronLeft,
+  MdOutlineChevronRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+  MdOutlineKeyboardDoubleArrowRight,
+} from "react-icons/md";
 
 let sort_by_options = [
   "created_at",
@@ -55,7 +61,7 @@ const Overview = () => {
             </div>
             <div className="mt-5 border border-gray-200/5 rounded-2xl">
               <div className="grid bg-[#030021]/40 py-4 px-7 userBlockGrid items-center rounded-2xl">
-                <div className="inline-flex items-start">
+                {/* <div className="inline-flex items-start">
                   <label className="relative flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -86,13 +92,13 @@ const Overview = () => {
                       </svg>
                     </span>
                   </label>
-                </div>
+                </div> */}
                 {["Name", "Access", "Status", "Joined", "Last Online"].map(
                   (e, i) => {
                     return (
                       <h5
                         key={i}
-                        className={`text-[13px] min-[1600px]:text-base font-light tracking-wider ${
+                        className={`text-[13px] text-white min-[1600px]:text-base font-light tracking-wider ${
                           e?.includes("Name")
                             ? "min-[1600px]:ml-0 ml-2"
                             : "text-center"
@@ -113,6 +119,31 @@ const Overview = () => {
                   })}
                 </div>
                 <div className="h-[14%] gap-x-4  px-6 flex items-center justify-center bg-[#030021]/40 rounded-2xl">
+                  {" "}
+                  <MdOutlineKeyboardDoubleArrowLeft
+                    onClick={() => {
+                      if (users?.current_page != 1) {
+                        getUsers(1);
+                      }
+                    }}
+                    className={`text-2xl ${
+                      users?.current_page != 1
+                        ? "text-gray-300"
+                        : "text-gray-600"
+                    } cursor-pointer`}
+                  />
+                  <MdOutlineChevronLeft
+                    onClick={() => {
+                      if (users?.current_page != 1) {
+                        getUsers(users?.current_page - 1);
+                      }
+                    }}
+                    className={`text-2xl ${
+                      users?.current_page != 1
+                        ? "text-gray-300"
+                        : "text-gray-600"
+                    } cursor-pointer`}
+                  />
                   {[...Array(users?.total_pages).keys()]
                     .map((i) => i + 1)
                     ?.map((e, i) => {
@@ -131,7 +162,31 @@ const Overview = () => {
                           {e}
                         </div>
                       );
-                    })}
+                    })}{" "}
+                  <MdOutlineChevronRight
+                    onClick={() => {
+                      if (users?.current_page != users?.total_pages) {
+                        getUsers(users?.current_page + 1);
+                      }
+                    }}
+                    className={`text-2xl ${
+                      users?.current_page != users?.total_pages
+                        ? "text-gray-300"
+                        : "text-gray-600"
+                    } cursor-pointer`}
+                  />{" "}
+                  <MdOutlineKeyboardDoubleArrowRight
+                    onClick={() => {
+                      if (users?.current_page != users?.total_pages) {
+                        getUsers(users?.total_pages);
+                      }
+                    }}
+                    className={`text-2xl ${
+                      users?.current_page != users?.total_pages
+                        ? "text-gray-300"
+                        : "text-gray-600"
+                    } cursor-pointer`}
+                  />
                 </div>
               </div>
             </div>

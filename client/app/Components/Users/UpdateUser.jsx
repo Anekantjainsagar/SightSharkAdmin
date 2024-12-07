@@ -8,7 +8,7 @@ import Required from "../Utils/Required";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import Context from "@/app/Context/Context";
-import { LuEye, LuEyeOff } from "react-icons/lu";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -122,9 +122,9 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
           })
           .then((res) => {
             if (res.msg) {
+              closeModal();
               getUsers();
               toast.success("User updated successfully");
-              closeModal();
             }
             if (res.detail) {
               toast.error(res.detail);
@@ -181,7 +181,7 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
                   alt="Agency Img"
                   width={1000}
                   height={1000}
-                  className="w-[6vw] aspect-squre min-[1600px]:w-[4vw] rounded-full"
+                  className="w-[6vw] aspect-squre min-[1600px]:w-[4vw] aspect-square object-cover rounded-full"
                 />
               </div>
             </div>
@@ -251,24 +251,31 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
                   Access
                   <Required />
                 </label>
-                <select
-                  name="access"
-                  id="access"
-                  className="glass outline-none border border-gray-500/5 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
-                  value={data?.access}
-                  onChange={(e) => {
-                    setData({ ...data, access: e.target.value });
-                  }}
-                >
-                  {availableRoles?.map((e, i) => {
-                    return (
-                      <option value={e} key={i} className="bg-main">
-                        {e[0]?.toUpperCase() + e.slice(1)}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>{" "}
+
+                <div className="relative w-full">
+                  <select
+                    name="access"
+                    id="access"
+                    className="glass outline-none w-full border border-gray-500/5 px-4 py-2 pr-10 min-[1600px]:text-base text-sm rounded-md appearance-none"
+                    value={data?.access}
+                    onChange={(e) => {
+                      setData({ ...data, access: e.target.value });
+                    }}
+                  >
+                    {availableRoles?.map((e, i) => {
+                      return (
+                        <option value={e} key={i} className="bg-main">
+                          {e[0]?.toUpperCase() + e.slice(1)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {/* Custom dropdown icon */}
+                  <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                    <MdKeyboardArrowDown />
+                  </span>
+                </div>
+              </div>
               {/* <div className="flex flex-col">
                 {" "}
                 <label
@@ -360,22 +367,29 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
                 >
                   Status
                 </label>
-                <select
-                  id="status"
-                  value={data?.status}
-                  onChange={(e) => {
-                    setData({ ...data, status: e.target.value });
-                  }}
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
-                >
-                  {["active", "inactive"].map((e, i) => {
-                    return (
-                      <option key={i} className="bg-main" value={e}>
-                        {e[0]?.toUpperCase() + e.slice(1)}
-                      </option>
-                    );
-                  })}
-                </select>
+
+                <div className="relative w-full">
+                  <select
+                    id="status"
+                    value={data?.status}
+                    onChange={(e) => {
+                      setData({ ...data, status: e.target.value });
+                    }}
+                    className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 pr-10 min-[1600px]:text-base text-sm rounded-md appearance-none"
+                  >
+                    {["active", "inactive"].map((e, i) => {
+                      return (
+                        <option key={i} className="bg-main" value={e}>
+                          {e[0]?.toUpperCase() + e.slice(1)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {/* Custom dropdown icon */}
+                  <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                    <MdKeyboardArrowDown />
+                  </span>
+                </div>
               </div>
             </div>
           </div>

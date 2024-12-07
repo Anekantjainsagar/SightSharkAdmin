@@ -105,7 +105,7 @@ input[type="number"] {
 
 .userBlockGrid {
   /* grid-template-columns: 3% 25% 16% 18% 15% 18% 4%; */
-  grid-template-columns: 3% 18% 17% 19% 16% 19% 7%;
+  grid-template-columns: 19% 18% 20% 16% 19% 7%;
 }
 
 .status-active {
@@ -145,8 +145,8 @@ input[type="number"] {
 }
 
 .status-user-inactive {
-  background-color: #e9c55b;
-  border-color: #ffa500;
+  background-color: #f8d879;
+  border-color: #ff8800;
   color: #ff8800;
 }
 

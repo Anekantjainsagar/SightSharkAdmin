@@ -75,7 +75,6 @@ const LoginOtp = ({ showSubscribe, setShowSubscribe, email }) => {
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
