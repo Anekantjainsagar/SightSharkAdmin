@@ -11,8 +11,7 @@ import { useRouter } from "next/navigation";
 import Context from "../Context/Context";
 
 export default function ResetPassword() {
-  const { checkPasswordCriteria, tooltips, password_params } =
-    useContext(Context);
+  const { checkPasswordCriteria, password_params } = useContext(Context);
   const history = useRouter();
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
