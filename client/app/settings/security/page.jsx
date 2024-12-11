@@ -33,39 +33,89 @@ const Settings = () => {
   }, [userData]);
 
   const toggle2factorAuth = (checked) => {
-    let cookie = getCookie("token");
-    setTwoFactorAuth(!twoFactorAuth);
-    if (cookie) {
-      axios
-        .put(
-          `${BACKEND_URI}/user/two-factor-authentication?user_id=${userData?.id}`,
-          {
-            two_factor_authentication: checked ? "enabled" : "disabled",
-          },
-          {
-            headers: {
-              Accept: "application/x-www-form-urlencoded",
-              "Content-Type": "application/x-www-form-urlencoded",
-              Authorization: `Bearer ${cookie}`,
-            },
-          }
-        )
-        .then((res) => {
-          if (res.data.data.id) {
-            setUserData({
-              ...userData,
+    if (
+      (checked && userData?.two_factor_authentication == "disabled") ||
+      (!checked && userData?.two_factor_authentication == "enabled")
+    ) {
+      let cookie = getCookie("token");
+      setTwoFactorAuth(!twoFactorAuth);
+      if (cookie) {
+        axios
+          .put(
+            `${BACKEND_URI}/user/two-factor-authentication?user_id=${userData?.id}`,
+            {
               two_factor_authentication: checked ? "enabled" : "disabled",
-            });
-            if (checked) {
-              toast.success("Two Factor Authentication Enabled");
-            } else {
-              toast.success("Two Factor Authentication Disabled");
+            },
+            {
+              headers: {
+                Accept: "application/x-www-form-urlencoded",
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: `Bearer ${cookie}`,
+              },
             }
+          )
+          .then((res) => {
+            if (res.data.data.id) {
+              setUserData({
+                ...userData,
+                two_factor_authentication: checked ? "enabled" : "disabled",
+              });
+              if (checked) {
+                toast.success("Two Factor Authentication Enabled");
+              } else {
+                toast.success("Two Factor Authentication Disabled");
+              }
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    } else {
+      toast.error("Two Factor Authentication not Changed");
+    }
+  };
+
+  const updatePassword = () => {
+    if (data?.oldPass && data?.newPassword && data?.reNewPassword) {
+      if (data?.newPassword === data?.reNewPassword) {
+        if (data?.oldPass !== data?.newPassword) {
+          try {
+            axios
+              .put(
+                `${BACKEND_URI}/user/update-password`,
+                {
+                  current_password: data?.oldPass,
+                  new_password: data?.newPassword,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${getCookie("token")}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                  },
+                }
+              )
+              .then((res) => {
+                if (res.status == 200) {
+                  toast.success("Password Changed Successfully");
+                  setData({ oldPass: "", newPassword: "", reNewPassword: "" });
+                }
+              })
+              .catch((err) => {
+                toast.error("Internal Server Error");
+                console.log(err);
+              });
+          } catch (err) {
+            console.error(err);
           }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        } else {
+          toast.error("New & Old Password Should not Match!!");
+        }
+      } else {
+        toast.error("Both New Password Should Match!!");
+      }
+    } else {
+      toast.error("Please fill all the details");
     }
   };
 
@@ -302,6 +352,7 @@ const Settings = () => {
                   className={`bg-newBlue font-semibold min-[1600px]:w-[160px] w-[120px] min-[1600px]:py-3 py-2 min-[1600px]:text-base text-sm rounded-xl ml-4`}
                   onClick={() => {
                     toggle2factorAuth(twoFactorAuth);
+                    updatePassword();
                   }}
                 >
                   Save

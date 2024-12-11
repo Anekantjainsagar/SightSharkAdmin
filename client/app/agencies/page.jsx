@@ -147,6 +147,11 @@ const Overview = () => {
               </div>
               <div className="h-[69.5vh] min-[1600px]:h-[70vh]">
                 <div className="overflow-y-auto small-scroller h-[86%]">
+                  {!agencies?.data && (
+                    <div className="h-full flex items-center justify-center text-xl text-gray-400">
+                      No Agencies Found
+                    </div>
+                  )}
                   {agencies?.data?.map((e, i) => {
                     return <AgencyDetailsBlock key={i} data={e} />;
                   })}

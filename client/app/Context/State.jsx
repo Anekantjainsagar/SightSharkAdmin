@@ -19,6 +19,7 @@ const State = (props) => {
   const [selectedAgencies, setSelectedAgencies] = useState([]);
   const [agencyDatasources, setAgencyDatasources] = useState();
   const [selectedDataSources, setSelectedDataSources] = useState([]);
+  const [searchTextAgency, setSearchTextAgency] = useState("");
 
   const password_params = [
     "hasUppercase",
@@ -125,7 +126,7 @@ const State = (props) => {
               (page - 1) * limit
             }&limit=${limit}&sort_by=${order_by}&order=${
               type ? "asc" : "desc"
-            }`,
+            }&agency_name=${searchTextAgency}`,
             {
               headers: {
                 Accept: "application/json",
@@ -141,6 +142,9 @@ const State = (props) => {
           })
           .catch((err) => {
             console.log(err);
+            if (err.message?.includes("404")) {
+              setAgencies();
+            }
           });
       } catch (error) {
         console.log(error);
@@ -283,6 +287,10 @@ const State = (props) => {
     getDataSources();
   }, [userData]);
 
+  useEffect(() => {
+    getAgencies();
+  }, [searchTextAgency]);
+
   return (
     <Context.Provider
       value={{
@@ -310,6 +318,8 @@ const State = (props) => {
         checkPasswordCriteria,
         tooltips,
         password_params,
+        setSearchTextAgency,
+        searchTextAgency,
       }}
     >
       {props.children}
