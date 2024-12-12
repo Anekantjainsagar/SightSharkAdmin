@@ -54,7 +54,7 @@ const Settings = () => {
           })
           .then((res) => {
             if (res.msg) {
-              toast.success("User updated successfully");
+              toast.success("Profile updated successfully");
               checkToken();
             }
             if (res.detail) {

@@ -15,20 +15,23 @@ const Navbar = () => {
       <h3 className="bigFont font-semibold">Hello {userData?.first_name},</h3>
       <div className="relative flex items-center w-[340px] min-[1600px]:w-[500px]">
         <FaSearch className="absolute left-4 z-40 text-white" />{" "}
-        <input
-          type="search"
-          placeholder="Search"
-          autoComplete={"false"}
-          autoCorrect={"false"}
-          value={searchTextAgency}
-          onChange={(e) => {
-            if (pathname !== "/agencies") {
-              history.push("/agencies");
-            }
-            setSearchTextAgency(e.target.value);
-          }}
-          className="outline-none text-sm min-[1600px]:text-base border border-gray-200/5 bg-transparent px-6 glass py-2 min-[1600px]:py-3 rounded-lg pl-12 w-full" // Add padding to the left for the icon
-        />
+        <form autoComplete="off" className="w-full">
+          <input type="text" style={{ display: "none" }} />
+          <input
+            type="search"
+            placeholder="Search"
+            autoCorrect="false"
+            autoComplete="off"
+            value={searchTextAgency}
+            onChange={(e) => {
+              if (pathname !== "/agencies") {
+                history.push("/agencies");
+              }
+              setSearchTextAgency(e.target.value);
+            }}
+            className="outline-none text-sm w-full min-[1600px]:text-base border border-gray-200/5 bg-transparent px-6 glass py-2 min-[1600px]:py-3 rounded-lg pl-12 w-full"
+          />
+        </form>
       </div>
     </div>
   );
