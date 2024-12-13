@@ -1,11 +1,12 @@
 "use client";
 import Context from "@/app/Context/Context";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const history = useRouter();
   const { userData, setSearchTextAgency, searchTextAgency, agencies } =
     useContext(Context);
 
@@ -34,6 +35,10 @@ const Navbar = () => {
                   <div
                     key={i}
                     className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md"
+                    onClick={() => {
+                      history.push(`/agencies/${e?.agency_name}`);
+                      setSearchTextAgency("");
+                    }}
                   >
                     <p>{e?.agency_name}</p>
                   </div>

@@ -231,11 +231,12 @@ const AgencyDetails = ({ data }) => {
                   <span
                     className="hover:underline cursor-pointer transition-all"
                     onClick={() => {
-                      if (e?.value?.includes("http")) {
-                        window.open(e?.value, "__blank");
-                      } else {
-                        toast.error("Invalid url");
-                      }
+                      const validUrl =
+                        e?.value.startsWith("http://") ||
+                        e?.value.startsWith("https://")
+                          ? e?.value
+                          : `https://${e?.value}`;
+                      window.open(validUrl, "_blank", "noopener,noreferrer");
                     }}
                   >
                     {e?.value?.slice(0, 25) + "..."}
@@ -244,11 +245,16 @@ const AgencyDetails = ({ data }) => {
                   <span
                     className="underline cursor-pointer hover:text-blue-400 transition-all"
                     onClick={() => {
-                      if (e?.value?.includes("http")) {
-                        window.open(e?.value, "_blank");
-                      } else {
-                        toast.error("Invalid url");
-                      }
+                      const validUrl =
+                        e?.value.startsWith("http://") ||
+                        e?.value.startsWith("https://")
+                          ? e?.value
+                          : `https://${e?.value}`;
+                      // if (e?.value?.includes("http")) {
+                      window.open(validUrl, "_blank", "noopener,noreferrer");
+                      // } else {
+                      //   toast.error("Invalid url");
+                      // }
                     }}
                   >
                     View Portal
@@ -318,9 +324,13 @@ const AgencyDetails = ({ data }) => {
           </p>
           <PieChart
             data={[
-              { title: "One", value: data?.license_limit, color: "#FFAE4C" },
               {
-                title: "Two",
+                title: "Current Number of Clients",
+                value: data?.current_number_of_clients,
+                color: "#FFAE4C",
+              },
+              {
+                title: "Remaining Licenses",
                 value: data?.license_limit - data?.current_number_of_clients,
                 color: "#3836FF",
               },
