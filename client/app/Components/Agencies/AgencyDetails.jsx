@@ -318,8 +318,12 @@ const AgencyDetails = ({ data }) => {
           </p>
           <PieChart
             data={[
-              { title: "One", value: 50, color: "#FFAE4C" },
-              { title: "Two", value: 15, color: "#3836FF" },
+              { title: "One", value: data?.license_limit, color: "#FFAE4C" },
+              {
+                title: "Two",
+                value: data?.license_limit - data?.current_number_of_clients,
+                color: "#3836FF",
+              },
             ]}
             lineWidth={25}
           />
