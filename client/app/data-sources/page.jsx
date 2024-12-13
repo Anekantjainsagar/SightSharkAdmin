@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import Context from "../Context/Context";
@@ -15,7 +15,7 @@ function formatName(input) {
 }
 
 const DataSources = () => {
-  const { getAgencies, agencies, datasources } = useContext(Context);
+  const { agencies, datasources } = useContext(Context);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -52,33 +52,7 @@ const DataSources = () => {
                     </div>
                     <div className="grid grid-cols-7 gap-8 mt-5">
                       {datasources?.map((e, i) => {
-                        return (
-                          <div
-                            key={i}
-                            className="border border-gray-400/20 rounded-2xl p-2"
-                          >
-                            <div className="py-10 border border-gray-400/20 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
-                              <Image
-                                src={e?.img_link}
-                                alt={e?.img_link?.src}
-                                width={1000}
-                                height={1000}
-                                className="aspect-squre object-contain w-2/12"
-                              />{" "}
-                              <p className="text-base min-[1600px]:text-lg cursor-pointer mt-2">
-                                {formatName(e?.name)}
-                              </p>
-                            </div>
-                            <div className="mt-2 flex items-end justify-between px-2">
-                              <p className="text-[10px] min-[1600px]:text-xs cursor-pointer">
-                                Last Refresh Time
-                                <br />
-                                {new Date(Date.now()).toString().slice(4, 21)}
-                              </p>
-                              <IoReload className="text-lg cursor-pointer" />
-                            </div>
-                          </div>
-                        );
+                        return <Block key={i} e={e} />;
                       })}
                     </div>
                   </div>
@@ -92,4 +66,44 @@ const DataSources = () => {
   );
 };
 
+const Block = ({ e }) => {
+  const [isRotating, setIsRotating] = useState(false);
+
+  const handleReloadClick = () => {
+    setIsRotating(true);
+    setTimeout(() => {
+      setIsRotating(false);
+    }, 1000);
+  };
+
+  return (
+    <div className="border border-gray-400/20 rounded-2xl p-2">
+      <div className="py-10 border border-gray-400/20 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
+        <Image
+          src={e?.img_link}
+          alt={e?.img_link?.src}
+          width={1000}
+          height={1000}
+          className="aspect-square object-contain w-2/12"
+        />
+        <p className="text-sm text-center min-[1600px]:text-base cursor-pointer mt-2">
+          {formatName(e?.name)}
+        </p>
+      </div>
+      <div className="mt-2 flex items-end justify-between px-2">
+        <p className="text-[10px] min-[1600px]:text-xs cursor-pointer">
+          Last Refresh Time
+          <br />
+          {new Date(Date.now()).toString().slice(4, 21)}
+        </p>
+        <IoReload
+          className={`text-lg cursor-pointer transition-transform ${
+            isRotating ? "animate-spin" : ""
+          }`}
+          onClick={handleReloadClick}
+        />
+      </div>
+    </div>
+  );
+};
 export default DataSources;
