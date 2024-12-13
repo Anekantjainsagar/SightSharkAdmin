@@ -20,6 +20,7 @@ const State = (props) => {
   const [agencyDatasources, setAgencyDatasources] = useState();
   const [selectedDataSources, setSelectedDataSources] = useState([]);
   const [searchTextAgency, setSearchTextAgency] = useState("");
+  const [platformsData, setPlatformsData] = useState();
 
   const password_params = [
     "hasUppercase",
@@ -78,6 +79,78 @@ const State = (props) => {
       toast.success("Logged in Successfully");
     }
   }, [userData]);
+
+  const getCriticalNotifications = () => {
+    const cookie = getCookie("token");
+
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(
+            `${BACKEND_URI}/critical_notification?unseen_only=${false}&order_by=${"created_at"}&page=${1}&page_size=${50}`,
+            {
+              headers: {
+                Authorization: `Bearer ${cookie}`,
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
+        axios
+          .get(`${BACKEND_URI}/critical_notification/unseen/count`, {
+            headers: {
+              Authorization: `Bearer ${cookie}`,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getDataSourcesDataFromAPI = () => {
+    let cookie = getCookie("token");
+
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(`${BACKEND_URI}/data-refresh/platform-by-agency`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookie}`,
+            },
+          })
+          .then((res) => {
+            setPlatformsData(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const getUsers = (page = 1, order_by = "created_at", type = false) => {
     let cookie = getCookie("token");
@@ -288,6 +361,11 @@ const State = (props) => {
   }, [userData]);
 
   useEffect(() => {
+    getCriticalNotifications();
+    getDataSourcesDataFromAPI();
+  }, [userData]);
+
+  useEffect(() => {
     getAgencies();
   }, [searchTextAgency]);
 
@@ -320,6 +398,7 @@ const State = (props) => {
         password_params,
         setSearchTextAgency,
         searchTextAgency,
+        platformsData,
       }}
     >
       {props.children}

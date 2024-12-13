@@ -9,13 +9,13 @@ import { TfiReload } from "react-icons/tfi";
 
 function formatName(input) {
   return input
-    .split("_")
+    ?.split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
 
 const DataSources = () => {
-  const { agencies, datasources } = useContext(Context);
+  const { agencies, platformsData } = useContext(Context);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -31,7 +31,7 @@ const DataSources = () => {
               <h3 className="text-xl min-[1600px]:text-2xl font-semibold">
                 Agencies Data Sources{" "}
                 <span className="text-lg min-[1600px]:text-xl text-white/80">
-                  ({agencies?.total_count})
+                  ({platformsData?.length})
                 </span>
               </h3>
               <div></div>
@@ -51,9 +51,10 @@ const DataSources = () => {
                       </button>
                     </div>
                     <div className="grid grid-cols-7 gap-8 mt-5">
-                      {datasources?.map((e, i) => {
-                        return <Block key={i} e={e} />;
-                      })}
+                      {platformsData &&
+                        platformsData[i]?.map((e, i) => {
+                          return <Block key={i} e={e} />;
+                        })}
                     </div>
                   </div>
                 );
@@ -80,14 +81,14 @@ const Block = ({ e }) => {
     <div className="border border-gray-400/20 rounded-2xl p-2">
       <div className="py-10 border border-gray-400/20 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
         <Image
-          src={e?.img_link}
-          alt={e?.img_link?.src}
+          src={e[Object.keys(e)[0]]}
+          alt={e[Object.keys(e)[0]]?.src}
           width={1000}
           height={1000}
           className="aspect-square object-contain w-2/12"
         />
         <p className="text-sm text-center min-[1600px]:text-base cursor-pointer mt-2">
-          {formatName(e?.name)}
+          {formatName(Object.keys(e)[0])}
         </p>
       </div>
       <div className="mt-2 flex items-end justify-between px-2">
@@ -106,4 +107,5 @@ const Block = ({ e }) => {
     </div>
   );
 };
+
 export default DataSources;

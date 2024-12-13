@@ -63,6 +63,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     region: "",
     project_number: "",
   });
+  const criteria = checkPasswordCriteria(data?.credentials?.password);
 
   const handleSave = () => {
     setShowSave(false);
@@ -802,6 +803,47 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       </div>
                     </div>
                   </div>{" "}
+                  {data?.credentials?.password && (
+                    <div className="text-sm mb-5">
+                      <p
+                        className={
+                          criteria.hasUppercase
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        {criteria.hasUppercase ? "✔" : "✘"} At least one
+                        uppercase letter
+                      </p>
+                      <p
+                        className={
+                          criteria.hasLowercase
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        {criteria.hasLowercase ? "✔" : "✘"} At least one
+                        lowercase letter
+                      </p>
+                      <p
+                        className={
+                          criteria.hasNumber ? "text-green-500" : "text-red-500"
+                        }
+                      >
+                        {criteria.hasNumber ? "✔" : "✘"} At least one number
+                      </p>
+                      <p
+                        className={
+                          criteria.hasSpecialChar
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        {criteria.hasSpecialChar ? "✔" : "✘"} At least one
+                        special character
+                      </p>
+                    </div>
+                  )}
                   <div className="flex flex-col">
                     <label
                       htmlFor="passwordKeyConfirm"
