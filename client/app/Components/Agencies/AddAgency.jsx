@@ -33,7 +33,8 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
   const fileInputRef = React.useRef(null);
   const fileInputRef2 = React.useRef(null);
-  const { setAgencies, agencies, getAgencies } = useContext(Context);
+  const { setAgencies, agencies, getAgencies, checkPasswordCriteria } =
+    useContext(Context);
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -748,7 +749,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Portal Owner Email
-                      <Required /> <Info text="Portal Owner Email" />
+                      <Required /> 
                     </label>
                     <input
                       id="emailKey"
@@ -773,7 +774,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Password <Required />
-                      <Info text="Portal Owner Password" />
                     </label>
                     <div className="w-full relative">
                       <input
@@ -850,7 +850,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Confirm Password <Required />
-                      <Info text="Portal Owner Confirm Password" />
                     </label>
                     <div className="w-full relative">
                       <input

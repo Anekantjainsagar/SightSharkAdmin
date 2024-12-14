@@ -85,7 +85,7 @@ const Overview = ({ params }) => {
                   </div>
                   <div className="gradient-line my-4"></div>
                   {agencyDatasources?.length > 0 ? (
-                    <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4 min-h-[12vh]">
+                    <div className="bg-[#171C2A] grid grid-cols-4 gap-y-2 rounded-lg p-3 min-[1600px]:p-4 h-[12vh] overflow-y-auto small-scroller">
                       {agencyDatasources?.map((e, i) => {
                         return (
                           <div
