@@ -1,13 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AddAgency from "@/app/Components/Agencies/AddAgency";
 import Notify from "@/app/Components/Overview/Notify";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import Context from "../../Context/Context";
 
 const Alerts = () => {
+  const { criticalNotifications } = useContext(Context);
   const history = useRouter();
   const [addAgency, setAddAgency] = useState(false);
 
@@ -38,26 +40,11 @@ const Alerts = () => {
               </div>
               <div className="gradient-line my-4"></div>
               <div className="h-[72vh] pr-5 overflow-y-auto small-scroller">
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
-                <Notify status={false} />
+                {criticalNotifications?.map((e, i) => {
+                  return (
+                    <Notify data={e} key={i} status={e?.type != "error"} />
+                  );
+                })}
               </div>
             </div>
           </div>

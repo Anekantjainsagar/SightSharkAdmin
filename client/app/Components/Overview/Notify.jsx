@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const Notify = ({ status }) => {
+const Notify = ({ status, data }) => {
   return (
     <div className="flex items-center justify-between py-1.5 min-[1600px]:py-2">
       <div className="flex items-center">
@@ -16,12 +16,12 @@ const Notify = ({ status }) => {
         />
         <p className="text-sm min-[1600px]:text-base font-medium ml-4 min-[1600px]:ml-6">
           ProWiz Analytics -{" "}
-          <span className="font-normal mainText14">
-            Added a new client “SightShark”
-          </span>
+          <span className="font-normal mainText14">{data?.message}</span>
         </p>
       </div>
-      <p className="text-sm min-[1600px]:text-base">6 Sept, 2023 02:30 PM</p>
+      <p className="text-sm min-[1600px]:text-base">
+        {new Date(data?.created_at).toString().slice(4, 21)}
+      </p>
     </div>
   );
 };

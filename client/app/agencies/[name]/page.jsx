@@ -73,7 +73,9 @@ const Overview = ({ params }) => {
               <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-3 min-[1600px]:p-4">
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="min-[1600px]:text-xl">Data Sources </h4>
+                    <h4 className="min-[1600px]:text-xl">
+                      Data Sources ({agencyDatasources?.length})
+                    </h4>
                     <button
                       onClick={(e) => {
                         setAddDataSouces(!addDataSouces);

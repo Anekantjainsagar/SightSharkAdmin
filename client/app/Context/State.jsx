@@ -21,6 +21,9 @@ const State = (props) => {
   const [selectedDataSources, setSelectedDataSources] = useState([]);
   const [searchTextAgency, setSearchTextAgency] = useState("");
   const [platformsData, setPlatformsData] = useState();
+  const [criticalNotifications, setCriticalNotifications] = useState([]);
+  const [criticalNotificationsLength, setCriticalNotificationsLength] =
+    useState(0);
 
   const password_params = [
     "hasUppercase",
@@ -87,7 +90,7 @@ const State = (props) => {
       try {
         axios
           .get(
-            `${BACKEND_URI}/critical_notification?unseen_only=${false}&order_by=${"created_at"}&page=${1}&page_size=${50}`,
+            `${BACKEND_URI}/critical_notification/?unseen_only=${false}&order_by=${"created_at"}&page=${1}&page_size=${50}`,
             {
               headers: {
                 Authorization: `Bearer ${cookie}`,
@@ -97,7 +100,7 @@ const State = (props) => {
             }
           )
           .then((res) => {
-            console.log(res.data);
+            setCriticalNotifications(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -108,7 +111,7 @@ const State = (props) => {
 
       try {
         axios
-          .get(`${BACKEND_URI}/critical_notification/unseen/count`, {
+          .get(`${BACKEND_URI}/critical_notification/unseen/count/`, {
             headers: {
               Authorization: `Bearer ${cookie}`,
               Accept: "application/json",
@@ -116,7 +119,7 @@ const State = (props) => {
             },
           })
           .then((res) => {
-            console.log(res.data);
+            setCriticalNotificationsLength(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -399,6 +402,8 @@ const State = (props) => {
         setSearchTextAgency,
         searchTextAgency,
         platformsData,
+        criticalNotificationsLength,
+        criticalNotifications,
       }}
     >
       {props.children}

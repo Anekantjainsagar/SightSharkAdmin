@@ -6,6 +6,10 @@ import Context from "../Context/Context";
 import Image from "next/image";
 import { IoReload } from "react-icons/io5";
 import { TfiReload } from "react-icons/tfi";
+import axios from "axios";
+import { BACKEND_URI } from "../utils/url";
+import { getCookie } from "cookies-next";
+import toast from "react-hot-toast";
 
 function formatName(input) {
   return input
@@ -15,7 +19,7 @@ function formatName(input) {
 }
 
 const DataSources = () => {
-  const { agencies, platformsData } = useContext(Context);
+  const { platformsData } = useContext(Context);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -37,7 +41,7 @@ const DataSources = () => {
               <div></div>
             </div>
             <div className="overflow-y-auto mt-5 h-[78vh] rounded-2xl small-scroller">
-              {agencies?.data?.map((e, i) => {
+              {platformsData?.map((e, i) => {
                 return (
                   <div
                     key={i}
@@ -51,10 +55,9 @@ const DataSources = () => {
                       </button>
                     </div>
                     <div className="grid grid-cols-7 gap-8 mt-5">
-                      {platformsData &&
-                        platformsData[i]?.map((e, i) => {
-                          return <Block key={i} e={e} />;
-                        })}
+                      {e?.platforms?.map((data, i) => {
+                        return <Block key={i} e={data} data={e} />;
+                      })}
                     </div>
                   </div>
                 );
@@ -67,11 +70,40 @@ const DataSources = () => {
   );
 };
 
-const Block = ({ e }) => {
+const Block = ({ e, data }) => {
   const [isRotating, setIsRotating] = useState(false);
 
-  const handleReloadClick = () => {
+  const handleReloadClick = async () => {
     setIsRotating(true);
+    try {
+      const token = getCookie("token");
+
+      const response = await fetch(
+        `${BACKEND_URI}/data-refresh/?agency_id=${data?.agency_id}&script_name=${e?.platform_name}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      if (responseData?.message?.includes("Failed")) {
+        toast.error(responseData.message);
+      } else {
+        toast.success(responseData.message);
+      }
+    } catch (err) {
+      console.error("Fetch Error:", err.message);
+      toast.error("Internal Server Error");
+    }
+
     setTimeout(() => {
       setIsRotating(false);
     }, 1000);
@@ -81,21 +113,21 @@ const Block = ({ e }) => {
     <div className="border border-gray-400/20 rounded-2xl p-2">
       <div className="py-10 border border-gray-400/20 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
         <Image
-          src={e[Object.keys(e)[0]]}
-          alt={e[Object.keys(e)[0]]?.src}
+          src={e?.logo_link}
+          alt={e?.logo_link?.src}
           width={1000}
           height={1000}
           className="aspect-square object-contain w-2/12"
         />
         <p className="text-sm text-center min-[1600px]:text-base cursor-pointer mt-2">
-          {formatName(Object.keys(e)[0])}
+          {formatName(e?.platform_name)}
         </p>
       </div>
       <div className="mt-2 flex items-end justify-between px-2">
         <p className="text-[10px] min-[1600px]:text-xs cursor-pointer">
           Last Refresh Time
           <br />
-          {new Date(Date.now()).toString().slice(4, 21)}
+          {new Date(e?.last_refreshed).toString().slice(4, 21)}
         </p>
         <IoReload
           className={`text-lg cursor-pointer transition-transform ${

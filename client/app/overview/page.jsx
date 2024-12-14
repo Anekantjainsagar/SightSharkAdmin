@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import Context from "../Context/Context";
 
 const Overview = () => {
-  const { agencies } = useContext(Context);
+  const { agencies, criticalNotifications } = useContext(Context);
   const history = useRouter();
 
   return (
@@ -118,9 +118,11 @@ const Overview = () => {
               </div>
               <div className="gradient-line my-4"></div>
               <div className="h-[15vh] overflow-y-auto small-scroller">
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
+                {criticalNotifications?.map((e, i) => {
+                  return (
+                    <Notify data={e} key={i} status={e?.type != "error"} />
+                  );
+                })}
               </div>
             </div>
           </div>
