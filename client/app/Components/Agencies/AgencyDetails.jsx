@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import toast from "react-hot-toast";
 import { PieChart } from "react-minimal-pie-chart";
 
 const AgencyDetails = ({ data }) => {

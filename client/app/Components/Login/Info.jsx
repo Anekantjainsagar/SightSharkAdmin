@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Info = ({ text }) => {
+const Info = ({ text, values, placement }) => {
   return (
-    <PopoverComponent content={text}>
+    <PopoverComponent content={text} placement={placement} values={values}>
       <svg
         width="15"
         height="16"
@@ -23,7 +23,7 @@ const Info = ({ text }) => {
   );
 };
 
-const PopoverComponent = ({ children, placement = "top", content }) => {
+const PopoverComponent = ({ children, placement = "top", content, values }) => {
   const [isOpen, setIsOpen] = useState(false);
   const popoverRef = useRef(null);
 
@@ -61,6 +61,17 @@ const PopoverComponent = ({ children, placement = "top", content }) => {
         }`}
       >
         {content}
+        {values && (
+          <ul className="">
+            {values?.map((e, i) => {
+              return (
+                <li key={i} className="w-full">
+                  {i + 1}. {e}
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </div>
   );

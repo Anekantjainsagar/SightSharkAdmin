@@ -677,7 +677,26 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     className="mb-1.5 text-base flex items-center w-fit relative"
                   >
                     Service Account 1
-                    <Info text="Manages internal google cloud services" />{" "}
+                    {/* <Info
+                      text="Add the service account with the following permission-"
+                      values={[
+                        "Artifact Registry Administrator",
+                        "Artifact Registry Writer",
+                        "Cloud Build Connection Admin",
+                        "Cloud Build Editor",
+                        "Cloud Run Admin",
+                        "Cloud Scheduler Admin",
+                        "Cloud SQL Admin",
+                        "Logging Admin",
+                        "Pub/Sub Admin",
+                        "Secret Manager Admin",
+                        "Service Account User",
+                        "Service Usage Admin",
+                        "Source Repository Reader",
+                        "Storage Admin",
+                        "Viewer",
+                      ]}
+                    /> */}
                     <Required />
                   </label>
                   <div className="flex items-center">
@@ -711,7 +730,27 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     className="mb-1.5 text-base flex items-center w-fit relative"
                   >
                     Service Account 2
-                    <Info text="Manages internal google cloud services" />{" "}
+                    <Info
+                      text="Add the service account with the following permission-"
+                      values={[
+                        "Artifact Registry Administrator",
+                        "Artifact Registry Writer",
+                        "Cloud Build Connection Admin",
+                        "Cloud Build Editor",
+                        "Cloud Run Admin",
+                        "Cloud Scheduler Admin",
+                        "Cloud SQL Admin",
+                        "Logging Admin",
+                        "Pub/Sub Admin",
+                        "Secret Manager Admin",
+                        "Service Account User",
+                        "Service Usage Admin",
+                        "Source Repository Reader",
+                        "Storage Admin",
+                        "Viewer",
+                      ]}
+                      placement="bottom"
+                    />
                     <Required />
                   </label>
                   <div className="flex items-center">
@@ -749,7 +788,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Portal Owner Email
-                      <Required /> 
+                      <Required />
                     </label>
                     <input
                       id="emailKey"
