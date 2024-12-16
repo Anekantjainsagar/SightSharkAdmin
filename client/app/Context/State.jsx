@@ -24,6 +24,8 @@ const State = (props) => {
   const [criticalNotifications, setCriticalNotifications] = useState([]);
   const [criticalNotificationsLength, setCriticalNotificationsLength] =
     useState(0);
+  const [alerts, setAlerts] = useState([]);
+  const [alertsLength, setAlertsLength] = useState(0);
 
   const password_params = [
     "hasUppercase",
@@ -120,6 +122,53 @@ const State = (props) => {
           })
           .then((res) => {
             setCriticalNotificationsLength(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getAlerts = () => {
+    const cookie = getCookie("token");
+
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(
+            `${BACKEND_URI}/alert/?unseen_only=${false}&order_by=${"created_at"}&page=${1}&page_size=${50}`,
+            {
+              headers: {
+                Authorization: `Bearer ${cookie}`,
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            setAlerts(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
+        axios
+          .get(`${BACKEND_URI}/alert/unseen/count/`, {
+            headers: {
+              Authorization: `Bearer ${cookie}`,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            setAlertsLength(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -365,6 +414,7 @@ const State = (props) => {
 
   useEffect(() => {
     getCriticalNotifications();
+    getAlerts();
     getDataSourcesDataFromAPI();
   }, [userData]);
 
@@ -404,6 +454,8 @@ const State = (props) => {
         platformsData,
         criticalNotificationsLength,
         criticalNotifications,
+        alerts,
+        alertsLength,
       }}
     >
       {props.children}

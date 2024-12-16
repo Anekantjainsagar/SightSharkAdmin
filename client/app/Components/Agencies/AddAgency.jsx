@@ -677,7 +677,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     className="mb-1.5 text-base flex items-center w-fit relative"
                   >
                     Service Account 1
-                    {/* <Info
+                    <Info
                       text="Add the service account with the following permission-"
                       values={[
                         "Artifact Registry Administrator",
@@ -696,7 +696,8 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                         "Storage Admin",
                         "Viewer",
                       ]}
-                    /> */}
+                      placement={"bottom"}
+                    />
                     <Required />
                   </label>
                   <div className="flex items-center">
