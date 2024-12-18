@@ -1,9 +1,8 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Modal from "react-modal";
-import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import OtpInput from "react-otp-input";
 import Context from "../Context/Context";

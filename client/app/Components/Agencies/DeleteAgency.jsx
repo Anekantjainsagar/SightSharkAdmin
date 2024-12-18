@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Modal from "react-modal";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Context from "@/app/Context/Context";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";

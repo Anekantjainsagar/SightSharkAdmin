@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Required from "../Utils/Required";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";

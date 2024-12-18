@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import Info from "@/app/Components/Login/Info";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { IoMdCheckmark } from "react-icons/io";
 import Required from "../Utils/Required";
 import { LuEye, LuEyeOff } from "react-icons/lu";

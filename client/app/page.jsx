@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import RightSide from "@/app/Components/Login/RightSide";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Image from "next/image";
 import { BACKEND_URI } from "./utils/url";
 import LoginOtp from "@/app/Components/LoginOtp";
@@ -93,7 +93,6 @@ const App = () => {
 
   return (
     <div className="bg-[#091022] w-full flex items-start justify-between h-[100vh]">
-      <Toaster />{" "}
       <PasswordReset
         showSubscribe={recoverPassword}
         setShowSubscribe={setRecoverPassword}
