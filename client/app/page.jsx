@@ -13,11 +13,11 @@ import PasswordReset from "@/app/Components/PasswordReset";
 
 const App = () => {
   const history = useRouter();
+  const [user, setUser] = useState({ password: "", email: "" });
   const [recoverPassword, setRecoverPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState({ password: "", email: "" });
-  const [showOtp, setShowOtp] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showOtp, setShowOtp] = useState(false);
   const { checkToken } = useContext(Context);
 
   const handleRememberMe = () => {
@@ -32,6 +32,16 @@ const App = () => {
     let email = localStorage.getItem("email");
     let password = localStorage.getItem("password");
     setUser({ email, password });
+  }, []);
+
+  useEffect(() => {
+    // Getting access token if google
+    const url = new URL(window.location.href);
+    const tokenFromUrl = url.searchParams.get("access_token");
+    if (tokenFromUrl?.length > 0) {
+      setCookie("token", tokenFromUrl);
+      checkToken();
+    }
   }, []);
 
   const onLogin = () => {
