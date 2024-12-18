@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AgencySmallBlock from "@/app/Components/Agencies/AgencySmallBlock";
@@ -10,8 +10,13 @@ import { useRouter } from "next/navigation";
 import Context from "../Context/Context";
 
 const Overview = () => {
-  const { agencies, criticalNotifications } = useContext(Context);
+  const { agencies, criticalNotifications, activeAgencies, getActiveAgencies } =
+    useContext(Context);
   const history = useRouter();
+  ` `
+  useEffect(() => {
+    getActiveAgencies();
+  }, []);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -32,7 +37,7 @@ const Overview = () => {
                 },
                 {
                   name: "Active Agencies",
-                  value: agencies?.total_count,
+                  value: activeAgencies,
                   img: "/Overview/Icons/active.png",
                 },
                 {

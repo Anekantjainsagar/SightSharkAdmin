@@ -26,6 +26,7 @@ const State = (props) => {
     useState(0);
   const [alerts, setAlerts] = useState([]);
   const [alertsLength, setAlertsLength] = useState(0);
+  const [activeAgencies, setActiveAgencies] = useState(0);
 
   const password_params = [
     "hasUppercase",
@@ -38,6 +39,30 @@ const State = (props) => {
     hasLowercase: "Password must have at least one lowercase letter.",
     hasNumber: "Password must have at least one number.",
     hasSpecialChar: "Password must have at least one special character.",
+  };
+
+  const getActiveAgencies = () => {
+    let cookie = getCookie("token");
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(`${BACKEND_URI}/agency/active-agencies`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookie}`,
+            },
+          })
+          .then((res) => {
+            setActiveAgencies(res.data.count);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const checkToken = () => {
@@ -456,6 +481,9 @@ const State = (props) => {
         criticalNotifications,
         alerts,
         alertsLength,
+        getDataSourcesDataFromAPI,
+        activeAgencies,
+        getActiveAgencies,
       }}
     >
       {props.children}
