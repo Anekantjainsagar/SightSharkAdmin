@@ -13,6 +13,7 @@ const State = (props) => {
   const [users, setUsers] = useState([]);
   const [userData, setUserData] = useState();
   const [agencies, setAgencies] = useState([]);
+  const [filteredAgencies, setFilteredAgencies] = useState([]);
   const [datasources, setDatasources] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [agency_templates, setAgency_templates] = useState([]);
@@ -276,7 +277,7 @@ const State = (props) => {
               (page - 1) * limit
             }&limit=${limit}&sort_by=${order_by}&order=${
               type ? "asc" : "desc"
-            }&agency_name=${searchTextAgency}`,
+            }`,
             {
               headers: {
                 Accept: "application/json",
@@ -294,6 +295,44 @@ const State = (props) => {
             console.log(err);
             if (err.message?.includes("404")) {
               setAgencies();
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getFilteredAgencies = (page = 1, order_by = "created_at", type = false) => {
+    let cookie = getCookie("token");
+    let limit = agencies?.limit ? agencies?.limit : 7;
+
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(
+            `${BACKEND_URI}/agency/agencies?offset=${
+              (page - 1) * limit
+            }&limit=${limit}&sort_by=${order_by}&order=${
+              type ? "asc" : "desc"
+            }&agency_name=${searchTextAgency}`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie}`,
+              },
+            }
+          )
+          .then((res) => {
+            if (res.data.data?.length > 0) {
+              setFilteredAgencies(res.data);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err.message?.includes("404")) {
+              setFilteredAgencies();
             }
           });
       } catch (error) {
@@ -444,7 +483,7 @@ const State = (props) => {
   }, [userData]);
 
   useEffect(() => {
-    getAgencies();
+    getFilteredAgencies();
   }, [searchTextAgency]);
 
   return (
@@ -460,6 +499,7 @@ const State = (props) => {
         datasources,
         getDataSources,
         agencies,
+        filteredAgencies,
         getAgencies,
         setAgencies,
         setSelectedDataSources,

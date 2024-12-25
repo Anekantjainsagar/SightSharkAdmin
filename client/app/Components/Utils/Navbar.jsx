@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 const Navbar = () => {
   const pathname = usePathname();
   const history = useRouter();
-  const { userData, setSearchTextAgency, searchTextAgency, agencies } =
+  const { userData, setSearchTextAgency, searchTextAgency, filteredAgencies } =
     useContext(Context);
 
   return (
@@ -30,7 +30,7 @@ const Navbar = () => {
           />
           {pathname !== "/agencies" && searchTextAgency && (
             <div className="absolute right-0 top-16 w-[500px] bg-main rounded-md min-h-[15vh] overflow-y-auto p-2">
-              {agencies?.data?.map((e, i) => {
+              {filteredAgencies?.data?.map((e, i) => {
                 return (
                   <div
                     key={i}
