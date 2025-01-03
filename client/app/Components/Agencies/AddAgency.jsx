@@ -676,7 +676,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     htmlFor="switchAcc1"
                     className="mb-1.5 text-base flex items-center w-fit relative"
                   >
-                    Service Account 1
+                    Service Account
                     <Info
                       text="Add the service account with the following permission-"
                       values={[
@@ -725,60 +725,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center justify-between mt-5">
-                  <label
-                    htmlFor="switchAcc2"
-                    className="mb-1.5 text-base flex items-center w-fit relative"
-                  >
-                    Service Account 2
-                    <Info
-                      text="Add the service account with the following permission-"
-                      values={[
-                        "Artifact Registry Administrator",
-                        "Artifact Registry Writer",
-                        "Cloud Build Connection Admin",
-                        "Cloud Build Editor",
-                        "Cloud Run Admin",
-                        "Cloud Scheduler Admin",
-                        "Cloud SQL Admin",
-                        "Logging Admin",
-                        "Pub/Sub Admin",
-                        "Secret Manager Admin",
-                        "Service Account User",
-                        "Service Usage Admin",
-                        "Source Repository Reader",
-                        "Storage Admin",
-                        "Viewer",
-                      ]}
-                      placement="bottom"
-                    />
-                    <Required />
-                  </label>
-                  <div className="flex items-center">
-                    {/* Custom File Input */}
-                    <label
-                      className={`border border-gray-300/20 py-1 ${
-                        serviceAcc2 ? "px-4" : "px-1"
-                      } rounded-md cursor-pointer`}
-                    >
-                      {serviceAcc2 && serviceAcc2?.name}
-                      {!serviceAcc2 && (
-                        <input
-                          type="file"
-                          onChange={handleFileUpload2}
-                          ref={fileInputRef2}
-                        />
-                      )}
-                    </label>
-
-                    {serviceAcc2 && (
-                      <AiOutlineClose
-                        className="text-lg cursor-pointer ml-2"
-                        onClick={handleClearFile2}
-                      />
-                    )}
-                  </div>
-                </div>{" "}
               </div>
             ) : (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
@@ -974,8 +920,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       data?.project_id &&
                       data?.project_number &&
                       data?.region &&
-                      data?.serviceAcc?.acc1 &&
-                      data?.serviceAcc?.acc2
+                      data?.serviceAcc?.acc1
                     ) {
                       setPage(page + 1);
                     } else {

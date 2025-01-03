@@ -600,15 +600,13 @@ const Overview = ({ params }) => {
                             htmlFor="switchAcc1"
                             className="mb-1.5 text-base flex items-center"
                           >
-                            Service Account 1
+                            Service Account
                             <Info text="Manages internal google cloud services" />
                           </label>
                           <div className="flex items-center">
                             {/* Custom File Input */}
                             <label
-                              className={`border border-gray-300/20 py-1 ${
-                                serviceAcc1 ? "px-4" : "px-1"
-                              } rounded-md cursor-pointer`}
+                              className={`border border-gray-300/20 py-1 px-5 rounded-md cursor-pointer`}
                             >
                               {/* Show file name or "Replace file" */}
                               {serviceAcc1 ? serviceAcc1.name : "Replace file"}
@@ -624,39 +622,6 @@ const Overview = ({ params }) => {
                               <AiOutlineClose
                                 className="text-lg cursor-pointer ml-2"
                                 onClick={handleClearFile}
-                              />
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between mt-5">
-                          <label
-                            htmlFor="switchAcc2"
-                            className="mb-1.5 text-base flex items-center"
-                          >
-                            Service Account 2
-                            <Info text="Manages internal google cloud services" />
-                          </label>
-                          <div className="flex items-center">
-                            {/* Custom File Input */}
-                            <label
-                              className={`border border-gray-300/20 py-1 ${
-                                serviceAcc2 ? "px-4" : "px-1"
-                              } rounded-md cursor-pointer`}
-                            >
-                              {/* Show file name or "Replace file" */}
-                              {serviceAcc2 ? serviceAcc2.name : "Replace file"}
-                              <input
-                                type="file"
-                                onChange={handleFileUpload2}
-                                ref={fileInputRef2}
-                                style={{ display: "none" }} // Hide the input
-                              />
-                            </label>
-
-                            {serviceAcc2 && (
-                              <AiOutlineClose
-                                className="text-lg cursor-pointer ml-2"
-                                onClick={handleClearFile2}
                               />
                             )}
                           </div>
