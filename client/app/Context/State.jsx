@@ -28,6 +28,7 @@ const State = (props) => {
   const [alerts, setAlerts] = useState([]);
   const [alertsLength, setAlertsLength] = useState(0);
   const [activeAgencies, setActiveAgencies] = useState(0);
+  const [regions, setRegions] = useState([]);
 
   const password_params = [
     "hasUppercase",
@@ -56,6 +57,34 @@ const State = (props) => {
           })
           .then((res) => {
             setActiveAgencies(res.data.count);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getRegions = () => {
+    let cookie = getCookie("token");
+
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(
+            `${BACKEND_URI}/agency/regions`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie}`,
+              },
+            }
+          )
+          .then((res) => {
+            setRegions(res.data.regions);
           })
           .catch((err) => {
             console.log(err);
@@ -303,7 +332,11 @@ const State = (props) => {
     }
   };
 
-  const getFilteredAgencies = (page = 1, order_by = "created_at", type = false) => {
+  const getFilteredAgencies = (
+    page = 1,
+    order_by = "created_at",
+    type = false
+  ) => {
     let cookie = getCookie("token");
     let limit = agencies?.limit ? agencies?.limit : 7;
 
@@ -474,6 +507,7 @@ const State = (props) => {
     getAgencies();
     getUsers();
     getDataSources();
+    getRegions();
   }, [userData]);
 
   useEffect(() => {
@@ -524,6 +558,7 @@ const State = (props) => {
         getDataSourcesDataFromAPI,
         activeAgencies,
         getActiveAgencies,
+        regions,
       }}
     >
       {props.children}

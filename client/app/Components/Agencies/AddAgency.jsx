@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
@@ -32,8 +32,7 @@ const customStyles = {
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
   const fileInputRef = React.useRef(null);
-  const fileInputRef2 = React.useRef(null);
-  const { setAgencies, agencies, getAgencies, checkPasswordCriteria } =
+  const { setAgencies, agencies, getAgencies, checkPasswordCriteria, regions } =
     useContext(Context);
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +40,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   const [showSave, setShowSave] = useState(true);
   const [page, setPage] = useState(1);
   const [serviceAcc1, setserviceAcc1] = useState();
-  const [serviceAcc2, setserviceAcc2] = useState();
   const [data, setData] = useState({
     name: "",
     profile: "",
@@ -184,46 +182,6 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     }
   };
 
-  const handleFileUpload2 = (event) => {
-    const file = event.target.files[0];
-    setserviceAcc2(file);
-    if (file && file.type === "application/json") {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        const result = e.target.result;
-
-        try {
-          // Check if the file content is not empty before parsing
-          if (result) {
-            const content = JSON.parse(result);
-            setData((prevData) => ({
-              ...prevData,
-              serviceAcc: {
-                ...prevData.serviceAcc,
-                acc2: JSON.stringify(content),
-              },
-            }));
-          } else {
-            throw new Error("Empty file content");
-          }
-        } catch (error) {
-          console.error("Invalid JSON:", error);
-          toast.error("Invalid JSON file. Please check the file format.");
-        }
-      };
-
-      reader.onerror = () => {
-        console.error("File reading error:", reader.error);
-        toast.error("An error occurred while reading the file.");
-      };
-
-      reader.readAsText(file);
-    } else {
-      toast.error("Please upload a valid JSON file.");
-    }
-  };
-
   const handleClearProfile = () => {
     setFile(null);
     if (fileInputRef.current) {
@@ -249,23 +207,15 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     });
   };
 
-  const handleClearFile2 = () => {
-    setserviceAcc2(null);
-    if (fileInputRef2.current) {
-      fileInputRef2.current.value = "";
-    }
-    setData({
-      ...data,
-      serviceAcc: {
-        ...data.serviceAcc,
-        acc2: "",
-      },
-    });
-  };
-
   function closeModal() {
     setShowSubscribe(false);
   }
+
+  useEffect(() => {
+    if (regions) {
+      setData({ ...data, region: regions[0]?.region_name });
+    }
+  }, [regions, data]);
 
   return (
     <div className="z-50">
@@ -659,16 +609,31 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     >
                       Region <Required />
                     </label>
-                    <input
-                      id="region"
-                      value={data?.region}
-                      onChange={(e) => {
-                        setData({ ...data, region: e.target.value });
-                      }}
-                      type="text"
-                      placeholder="Enter Region"
-                      className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                    />
+                    <div className="relative w-full">
+                      <select
+                        value={data?.region}
+                        onChange={(e) => {
+                          setData({ ...data, region: e.target.value });
+                        }}
+                        className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 pr-10 rounded-md appearance-none"
+                      >
+                        {regions.map((e, i) => {
+                          return (
+                            <option
+                              value={e?.region_name}
+                              key={i}
+                              className="bg-main"
+                            >
+                              {e?.region_name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      {/* Custom dropdown icon */}
+                      <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                        <MdKeyboardArrowDown />
+                      </span>
+                    </div>
                   </div>
                 </div>{" "}
                 <div className="flex items-center justify-between mt-12">
