@@ -6,8 +6,8 @@ const AgencyDetails = ({ data }) => {
   let days_left =
     Math.ceil(
       (new Date(
-        new Date(data?.deployment_date).setMonth(
-          new Date(data?.deployment_date).getMonth() + data?.warranty_period
+        new Date(data?.created_at).setMonth(
+          new Date(data?.created_at).getMonth() + data?.warranty_period
         )
       ) -
         new Date()) /
@@ -15,8 +15,8 @@ const AgencyDetails = ({ data }) => {
     ) >= 0
       ? Math.ceil(
           (new Date(
-            new Date(data?.deployment_date).setMonth(
-              new Date(data?.deployment_date).getMonth() + data?.warranty_period
+            new Date(data?.created_at).setMonth(
+              new Date(data?.created_at).getMonth() + data?.warranty_period
             )
           ) -
             new Date()) /
@@ -173,8 +173,8 @@ const AgencyDetails = ({ data }) => {
               </svg>
             ),
             title: "Deployment Date",
-            value: data?.deployment_date
-              ? new Date(data?.deployment_date).toString()?.slice(4, 21)
+            value: data?.created_at
+              ? new Date(data?.created_at).toString()?.slice(4, 21)
               : "",
           },
           {

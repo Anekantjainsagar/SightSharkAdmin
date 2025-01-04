@@ -53,6 +53,7 @@ const Overview = ({ params }) => {
     region: "",
     profile_picture: "",
     project_number: "",
+    onboarding_date: "",
   });
   const fileInputRef = React.useRef(null);
   const [serviceAcc1, setserviceAcc1] = useState();
@@ -304,15 +305,15 @@ const Overview = ({ params }) => {
                             htmlFor="deployment"
                             className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
-                            Deployment Date <Required />
+                            Onboarding Date <Required />
                           </label>
                           <input
                             id="deployment"
-                            value={data?.deployment}
+                            value={data?.onboarding_date}
                             onChange={(e) => {
                               setData({
                                 ...data,
-                                deployment: e.target.value,
+                                onboarding_date: e.target.value,
                               });
                             }}
                             type="date"
@@ -645,6 +646,7 @@ const Overview = ({ params }) => {
                             key_contact_phone: data?.keyContact?.phone,
                             service_account_cloud: data?.serviceAcc?.acc1,
                             service_account_api: data?.serviceAcc?.acc2,
+                            onboarding_date: data?.onboarding_date,
                             status,
                             ...data,
                           }).toString();

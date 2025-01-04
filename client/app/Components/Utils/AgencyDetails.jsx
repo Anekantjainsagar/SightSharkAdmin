@@ -88,8 +88,8 @@ const AgencyDetailsBlock = ({ data }) => {
           {data?.key_contact_email_address}
         </p>
         <p className="text-center">
-          {data?.deployment_date
-            ? new Date(data?.deployment_date).toString()?.slice(4, 21)
+          {data?.created_at
+            ? new Date(data?.created_at).toString()?.slice(4, 21)
             : ""}
         </p>
         <div className="flex items-center justify-center">
