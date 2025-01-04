@@ -47,6 +47,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     location: "",
     warrenty: 3,
     deployment: "",
+    onboarding_date: "",
     license: "",
     keyContact: {
       name: "",
@@ -93,6 +94,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
         project_id: data?.project_id || "",
         project_number: data?.project_number || "",
         status: data?.status || "active",
+        onboarding_date: data?.onboarding_date,
       }).toString();
 
       let formData = new FormData();
@@ -111,16 +113,11 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
         })
         .then((response) => {
           const res = response.data;
-          console.log(response);
-          if (res.status == 200) {
-            toast.success("Agency created successfully");
-            setAgencies([...agencies, res.data]);
-            getAgencies();
-            setShowSubscribe(false);
-          } else if (res.detail) {
-            setShowSave(true);
-            toast.error(res.detail);
-          }
+          setShowSubscribe(false);
+          // if (res.status == 200) {
+          toast.success("Agency created successfully");
+          // setAgencies([...agencies, res.data]);
+          getAgencies();
         })
         .catch((error) => {
           console.error(error);
@@ -145,6 +142,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     setserviceAcc1(file);
+    console.log(file);
     if (file && file.type === "application/json") {
       const reader = new FileReader();
 
@@ -155,6 +153,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
           // Check if the file content is not empty before parsing
           if (result) {
             const content = JSON.parse(result);
+            console.log(content);
             setData((prevData) => ({
               ...prevData,
               serviceAcc: {
@@ -215,7 +214,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     if (regions) {
       setData({ ...data, region: regions[0]?.region_name });
     }
-  }, [regions, data]);
+  }, [regions]);
 
   return (
     <div className="z-50">
@@ -427,15 +426,15 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       htmlFor="deployment"
                       className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
-                      Deployment Date
+                      Onboarding Date
+                      <Required />
                     </label>
                     <input
                       id="deployment"
-                      value={data?.deployment}
+                      value={data?.onboarding_date}
                       type="date"
-                      placeholder="Enter deployment Period"
                       onChange={(e) => {
-                        setData({ ...data, deployment: e.target.value });
+                        setData({ ...data, onboarding_date: e.target.value });
                       }}
                       className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
@@ -848,6 +847,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             </button>
             <button
               onClick={() => {
+                console.log(data);
                 if (page == maxPage) {
                   if (
                     page == 4 &&
@@ -874,7 +874,9 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                     data?.name &&
                     data?.website &&
                     data?.warrenty &&
-                    data?.license
+                    data?.license &&
+                    data?.onboarding_date &&
+                    file
                   ) {
                     setPage(page + 1);
                   } else {

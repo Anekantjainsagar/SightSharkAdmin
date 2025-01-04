@@ -21,10 +21,14 @@ const AgencySmallBlock = ({ data }) => {
         ></div>
       </div>
       <p className="text-center text-sm min-[1600px]:text-base">
-        {new Date(data?.created_at)?.toString()?.slice(4, 21)}
+        {data?.onboarding_date
+          ? new Date(data?.onboarding_date)?.toString()?.slice(4, 21)
+          : ""}
       </p>{" "}
       <p className="text-center text-sm min-[1600px]:text-base">
-        {new Date(data?.deployment_date)?.toString()?.slice(4, 21)}
+        {data?.created_at
+          ? new Date(data?.created_at)?.toString()?.slice(4, 21)
+          : ""}
       </p>
     </div>
   );
