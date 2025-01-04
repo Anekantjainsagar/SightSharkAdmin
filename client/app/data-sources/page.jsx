@@ -76,7 +76,7 @@ const DataSources = () => {
                 return (
                   <div
                     key={i}
-                    className="border px-6 py-5 mb-10 rounded-2xl border-gray-200/5"
+                    className="border px-6 py-5 mb-10 rounded-2xl border-gray-200/5 bg-[#171C2A]/20"
                   >
                     <div className="flex items-center justify-between">
                       <h5 className="text-2xl">{e?.agency_name}</h5>

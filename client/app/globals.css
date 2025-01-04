@@ -106,7 +106,7 @@ input:-webkit-autofill {
 
 .agencyBlockGrid {
   /* grid-template-columns: 3% 14% 10% 14% 22% 14% 10% 12%; */
-  grid-template-columns: 3% 11% 6% 16% 22% 17% 15% 10%;
+  grid-template-columns: 3% 16% 3% 14% 22% 17% 15% 10%;
 }
 
 .userBlockGrid {
