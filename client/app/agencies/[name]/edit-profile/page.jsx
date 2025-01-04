@@ -82,6 +82,7 @@ const Overview = ({ params }) => {
         acc1: temp?.service_account_cloud,
         acc2: temp?.service_account_api,
       },
+      region: temp?.region,
     });
     setStatus(temp?.status);
     setFile(temp?.profile_picture);
@@ -93,7 +94,6 @@ const Overview = ({ params }) => {
     });
     setOriginal_data(temp);
     setDetails(temp);
-    setData({ ...data, region: temp?.region });
   }, [name, agencies]);
 
   const handleFileChangeProfile = (event) => {
