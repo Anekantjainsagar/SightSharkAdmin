@@ -148,8 +148,8 @@ const Block = ({ e, data }) => {
   };
 
   return (
-    <div className="border border-gray-400/20 rounded-2xl p-2">
-      <div className="py-10 border border-gray-400/20 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
+    <div className="bg-[#171C2A]/50 rounded-2xl p-2 border border-gray-300/10">
+      <div className="py-10 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
         <Image
           src={e?.logo_link}
           alt={e?.logo_link?.src}
@@ -161,7 +161,7 @@ const Block = ({ e, data }) => {
           {formatName(e?.platform_name)}
         </p>
       </div>
-      <div className="mt-2 flex items-end justify-between px-2">
+      <div className="mt-2 flex items-center justify-between px-2">
         <p className="text-[10px] min-[1600px]:text-xs cursor-pointer">
           Last Refresh Time
           <br />
