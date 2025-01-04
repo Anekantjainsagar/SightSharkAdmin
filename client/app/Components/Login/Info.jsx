@@ -49,19 +49,20 @@ const PopoverComponent = ({ children, placement = "top", content, values }) => {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <div className="relative inline-block text-left" ref={popoverRef}>
+    <div className="relative inline-block text-left w-full" ref={popoverRef}>
       <div onClick={handleClick} className="cursor-pointer">
         {children}
       </div>
       {isOpen && (
         <div
-          className={`absolute w-[280px] text-center ${
+          className={`absolute text-center ${
             placement === "bottom" ? "top-full mt-2" : "bottom-full mb-2"
           } left-1/2 transform -translate-x-1/2 bg-gray-800 border border-gray-300/5 rounded-lg shadow-lg px-2 py-1.5 z-10 text-[12px] transition-transform duration-300 ease-in-out`}
+          style={values ? { width: "450px" } : { width: "280px" }}
         >
           {content}
           {values && (
-            <ul className="">
+            <ul className="grid grid-cols-2 gap-x-2">
               {values?.map((e, i) => (
                 <li key={i} className="w-full text-left">
                   {i + 1}. {e}

@@ -55,10 +55,8 @@ const Overview = ({ params }) => {
     project_number: "",
   });
   const fileInputRef = React.useRef(null);
-  const fileInputRef2 = React.useRef(null);
   const [serviceAcc1, setserviceAcc1] = useState();
-  const [serviceAcc2, setserviceAcc2] = useState();
-  const { agencies, getAgencies } = useContext(Context);
+  const { agencies, getAgencies, regions } = useContext(Context);
   const { name } = params;
   const history = useRouter();
 
@@ -95,6 +93,7 @@ const Overview = ({ params }) => {
     });
     setOriginal_data(temp);
     setDetails(temp);
+    setData({ ...data, region: temp?.region });
   }, [name, agencies]);
 
   const handleFileChangeProfile = (event) => {
@@ -121,20 +120,6 @@ const Overview = ({ params }) => {
     });
   };
 
-  const handleClearFile2 = () => {
-    setserviceAcc2(null);
-    if (fileInputRef2.current) {
-      fileInputRef2.current.value = "";
-    }
-    setData({
-      ...data,
-      serviceAcc: {
-        ...data.serviceAcc,
-        acc2: "",
-      },
-    });
-  };
-
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     setserviceAcc1(file);
@@ -149,33 +134,6 @@ const Overview = ({ params }) => {
             serviceAcc: {
               ...data.serviceAcc,
               acc1: JSON.stringify(content),
-            },
-          });
-        } catch (error) {
-          console.error("Invalid JSON:", error);
-        }
-      };
-
-      reader.readAsText(file);
-    } else {
-      toast.error("Please upload a valid JSON file.");
-    }
-  };
-
-  const handleFileUpload2 = (event) => {
-    const file = event.target.files[0];
-    setserviceAcc2(file);
-    if (file && file.type === "application/json") {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        try {
-          const content = JSON.parse(e.target.result);
-          setData({
-            ...data,
-            serviceAcc: {
-              ...data.serviceAcc,
-              acc2: JSON.stringify(content),
             },
           });
         } catch (error) {
@@ -583,16 +541,31 @@ const Overview = ({ params }) => {
                             >
                               Region <Required />
                             </label>
-                            <input
-                              id="region"
-                              value={data?.region}
-                              onChange={(e) => {
-                                setData({ ...data, region: e.target.value });
-                              }}
-                              type="text"
-                              placeholder="Enter Region"
-                              className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                            />
+                            <div className="relative w-full">
+                              <select
+                                value={data?.region}
+                                onChange={(e) => {
+                                  setData({ ...data, region: e.target.value });
+                                }}
+                                className="bg-[#898989]/15 leading-5 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 pr-10 rounded-md appearance-none"
+                              >
+                                {regions.map((e, i) => {
+                                  return (
+                                    <option
+                                      value={e?.region_name}
+                                      key={i}
+                                      className="bg-main"
+                                    >
+                                      {e?.region_name}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                              {/* Custom dropdown icon */}
+                              <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                                <MdKeyboardArrowDown />
+                              </span>
+                            </div>
                           </div>
                         </div>{" "}
                         <div className="flex items-center justify-between mt-8">

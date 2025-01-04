@@ -28,7 +28,7 @@ export const cloudProps = {
     initial: [0.1, -0.1],
     clickToFront: 500,
     tooltipDelay: 0,
-    outlineColour: "#0000",
+    outlineColour: "#fff",
     maxSpeed: 0.04,
     minSpeed: 0.02,
     // dragControl: false,

@@ -6,7 +6,6 @@ import Context from "../Context/Context";
 import Image from "next/image";
 import { IoReload } from "react-icons/io5";
 import { TfiReload } from "react-icons/tfi";
-import axios from "axios";
 import { BACKEND_URI } from "../utils/url";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
@@ -68,10 +67,7 @@ const DataSources = () => {
           <div className="text-white w-full rounded-lg py-2 px-6 min-[1600px]:py-6">
             <div className="flex items-center justify-between">
               <h3 className="text-xl min-[1600px]:text-2xl font-semibold">
-                Agencies Data Sources{" "}
-                <span className="text-lg min-[1600px]:text-xl text-white/80">
-                  ({platformsData?.length})
-                </span>
+                Agencies Data Sources
               </h3>
               <div></div>
             </div>

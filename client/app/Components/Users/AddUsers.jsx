@@ -83,10 +83,10 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
       data?.access
     ) {
       const queryParams = new URLSearchParams({
-        email: data?.email,
-        password: data?.password,
-        first_name: data?.firstName,
-        last_name: data?.lastName,
+        email: data?.email.trim(),
+        password: data?.password.trim(),
+        first_name: data?.firstName.trim(),
+        last_name: data?.lastName.trim(),
         phone: data?.phone || "",
         postal_code: data?.postal_code || "",
         role: data?.access || "admin",

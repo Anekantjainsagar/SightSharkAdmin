@@ -49,8 +49,8 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
 
   useEffect(() => {
     setData({
-      firstName: clickedUsers?.first_name,
-      lastName: clickedUsers?.last_name,
+      firstName: clickedUsers?.first_name.trim(),
+      lastName: clickedUsers?.last_name.trim(),
       access: clickedUsers?.role,
       ...clickedUsers,
     });
