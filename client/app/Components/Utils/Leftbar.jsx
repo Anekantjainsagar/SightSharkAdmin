@@ -140,8 +140,7 @@ const Leftbar = () => {
       route: "/data-sources",
       temp_icon: [
         <svg
-          width="24"
-          height="24"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -154,8 +153,7 @@ const Leftbar = () => {
           />
         </svg>,
         <svg
-          width="24"
-          height="24"
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -165,6 +163,41 @@ const Leftbar = () => {
             d="M5.28905 13.6318L12.2782 2.64879C12.5468 2.22677 13.2 2.417 13.2 2.91722V10.7002C13.2 10.7554 13.2448 10.8002 13.3 10.8002H18.2397C18.6442 10.8002 18.8813 11.2555 18.6493 11.5869L11.7097 21.5007C11.4293 21.9012 10.8 21.7029 10.8 21.214V14.5002C10.8 14.445 10.7553 14.4002 10.7 14.4002H5.71089C5.31634 14.4002 5.07723 13.9646 5.28905 13.6318Z"
             stroke="#888"
             strokeWidth="2"
+          />
+        </svg>,
+      ],
+    },
+    {
+      title: "Templates",
+      icon: <IoNewspaperOutline className="text-2xl" key={"5"} />,
+      route: "/templates",
+      temp_icon: [
+        <svg
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          key={500001}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 13.125L4 7C4 4.79086 5.79086 3 8 3L14.125 3M10 21L16.75 21C17.9926 21 19 19.9926 19 18.75L19 9C19 7.75736 17.9926 6.75 16.75 6.75L10 6.75C8.75736 6.75 7.75 7.75736 7.75 9L7.75 18.75C7.75 19.9926 8.75736 21 10 21Z"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>,
+        <svg
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
+          viewBox="0 0 24 24"
+          key={500002}
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 13.125L4 7C4 4.79086 5.79086 3 8 3L14.125 3M10 21L16.75 21C17.9926 21 19 19.9926 19 18.75L19 9C19 7.75736 17.9926 6.75 16.75 6.75L10 6.75C8.75736 6.75 7.75 7.75736 7.75 9L7.75 18.75C7.75 19.9926 8.75736 21 10 21Z"
+            stroke="#888"
+            stroke-width="2"
+            stroke-linecap="round"
           />
         </svg>,
       ],

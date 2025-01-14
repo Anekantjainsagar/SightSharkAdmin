@@ -84,6 +84,8 @@ const Overview = ({ params }) => {
         acc2: temp?.service_account_api,
       },
       region: temp?.region,
+      onboarding_date: temp?.onboarding_date,
+      ...temp,
     });
     setStatus(temp?.status);
     setFile(temp?.profile_picture);

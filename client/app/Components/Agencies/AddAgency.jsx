@@ -32,8 +32,7 @@ const customStyles = {
 const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 4;
   const fileInputRef = React.useRef(null);
-  const { setAgencies, agencies, getAgencies, checkPasswordCriteria, regions } =
-    useContext(Context);
+  const { getAgencies, checkPasswordCriteria, regions } = useContext(Context);
   const [file, setFile] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -293,7 +292,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
               })}
             </div>
           </div>
-          <div className="h-[45vh] min-[1600px]:h-[40vh]">
+          <div className="h-[45vh] min-[1600px]:h-[43vh]">
             {page === 1 ? (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
                 <div className="flex flex-col items-center justify-center mb-6">

@@ -70,7 +70,7 @@ const Overview = ({ params }) => {
             <AgencyDetails data={data} />
             <div className="w-[69%]">
               <AgencyDetailsTopbar name={name} />
-              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-3 min-[1600px]:p-4">  
+              <div className="border border-gray-500/5 h-[83vh] w-full rounded-lg p-3 min-[1600px]:p-4">
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5">
                   <div className="flex items-center justify-between w-full">
                     <h4 className="min-[1600px]:text-xl">
@@ -142,72 +142,28 @@ const Overview = ({ params }) => {
                     >
                       <FaPlus className="text-sm" /> Add Template
                     </button>
-                  </div>{" "}
-                  <div className="gradient-line my-4"></div>
-                  {agency_templates?.length > 0 ? (
-                    <div className="grid grid-cols-4 gap-x-4 mt-2">
-                      {agency_templates?.map((e, i) => {
-                        return (
-                          <TemplateBlock
-                            data={e}
-                            key={i}
-                            original_data={data}
-                            showDeleteTemplate={showDeleteTemplate}
-                            setShowDeleteTemplate={setShowDeleteTemplate}
-                          />
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="mt-2 text-center">
-                      No Templates Available Please Add some of the Templates
-                    </div>
-                  )}
-                </div>
-                <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4 overflow-y-auto small-scroller h-[23vh]">
-                  <div className="flex items-center justify-between w-full">
-                    <h4 className="min-[1600px]:text-xl">Recent Activity </h4>
-                    <p
-                      className="text-white text-sm min-[1600px]:text-base flex items-center cursor-pointer"
-                      onClick={() =>
-                        history.push(`/agencies/${name}/recent-activities`)
-                      }
-                    >
-                      View All
-                      <HiOutlineArrowNarrowRight className="text-base ml-2" />
-                    </p>
                   </div>
                   <div className="gradient-line my-4"></div>
-                  <div>
-                    <div className="">
-                      <span className="bg-[#5F5F5F]/10 px-4 py-1 w-fit rounded border border-gray-500/5 text-sm min-[1600px]:text-base">
-                        14 August 2024
-                      </span>
-                      <div className="mt-4">
-                        {[1, 2]?.map((e, i) => {
+                  <div className="h-[43vh]">
+                    {agency_templates?.length > 0 ? (
+                      <div className="grid grid-cols-3 gap-4 mt-2">
+                        {agency_templates?.map((e, i) => {
                           return (
-                            <div
+                            <TemplateBlock
+                              data={e}
                               key={i}
-                              className={`flex items-center justify-between mb-4`}
-                            >
-                              <div className="flex items-center gap-x-3 ml-12">
-                                <Circle0 />
-                                <h6 className="text-[13px] min-[1600px]:text-base">
-                                  <span className="font-semibold">
-                                    ProWiz Analytics
-                                  </span>{" "}
-                                  - Assigned “SightShark” Google Ads, Meta Ads
-                                  and LinkedIn Ads data sources
-                                </h6>
-                              </div>
-                              <p className="text-[13px] min-[1600px]:text-base">
-                                02:30 PM
-                              </p>
-                            </div>
+                              original_data={data}
+                              showDeleteTemplate={showDeleteTemplate}
+                              setShowDeleteTemplate={setShowDeleteTemplate}
+                            />
                           );
                         })}
                       </div>
-                    </div>
+                    ) : (
+                      <div className="mt-2 text-center">
+                        No Templates Available Please Add some of the Templates
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -215,14 +171,6 @@ const Overview = ({ params }) => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const Circle0 = () => {
-  return (
-    <div className="bg-[#FFE8CC] p-2 w-7 rounded-full aspect-square">
-      <div className="bg-[#FDC53E] w-full h-full rounded-full"></div>
     </div>
   );
 };

@@ -386,7 +386,25 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
                 <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
                   {formatName(e?.name)}
                 </p>
-                <p>Track</p>
+                <p>
+                  Track (
+                  <span
+                    onClick={() => {
+                      let platformName = e?.name;
+                      setCheckedTables((prevCheckedTables) => {
+                        const newCheckedTables = { ...prevCheckedTables };
+                        newCheckedTables[platformName] = datasources?.find(
+                          (item) => item?.name === e?.name
+                        )?.tables;
+                        return newCheckedTables;
+                      });
+                    }}
+                    className="hover:underline transition-all cursor-pointer hover:text-blue-400"
+                  >
+                    Select All
+                  </span>
+                  )
+                </p>
               </div>
               {checkedTables &&
                 datasources &&
