@@ -137,14 +137,14 @@ const State = (props) => {
     }
   }, [userData]);
 
-  const getCriticalNotifications = () => {
+  const getCriticalNotifications = (page = 1) => {
     const cookie = getCookie("token");
 
     if (cookie?.length > 5) {
       try {
         axios
           .get(
-            `${BACKEND_URI}/critical_notification/?unseen_only=${false}&order_by=${"created_at"}&page=${1}&page_size=${50}`,
+            `${BACKEND_URI}/critical_notification/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}`,
             {
               headers: {
                 Authorization: `Bearer ${cookie}`,

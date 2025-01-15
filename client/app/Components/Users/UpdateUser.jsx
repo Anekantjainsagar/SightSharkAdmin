@@ -45,6 +45,7 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
   });
   const [availableRoles, setAvailableRoles] = useState([]);
   const [file, setFile] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = React.useRef(null);
 
   useEffect(() => {
@@ -75,6 +76,40 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
     if (file) {
       setFile(URL.createObjectURL(file));
       setData({ ...data, profile: file });
+    }
+  };
+
+  const handleClearProfile = () => {
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      setData({ ...data, profile: "" });
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile) {
+      handleFileChangeProfile({ target: { files: [droppedFile] } });
+    }
+  };
+
+  const handlePaste = (e) => {
+    const clipboardItem = e.clipboardData.items[0];
+    if (clipboardItem && clipboardItem.type.startsWith("image")) {
+      const pastedFile = clipboardItem.getAsFile();
+      handleFileChangeProfile({ target: { files: [pastedFile] } });
     }
   };
 
@@ -159,29 +194,67 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
             <h1 className="mainLogoSize font-semibold">Update User Details</h1>
           </div>
           <div className="h-fit px-[8vw] w-full">
-            <div className="flex items-center justify-center mb-6">
-              <div className="relative">
+            <div className="flex items-center justify-center mb-2">
+              <div
+                className={`relative flex w-full flex-col items-center justify-center mb-3 md:mb-4 ${
+                  isDragging
+                    ? "border-2 border-dashed border-blue-500 bg-black/30 cursor-pointer"
+                    : ""
+                }`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onPaste={handlePaste}
+              >
                 <input
                   type="file"
                   ref={fileInputRef}
                   style={{ display: "none" }}
                   onChange={handleFileChangeProfile}
                 />
-                <div
-                  onClick={() => {
-                    fileInputRef.current.click();
-                  }}
-                  className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 bottom-0 min-[1600px]:-bottom-2 cursor-pointer right-0 min-[1600px]:-right-2 rounded-full"
-                >
-                  +
+                <div className="relative">
+                  <div
+                    onClick={() => {
+                      if (file) {
+                        handleClearProfile();
+                      } else {
+                        fileInputRef.current.click();
+                      }
+                    }}
+                    title={
+                      !file ? "Upload User Profile" : "Remove User Profile"
+                    }
+                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -top-1 aspect-square cursor-pointer right-0 rounded-full"
+                  >
+                    {file ? (
+                      <AiOutlineClose className="text-base md:text-[13px]" />
+                    ) : (
+                      "+"
+                    )}
+                  </div>
+                  <Image
+                    src={file ? file : "/Agency/temp_logo.png"}
+                    alt="Agency Img"
+                    width={1000}
+                    height={1000}
+                    title={
+                      !file ? "Upload User Profile" : "Remove User Profile"
+                    }
+                    className="w-[6vw] min-[1600px]:w-[5vw] aspect-square object-cover rounded-full"
+                  />
                 </div>
-                <Image
-                  src={file || "/Agency/temp_logo.png"}
-                  alt="Agency Img"
-                  width={1000}
-                  height={1000}
-                  className="w-[6vw] aspect-squre min-[1600px]:w-[4vw] aspect-square object-cover rounded-full"
-                />
+                {
+                  <p className="text-center mt-3 text-gray-300">
+                    {data?.profile?.name || (
+                      <span className="opacity-0">hell</span>
+                    )}
+                  </p>
+                }
+                {isDragging && (
+                  <p className="absolute text-blue-500 mt-3">
+                    Drop file to upload
+                  </p>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-4">

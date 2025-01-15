@@ -67,7 +67,7 @@ const DataSources = () => {
           <div className="text-white w-full rounded-lg py-2 px-6 min-[1600px]:py-6">
             <div className="flex items-center justify-between">
               <h3 className="text-xl min-[1600px]:text-2xl font-semibold">
-                Agencies Data Sources
+                Data Sources
               </h3>
               <div></div>
             </div>
@@ -148,8 +148,8 @@ const Block = ({ e, data }) => {
   };
 
   return (
-    <div className="bg-[#171C2A]/50 rounded-2xl p-2 border border-gray-300/10">
-      <div className="py-10 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
+    <div className="bg-[#171C2A]/50 rounded-xl p-2 border border-gray-300/10">
+      <div className="py-7 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
         <Image
           src={e?.logo_link}
           alt={e?.logo_link?.src}

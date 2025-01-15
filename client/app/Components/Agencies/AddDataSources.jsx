@@ -323,6 +323,37 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
 };
 
 const Page2 = ({ checkedTables, setCheckedTables }) => {
+  const { selectedDataSources } = useContext(Context);
+
+  useEffect(() => {
+    if (Object?.keys(checkedTables)?.length == 0) {
+      setCheckedTables(
+        selectedDataSources.reduce((acc, platform) => {
+          acc[platform.name] = [];
+          return acc;
+        }, {})
+      );
+    }
+  }, [selectedDataSources]);
+
+  return (
+    <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
+      <div className="grid grid-cols-1 gap-3">
+        {selectedDataSources?.map((e, i) => (
+          <Block
+            e={e}
+            key={i}
+            checkedTables={checkedTables}
+            setCheckedTables={setCheckedTables}
+            i={i}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Block = ({ e, checkedTables, setCheckedTables, i }) => {
   const { selectedDataSources, datasources } = useContext(Context);
 
   const handleCheckboxChange = (sourceIndex, table, isChecked) => {
@@ -351,114 +382,147 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
     });
   };
 
+  return (
+    <div className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center w-[30%]">
+        <img
+          src={e?.img_link}
+          alt={e?.name}
+          width={1000}
+          height={1000}
+          className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
+        />
+        <h6 className="mt-2 text-lg">{formatName(e?.name)}</h6>
+      </div>
+      <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
+      <div className="w-[70%]">
+        <div className="flex justify-between items-center w-full px-4 py-1">
+          <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+            Track
+          </p>
+          <div className="inline-flex items-start">
+            <label className="relative flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                id={e?.name}
+                checked={
+                  checkedTables[e?.name]?.length ===
+                  datasources?.find((item) => item?.name === e?.name)?.tables
+                    ?.length
+                }
+                className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
+                onChange={(event) => {
+                  let platformName = e?.name;
+                  if (event?.target?.checked) {
+                    setCheckedTables((prevCheckedTables) => {
+                      const newCheckedTables = { ...prevCheckedTables };
+                      newCheckedTables[platformName] = datasources?.find(
+                        (item) => item?.name === e?.name
+                      )?.tables;
+                      return newCheckedTables;
+                    });
+                  } else {
+                    setCheckedTables((prevCheckedTables) => {
+                      let newCheckedTables = { ...prevCheckedTables };
+                      delete newCheckedTables[platformName];
+                      return newCheckedTables;
+                    });
+                  }
+                }}
+              />
+              <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+            </label>
+          </div>
+        </div>
+        {checkedTables &&
+          datasources &&
+          datasources
+            ?.find((item) => item?.name === e?.name)
+            ?.tables.map((table, index) => {
+              return (
+                <Row
+                  table={table}
+                  key={index}
+                  i={i}
+                  checkedTables={checkedTables}
+                  handleCheckboxChange={handleCheckboxChange}
+                  platformName={e?.name}
+                />
+              );
+            })}
+      </div>
+    </div>
+  );
+};
+
+const Row = ({
+  table,
+  i,
+  platformName,
+  checkedTables,
+  handleCheckboxChange,
+}) => {
+  const [isChecked, setIsChecked] = useState(false);
+
   useEffect(() => {
-    if (Object?.keys(checkedTables)?.length == 0) {
-      setCheckedTables(
-        selectedDataSources.reduce((acc, platform) => {
-          acc[platform.name] = [];
-          return acc;
-        }, {})
-      );
+    if (checkedTables) {
+      let checkIfTrue = checkedTables[platformName]?.includes(table);
+      if (checkIfTrue) {
+        setIsChecked(true);
+      } else {
+        setIsChecked(false);
+      }
     }
-  }, [selectedDataSources]);
+  }, [checkedTables]);
 
   return (
-    <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-      <div className="grid grid-cols-1 gap-3">
-        {selectedDataSources?.map((e, i) => (
-          <div
-            key={i}
-            className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center"
-          >
-            <div className="flex flex-col items-center justify-center w-[30%]">
-              <img
-                src={e?.img_link}
-                alt={e?.name}
-                width={1000}
-                height={1000}
-                className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
-              />
-              <h6 className="mt-2 text-lg">{formatName(e?.name)}</h6>
-            </div>
-            <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
-            <div className="w-[70%]">
-              <div className="flex justify-between items-center w-full px-4 py-1">
-                <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                  {formatName(e?.name)}
-                </p>
-                <p>
-                  Track (
-                  <span
-                    onClick={() => {
-                      let platformName = e?.name;
-                      setCheckedTables((prevCheckedTables) => {
-                        const newCheckedTables = { ...prevCheckedTables };
-                        newCheckedTables[platformName] = datasources?.find(
-                          (item) => item?.name === e?.name
-                        )?.tables;
-                        return newCheckedTables;
-                      });
-                    }}
-                    className="hover:underline transition-all cursor-pointer hover:text-blue-400"
-                  >
-                    Select All
-                  </span>
-                  )
-                </p>
-              </div>
-              {checkedTables &&
-                datasources &&
-                datasources
-                  ?.find((item) => item?.name === e?.name)
-                  ?.tables.map((table, index) => {
-                    const isChecked = checkedTables[e.name]?.includes(table);
-                    return (
-                      <div
-                        key={index}
-                        className="w-full flex justify-between items-center rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-400"
-                      >
-                        <label htmlFor={table} className="cursor-pointer">
-                          {formatName(table)}
-                        </label>
-                        <div className="inline-flex items-start">
-                          <label className="relative flex items-center cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
-                              id={table}
-                              onChange={(event) =>
-                                handleCheckboxChange(
-                                  i,
-                                  table,
-                                  event.target.checked
-                                )
-                              }
-                            />
-                            <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                strokeWidth="1"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                ></path>
-                              </svg>
-                            </span>
-                          </label>
-                        </div>
-                      </div>
-                    );
-                  })}
-            </div>
-          </div>
-        ))}
+    <div className="w-full flex justify-between items-center rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-400">
+      <label htmlFor={table} className="cursor-pointer">
+        {formatName(table)}
+      </label>
+      <div className="inline-flex items-start">
+        <label className="relative flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
+            id={table}
+            onChange={(event) =>
+              handleCheckboxChange(i, table, event.target.checked)
+            }
+          />
+          <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="1"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </span>
+        </label>
       </div>
     </div>
   );

@@ -18,7 +18,16 @@ const App = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const { checkToken } = useContext(Context);
+
+  useEffect(() => {
+    if (disabled) {
+      setTimeout(() => {
+        setDisabled(false);
+      }, 3000);
+    }
+  }, []);
 
   const handleRememberMe = () => {
     localStorage.setItem("email", user?.email);
@@ -212,6 +221,7 @@ const App = () => {
               onClick={() => {
                 onLogin();
               }}
+              disabled={disabled}
               className="w-full py-3 bg-newBlue rounded-[10px] mainText18"
             >
               Log In

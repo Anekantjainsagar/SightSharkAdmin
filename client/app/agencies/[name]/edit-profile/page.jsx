@@ -574,10 +574,30 @@ const Overview = ({ params }) => {
                         <div className="flex items-center justify-between mt-8">
                           <label
                             htmlFor="switchAcc1"
-                            className="mb-1.5 text-base flex items-center"
+                            className="mb-1.5 text-base flex items-center whitespace-nowrap"
                           >
                             Service Account
-                            <Info text="Manages internal google cloud services" />
+                            <Info
+                              text="Add the service account with the following permission-"
+                              values={[
+                                "Artifact Registry Administrator",
+                                "Artifact Registry Writer",
+                                "Cloud Build Connection Admin",
+                                "Cloud Build Editor",
+                                "Cloud Run Admin",
+                                "Cloud Scheduler Admin",
+                                "Cloud SQL Admin",
+                                "Logging Admin",
+                                "Pub/Sub Admin",
+                                "Secret Manager Admin",
+                                "Service Account User",
+                                "Service Usage Admin",
+                                "Source Repository Reader",
+                                "Storage Admin",
+                                "Viewer",
+                              ]}
+                              placement={"bottom"}
+                            />
                           </label>
                           <div className="flex items-center">
                             {/* Custom File Input */}

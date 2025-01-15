@@ -182,8 +182,8 @@ const Leftbar = () => {
           <path
             d="M4 13.125L4 7C4 4.79086 5.79086 3 8 3L14.125 3M10 21L16.75 21C17.9926 21 19 19.9926 19 18.75L19 9C19 7.75736 17.9926 6.75 16.75 6.75L10 6.75C8.75736 6.75 7.75 7.75736 7.75 9L7.75 18.75C7.75 19.9926 8.75736 21 10 21Z"
             stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
         </svg>,
         <svg
@@ -196,8 +196,8 @@ const Leftbar = () => {
           <path
             d="M4 13.125L4 7C4 4.79086 5.79086 3 8 3L14.125 3M10 21L16.75 21C17.9926 21 19 19.9926 19 18.75L19 9C19 7.75736 17.9926 6.75 16.75 6.75L10 6.75C8.75736 6.75 7.75 7.75736 7.75 9L7.75 18.75C7.75 19.9926 8.75736 21 10 21Z"
             stroke="#888"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
         </svg>,
       ],
@@ -382,11 +382,13 @@ const Leftbar = () => {
   ];
 
   return (
-    <div className="bg-main w-[15%] text-white h-full relative border-r border-r-white/20">
+    <div className="bg-main w-[15%] text-white h-full relative z-20 border-r border-r-white/20">
       <HelpPage showSubscribe={show} setShowSubscribe={setShow} />
       <div className="w-[120px] h-[100px] rounded-full bg-[#1664FF]/40 absolute left-[-2vw] top-[15vh]"></div>
       <div className="w-[60px] h-[50px] rounded-full bg-[#1664FF]/50 absolute right-2 bottom-[1vh]"></div>
-      <div className="w-full h-full absolute top-0 left-0 py-5 flex flex-col items-center justify-between backdrop-blur-3xl z-10">
+      <div className="w-full h-full absolute top-0 left-0 py-5 flex flex-col items-center justify-between backdrop-blur-3xl z-[inherit]">
+        {" "}
+        {/* Use `z-[inherit]` */}
         <div className="w-10/12 h-full flex flex-col items-center justify-between pb-0 min-[1600px]:pb-6">
           <div className="w-full">
             <div className="flex items-center">

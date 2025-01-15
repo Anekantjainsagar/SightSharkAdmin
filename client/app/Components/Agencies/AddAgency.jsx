@@ -191,6 +191,34 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
     });
   };
 
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      handleFileChangeProfile({ target: { files: [file] } });
+    }
+  };
+
+  const handlePaste = (e) => {
+    const clipboardItem = e.clipboardData.items[0];
+    if (clipboardItem && clipboardItem.type.startsWith("image")) {
+      const file = clipboardItem.getAsFile();
+      handleFileChangeProfile({ target: { files: [file] } });
+    }
+  };
+
   const handleClearFile = () => {
     setserviceAcc1(null);
     if (fileInputRef.current) {
@@ -292,10 +320,20 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
               })}
             </div>
           </div>
-          <div className="h-[45vh] min-[1600px]:h-[43vh]">
+          <div className="h-[45vh]">
             {page === 1 ? (
               <div className="px-[4vw] min-[1600px]:px-[8vw] w-full">
-                <div className="flex flex-col items-center justify-center mb-6">
+                <div
+                  className={`flex flex-col items-center justify-center mb-4 ${
+                    isDragging
+                      ? "border-2 border-dashed border-blue-500 bg-black/30"
+                      : ""
+                  }`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onPaste={handlePaste} // Adding paste event listener
+                >
                   <div className="relative">
                     <input
                       type="file"
@@ -311,7 +349,12 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                           fileInputRef.current.click();
                         }
                       }}
-                      className="absolute bg-newBlue flex items-center justify-center text-2xl w-[1.6vw] aspect-square -bottom-2 cursor-pointer -right-2 rounded-full"
+                      className="absolute bg-newBlue flex items-center justify-center text-2xl w-[1.6vw] aspect-square top-0 cursor-pointer -right-2 rounded-full"
+                      title={
+                        data?.profile
+                          ? "Remove Agency Logo"
+                          : "Upload Agency Logo"
+                      }
                     >
                       {data?.profile ? (
                         <AiOutlineClose className="text-sm" />
@@ -320,16 +363,28 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                       )}
                     </div>
                     <Image
-                      src={file ? file : "/Agency/temp_logo.png"}
+                      src={file || "/Agency/temp_logo.png"}
                       alt="Agency Img"
                       width={1000}
                       height={1000}
-                      className="w-[4vw] aspect-square object-cover rounded-full"
+                      className="w-[5vw] aspect-square object-cover rounded-full"
+                      title={
+                        data?.profile
+                          ? "Remove Agency Logo"
+                          : "Upload Agency Logo"
+                      }
                     />
                   </div>
                   <p className="text-center mt-3 text-gray-300">
-                    {data?.profile?.name}
+                    {data?.profile?.name || (
+                      <span className="opacity-0">File Path</span>
+                    )}
                   </p>
+                  {isDragging && (
+                    <p className="absolute text-blue-500 mt-3">
+                      Drop file to upload
+                    </p>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
                   <div className="flex flex-col">
@@ -366,7 +421,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                         setData({ ...data, website: e.target.value });
                       }}
                       type="text"
-                      placeholder="Enter Website"
+                      placeholder="Enter Agency Website"
                       className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                     />
                   </div>
@@ -637,7 +692,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 <div className="flex items-center justify-between mt-12">
                   <label
                     htmlFor="switchAcc1"
-                    className="mb-1.5 text-base flex items-center w-fit relative"
+                    className="mb-1.5 text-base flex items-center relative whitespace-nowrap"
                   >
                     Service Account
                     <Info

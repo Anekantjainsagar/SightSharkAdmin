@@ -10,10 +10,16 @@ import { useRouter } from "next/navigation";
 import Context from "../Context/Context";
 
 const Overview = () => {
-  const { agencies, criticalNotifications, activeAgencies, getActiveAgencies } =
-    useContext(Context);
+  const {
+    datasources,
+    agencies,
+    criticalNotifications,
+    activeAgencies,
+    getActiveAgencies,
+    users,
+  } = useContext(Context);
   const history = useRouter();
-  ` `
+  ` `;
   useEffect(() => {
     getActiveAgencies();
   }, []);
@@ -32,22 +38,22 @@ const Overview = () => {
               {[
                 {
                   name: "Total Agencies",
-                  value: agencies?.total_count,
+                  value: agencies?.total_count || 0,
                   img: "/Overview/Icons/total.png",
                 },
                 {
                   name: "Active Agencies",
-                  value: activeAgencies,
+                  value: activeAgencies || 0,
                   img: "/Overview/Icons/active.png",
                 },
                 {
-                  name: "Dashboard Views",
-                  value: 5,
+                  name: "Data Sources",
+                  value: datasources?.length || 0,
                   img: "/Overview/Icons/dashboard.png",
                 },
                 {
-                  name: "Satisfaction Score",
-                  value: 25,
+                  name: "Total Users",
+                  value: users?.total_count || 0,
                   img: "/Overview/Icons/satisfaction.png",
                 },
               ].map((e, i) => {
