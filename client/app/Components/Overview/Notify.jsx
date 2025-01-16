@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import { BiSolidError } from "react-icons/bi";
 import { CiCircleInfo } from "react-icons/ci";
@@ -23,7 +22,7 @@ const Notify = ({ status, data }) => {
       </div>
       <p className="text-sm min-[1600px]:text-base">
         {new Date(data?.created_at).toString().slice(4, 21)}
-      </p>
+      </p>  
     </div>
   );
 };

@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import Image from "next/image";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { FaPlus } from "react-icons/fa";
@@ -144,7 +143,7 @@ const Overview = ({ params }) => {
                     </button>
                   </div>
                   <div className="gradient-line my-4"></div>
-                  <div className="h-[43vh]">
+                  <div className="h-[41.5vh]">
                     {agency_templates?.length > 0 ? (
                       <div className="grid grid-cols-3 gap-4 mt-2">
                         {agency_templates?.map((e, i) => {
