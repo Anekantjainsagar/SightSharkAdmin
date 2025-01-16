@@ -4,7 +4,7 @@ import DeleteTemplate from "@/app/Components/Agencies/DeleteTemplate";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { UpdateMainTemplates } from "./AddMainTemplates";
 
-const TemplateBlock = ({ data }) => {
+const TemplateBlock = ({ data, showActions }) => {
   const [deleteTemplate, setDeleteTemplate] = useState(false);
   const [editTemplates, setEditTemplates] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -30,13 +30,15 @@ const TemplateBlock = ({ data }) => {
           window.open(data?.template_link, "__blank");
         }}
       >
-        <BsThreeDotsVertical
-          onClick={(e) => {
-            e.stopPropagation();
-            setClicked(!clicked);
-          }}
-          className="absolute right-2 top-2 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-200/20 transition-all text-gray-300"
-        />
+        {showActions && (
+          <BsThreeDotsVertical
+            onClick={(e) => {
+              e.stopPropagation();
+              setClicked(!clicked);
+            }}
+            className="absolute right-2 top-2 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-200/20 transition-all text-gray-300"
+          />
+        )}
         {clicked && (
           <div
             className={`w-fit md:w-[9vw] absolute ${"right-2"} z-50 top-10 shadow-sm text-xs md:text-sm shadow-gray-200/30 bg-main rounded-md`}

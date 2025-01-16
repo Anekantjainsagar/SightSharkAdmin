@@ -8,11 +8,8 @@ import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { FaPlus } from "react-icons/fa";
 import AddTemplates from "../../Components/Agencies/AddTemplates";
 import AddDataSouces from "../../Components/Agencies/AddDataSources";
-import { useRouter } from "next/navigation";
 import Context from "@/app/Context/Context";
 import TemplateBlock from "@/app/Components/Agencies/TemplateBlock";
-import { AiOutlineClose } from "react-icons/ai";
-import { BsPencilSquare } from "react-icons/bs";
 
 function formatName(input) {
   return input
@@ -23,8 +20,6 @@ function formatName(input) {
 }
 
 const Overview = ({ params }) => {
-  const history = useRouter();
-  const [showDeleteTemplate, setShowDeleteTemplate] = useState(false);
   const [addDataSouces, setAddDataSouces] = useState(false);
   const [addTemplates, setAddTemplates] = useState(false);
   const {
@@ -120,18 +115,6 @@ const Overview = ({ params }) => {
                   <div className="flex items-center justify-between w-full">
                     <h4 className="min-[1600px]:text-xl relative">
                       Templates{" "}
-                      <div
-                        className="absolute top-1/2 -translate-y-1/2 -right-8 cursor-pointer p-1 text-lg rounded-full"
-                        onClick={() => {
-                          setShowDeleteTemplate(!showDeleteTemplate);
-                        }}
-                      >
-                        {showDeleteTemplate ? (
-                          <AiOutlineClose />
-                        ) : (
-                          <BsPencilSquare />
-                        )}
-                      </div>
                     </h4>
                     <button
                       onClick={() => {
@@ -147,7 +130,14 @@ const Overview = ({ params }) => {
                     {agency_templates?.length > 0 ? (
                       <div className="grid grid-cols-3 gap-4 mt-2">
                         {agency_templates?.map((e, i) => {
-                          return <TemplateBlock data={e} key={i} idx={i} />;
+                          return (
+                            <TemplateBlock
+                              data={e}
+                              key={i}
+                              idx={i}
+                              showActions={false}
+                            />
+                          );
                         })}
                       </div>
                     ) : (
