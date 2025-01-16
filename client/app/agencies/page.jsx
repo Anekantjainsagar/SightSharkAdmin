@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AgencyDetailsBlock from "@/app/Components/Utils/AgencyDetails";
@@ -22,10 +22,49 @@ let sort_by_options = [
   "deployment_date",
 ];
 
+const excludedKeys = [
+  "agency_id",
+  "created_at",
+  "updated_at",
+  "onboarding_date",
+  "agency_name",
+  "website",
+  "license_limit",
+  "warranty_period",
+  "current_number_of_clients",
+  "status",
+  "deployment_status",
+  "region",
+  "location",
+  "agency_portal",
+  "client_portal",
+  "key_contact_name",
+  "key_contact_designation",
+  "key_contact_email_address",
+  "key_contact_phone",
+];
+
 const Overview = () => {
   const { agencies, getAgencies, setSelectedAgencies, selectedAgencies } =
     useContext(Context);
   const [addAgency, setAddAgency] = useState(false);
+  const [dataToExport, setDataToExport] = useState([]);
+
+  useEffect(() => {
+    if (selectedAgencies?.length > 0) {
+      const filteredData = selectedAgencies.map((agency) => {
+        const orderedData = {};
+        excludedKeys.forEach((key) => {
+          if (agency[key] !== undefined) {
+            orderedData[key] = agency[key];
+          }
+        });
+        return orderedData;
+      });
+
+      setDataToExport(filteredData);
+    }
+  }, [selectedAgencies]);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -54,8 +93,8 @@ const Overview = () => {
                 >
                   <FaPlus className="text-sm" /> Add Agency
                 </button>
-                {selectedAgencies?.length > 0 && (
-                  <CSVLink filename={"agencies.csv"} data={selectedAgencies}>
+                {dataToExport?.length > 0 && (
+                  <CSVLink filename={"agencies.csv"} data={dataToExport}>
                     <button
                       onClick={() => {}}
                       className="glass px-6 py-2 min-[1600px]:py-3 rounded-xl ml-4 text-sm min-[1600px]:text-base flex items-center gap-x-2 border border-gray-200/5"

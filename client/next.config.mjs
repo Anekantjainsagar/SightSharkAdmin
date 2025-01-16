@@ -7,6 +7,7 @@ const nextConfig = {
       "i.pinimg.com",
       "encrypted-tbn0.gstatic.com",
       "storage.googleapis.com",
+      "lookerstudio.google.com",
     ],
   },
 };

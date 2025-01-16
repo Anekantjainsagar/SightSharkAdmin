@@ -1,52 +1,88 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { MdDelete } from "react-icons/md";
 import DeleteTemplate from "@/app/Components/Agencies/DeleteTemplate";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { UpdateMainTemplates } from "./AddMainTemplates";
 
-const TemplateBlock = ({
-  data,
-  showDeleteTemplate,
-  setShowDeleteTemplate,
-  original_data,
-}) => {
+const TemplateBlock = ({ data }) => {
   const [deleteTemplate, setDeleteTemplate] = useState(false);
+  const [editTemplates, setEditTemplates] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   return (
-    <div
-      className="border border-gray-400/20 hover:border-white rounded-xl p-1 relative cursor-pointer hover:scale-105 transition-all"
-      onClick={() => {
-        window.open(data?.template_link, "__blank");
-      }}
-    >
-      <DeleteTemplate
-        showSubscribe={deleteTemplate}
-        setShowSubscribe={setDeleteTemplate}
-        name={data?.template_name}
-        id={original_data?.agency_id}
-      />
-      {data?.template_image && (
-        <Image
-          src={data?.template_image}
-          alt={data?.template_image?.src}
-          width={1000}
-          height={1000}
-          className="rounded-md h-[16vh] object-cover"
+    <>
+      <div className="absolute">
+        <UpdateMainTemplates
+          showSubscribe={editTemplates}
+          setShowSubscribe={setEditTemplates}
+          original_data={data}
         />
-      )}
-      <p className="text-center text-sm my-1 mx-auto">{data?.template_name}</p>
-      {showDeleteTemplate && (
-        <div
-          className="absolute w-full h-full flex items-center justify-center top-0 text-3xl left-0 bg-red-400/10 rounded-xl cursor-pointer"
+        <DeleteTemplate
+          showSubscribe={deleteTemplate}
+          setShowSubscribe={setDeleteTemplate}
+          name={data?.template_name}
+          id={data?.id}
+        />
+      </div>
+      <div
+        className="border border-gray-400/10 hover:border-gray-400/40 rounded-xl p-1 relative cursor-pointer hover:scale-105 transition-all"
+        onClick={() => {
+          window.open(data?.template_link, "__blank");
+        }}
+      >
+        <BsThreeDotsVertical
           onClick={(e) => {
             e.stopPropagation();
-            setDeleteTemplate(true);
-            setShowDeleteTemplate(false);
+            setClicked(!clicked);
           }}
-        >
-          <MdDelete />
-        </div>
-      )}
-    </div>
+          className="absolute right-2 top-2 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-200/20 transition-all text-gray-300"
+        />
+        {clicked && (
+          <div
+            className={`w-fit md:w-[9vw] absolute ${"right-2"} z-50 top-10 shadow-sm text-xs md:text-sm shadow-gray-200/30 bg-main rounded-md`}
+          >
+            {[
+              {
+                title: "Edit Template",
+                callback: (e) => {
+                  e.stopPropagation();
+                  setEditTemplates(!editTemplates);
+                  setClicked(false);
+                },
+              },
+              {
+                title: "Delete Template",
+                callback: (e) => {
+                  e.stopPropagation();
+                  setDeleteTemplate(!deleteTemplate);
+                  setClicked(false);
+                },
+              },
+            ]?.map((e, i) => (
+              <p
+                key={i}
+                onClick={e?.callback}
+                className="py-2 md:py-3 cursor-pointer px-2 md:px-3 hover:bg-gray-50/20 rounded-md"
+              >
+                {e?.title}
+              </p>
+            ))}
+          </div>
+        )}
+        {data?.template_image && (
+          <Image
+            src={data?.template_image}
+            alt={data?.template_image?.src}
+            width={1000}
+            height={1000}
+            className="rounded-md h-[20vh] object-cover p-1"
+          />
+        )}
+        <p className="text-center text-sm my-1 mx-auto py-1">
+          {data?.template_name}
+        </p>
+      </div>
+    </>
   );
 };
 

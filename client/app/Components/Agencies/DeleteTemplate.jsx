@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Context from "@/app/Context/Context";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
+import axios from "axios";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -23,7 +24,7 @@ const customStyles = {
 
 const DeleteTemplate = ({ showSubscribe, setShowSubscribe, name, id }) => {
   const [value, setValue] = useState("");
-  const { getTemplates } = useContext(Context);
+  const { getAllTemplates } = useContext(Context);
   function closeModal() {
     setShowSubscribe(false);
   }
@@ -92,32 +93,22 @@ const DeleteTemplate = ({ showSubscribe, setShowSubscribe, name, id }) => {
               className={`bg-red-600 w-full py-1.5 min-[1600px]:py-2 rounded-lg text-center`}
               onClick={(e) => {
                 e.stopPropagation();
-                if (value.trim() == name) {
+                if (value.trim() == name.trim()) {
                   try {
-                    fetch(
-                      `${BACKEND_URI}/template/remove/template?agency_id=${id}&template_name=${name}`,
-                      {
-                        method: "POST",
+                    axios
+                      .delete(`${BACKEND_URI}/templates/${id}`, {
                         headers: {
                           Accept: "application/json",
                           "Content-Type": "application/json",
                           Authorization: `Bearer ${getCookie("token")}`,
                         },
-                      }
-                    )
-                      .then((response) => {
-                        if (!response.ok) {
-                          throw new Error(
-                            `HTTP error! status: ${response.status}`
-                          );
-                        }
-                        return response.json();
                       })
-                      .then((res) => {
-                        if (res.msg) {
+                      .then((response) => {
+                        if (response.status == 200) {
                           toast.success("Template Deleted Successfully");
-                          getTemplates(id);
+                          getAllTemplates();
                           setShowSubscribe(false);
+                          setValue("");
                         }
                       })
                       .catch((err) => {

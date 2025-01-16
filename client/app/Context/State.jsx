@@ -29,6 +29,7 @@ const State = (props) => {
   const [alertsLength, setAlertsLength] = useState(0);
   const [activeAgencies, setActiveAgencies] = useState(0);
   const [regions, setRegions] = useState([]);
+  const [allTemplates, setAllTemplates] = useState([]);
 
   const password_params = [
     "hasUppercase",
@@ -184,14 +185,14 @@ const State = (props) => {
     }
   };
 
-  const getAlerts = () => {
+  const getAlerts = (page = 1) => {
     const cookie = getCookie("token");
 
     if (cookie?.length > 5) {
       try {
         axios
           .get(
-            `${BACKEND_URI}/alert/?unseen_only=${false}&order_by=${"created_at"}&page=${1}&page_size=${50}`,
+            `${BACKEND_URI}/alert/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}`,
             {
               headers: {
                 Authorization: `Bearer ${cookie}`,
@@ -385,7 +386,33 @@ const State = (props) => {
             },
           })
           .then((res) => {
+            console.log(res.data);
             setAgency_templates(res.data.templates);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const getAllTemplates = () => {
+    let cookie = getCookie("token");
+    setAllTemplates([]);
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(`${BACKEND_URI}/templates/search?template_name=${""}`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookie}`,
+            },
+          })
+          .then((res) => {
+            setAllTemplates(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -515,6 +542,7 @@ const State = (props) => {
     getUsers();
     getDataSources();
     getRegions();
+    getAllTemplates();
   }, [userData]);
 
   useEffect(() => {
@@ -566,6 +594,10 @@ const State = (props) => {
         activeAgencies,
         getActiveAgencies,
         regions,
+        getAlerts,
+        getCriticalNotifications,
+        getAllTemplates,
+        allTemplates,
       }}
     >
       {props.children}
