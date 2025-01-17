@@ -205,30 +205,49 @@ const AddMainTemplates = ({ showSubscribe, setShowSubscribe }) => {
           <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-end py-6 mt-10 text-[15px] min-[1600px]:text-xl">
             <button
               onClick={() => {
-                if (data?.template_link && data?.template_name) {
+                if (data?.template_link && data?.template_name && file) {
                   try {
+                    let queryParams = new URLSearchParams({
+                      template_name: data?.template_name,
+                      template_link: data?.template_link,
+                    }).toString();
+
+                    let formData = new FormData();
+                    formData.append(
+                      "profile_picture",
+                      data?.template_image || ""
+                    );
+                    formData.append(
+                      "profile_picture_filename",
+                      data?.template_image.name || ""
+                    );
+                    formData.append(
+                      "profile_picture_content_type",
+                      data?.template_image.type || ""
+                    );
+
                     axios
-                      .post(`${BACKEND_URI}/templates/`, data, {
-                        headers: {
-                          Accept:
-                            "application/json, application/xml, text/plain, text/html, *.*",
-                          Authorization: `Bearer ${getCookie("token")}`,
-                          "Content-Type": "application/json",
-                        },
-                      })
-                      .then((res) => {
-                        if (res.data.id) {
+                      .post(
+                        `${BACKEND_URI}/templates/?${queryParams}`,
+                        formData,
+                        {
+                          headers: {
+                            Authorization: `Bearer ${getCookie("token")}`,
+                            "Content-Type": "multipart/form-data",
+                          },
+                        }
+                      )
+                      .then((response) => {
+                        if (response.status == 200) {
                           toast.success("Template added successfully");
                           setShowSubscribe(false);
                           getAllTemplates();
                           setData({ template_name: "", template_link: "" });
                         }
                       })
-                      .catch((err) => {
-                        console.error("Error creating user:", err);
-                        toast.error(
-                          "An error occurred while creating the user"
-                        );
+                      .catch((error) => {
+                        console.error(error);
+                        toast.error(error.message);
                       });
                   } catch (error) {
                     console.error("Unexpected error:", error);
@@ -436,33 +455,48 @@ export const UpdateMainTemplates = ({
           <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-end py-6 mt-10 text-[15px] min-[1600px]:text-xl">
             <button
               onClick={() => {
-                if (data?.template_link && data?.template_name) {
+                if (data?.template_link && data?.template_name && file) {
                   try {
+                    let queryParams = new URLSearchParams({
+                      template_name: data?.template_name,
+                      template_link: data?.template_link,
+                    }).toString();
+
+                    let formData = new FormData();
+                    formData.append(
+                      "profile_picture",
+                      data?.template_image || ""
+                    );
+                    formData.append(
+                      "profile_picture_filename",
+                      data?.template_image.name || ""
+                    );
+                    formData.append(
+                      "profile_picture_content_type",
+                      data?.template_image.type || ""
+                    );
+
                     axios
                       .put(
-                        `${BACKEND_URI}/templates/${original_data?.id}`,
-                        data,
+                        `${BACKEND_URI}/templates/${data?.id}?${queryParams}`,
+                        formData,
                         {
                           headers: {
-                            Accept:
-                              "application/json, application/xml, text/plain, text/html, *.*",
                             Authorization: `Bearer ${getCookie("token")}`,
-                            "Content-Type": "application/json",
+                            "Content-Type": "multipart/form-data",
                           },
                         }
                       )
-                      .then((res) => {
-                        if (res.data.id) {
+                      .then((response) => {
+                        if (response.status == 200) {
                           toast.success("Template updated successfully");
                           setShowSubscribe(false);
                           getAllTemplates();
                         }
                       })
-                      .catch((err) => {
-                        console.error("Error creating user:", err);
-                        toast.error(
-                          "An error occurred while creating the user"
-                        );
+                      .catch((error) => {
+                        console.error(error);
+                        toast.error(error.message);
                       });
                   } catch (error) {
                     console.error("Unexpected error:", error);
