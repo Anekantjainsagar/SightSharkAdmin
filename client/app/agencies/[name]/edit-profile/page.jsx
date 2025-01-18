@@ -656,7 +656,9 @@ const Overview = ({ params }) => {
                           data?.license &&
                           data?.keyContact?.email
                         ) {
+                          console.log(status);
                           const queryParams = new URLSearchParams({
+                            status,
                             agency_name: data?.name.trim(),
                             warranty_period: parseInt(data?.warrenty),
                             deployment_date: data?.deployment,
@@ -669,7 +671,6 @@ const Overview = ({ params }) => {
                             service_account_cloud: data?.serviceAcc?.acc1,
                             service_account_api: data?.serviceAcc?.acc2,
                             onboarding_date: data?.onboarding_date,
-                            status,
                             ...data,
                           }).toString();
 
