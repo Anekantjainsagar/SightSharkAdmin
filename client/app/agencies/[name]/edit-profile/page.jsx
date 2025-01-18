@@ -656,12 +656,14 @@ const Overview = ({ params }) => {
                           data?.license &&
                           data?.keyContact?.email
                         ) {
-                          console.log(status);
                           const queryParams = new URLSearchParams({
-                            status,
+                            status: status,
                             agency_name: data?.name.trim(),
+                            website: data?.website,
+                            location: data?.location,
                             warranty_period: parseInt(data?.warrenty),
                             deployment_date: data?.deployment,
+                            onboarding_date: data?.onboarding_date,
                             license_limit: data?.license,
                             key_contact_name: data?.keyContact?.name,
                             key_contact_designation:
@@ -669,12 +671,11 @@ const Overview = ({ params }) => {
                             key_contact_email_address: data?.keyContact?.email,
                             key_contact_phone: data?.keyContact?.phone,
                             service_account_cloud: data?.serviceAcc?.acc1,
-                            service_account_api: data?.serviceAcc?.acc2,
-                            onboarding_date: data?.onboarding_date,
-                            ...data,
+                            project_number: data?.project_number,
+                            project_id: data?.project_id,
+                            region: data?.region,
+                            // ...data,
                           }).toString();
-
-                          console.log(data?.profile_picture);
 
                           const formData = new FormData();
                           formData.append(
