@@ -149,7 +149,7 @@ const Block = ({ e, data }) => {
 
   return (
     <div className="bg-[#171C2A]/50 rounded-xl p-2 border border-gray-300/5">
-      <div className="py-7 rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1 h-fit">
+      <div className="h-[15vh] rounded-2xl cursor-pointer flex flex-col text-white justify-center items-center lg:px-0 px-1">
         <Image
           src={e?.logo_link}
           alt={e?.logo_link?.src}
