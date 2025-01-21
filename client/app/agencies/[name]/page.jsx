@@ -5,11 +5,15 @@ import Navbar from "@/app/Components/Utils/Navbar";
 import Image from "next/image";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaRegEdit } from "react-icons/fa";
 import AddTemplates from "../../Components/Agencies/AddTemplates";
 import AddDataSouces from "../../Components/Agencies/AddDataSources";
 import Context from "@/app/Context/Context";
-import TemplateBlock from "@/app/Components/Agencies/TemplateBlock";
+import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
+import axios from "axios";
+import { BACKEND_URI } from "@/app/utils/url";
+import { getCookie } from "cookies-next";
+import toast from "react-hot-toast";
 
 function formatName(input) {
   return input
@@ -22,6 +26,7 @@ function formatName(input) {
 const Overview = ({ params }) => {
   const [addDataSouces, setAddDataSouces] = useState(false);
   const [addTemplates, setAddTemplates] = useState(false);
+  const [editTemplates, setEditTemplates] = useState(false);
   const {
     agencies,
     getTemplates,
@@ -113,8 +118,19 @@ const Overview = ({ params }) => {
                 </div>
                 <div className="bg-[#171C2A]/40 p-3 min-[1600px]:p-4 rounded-2xl border border-gray-500/5 my-3 min-[1600px]:my-4">
                   <div className="flex items-center justify-between w-full">
-                    <h4 className="min-[1600px]:text-xl relative">
+                    <h4 className="min-[1600px]:text-xl relative flex items-center">
                       Templates{" "}
+                      {editTemplates ? (
+                        <AiOutlineClose
+                          className="text-lg text-gray-200 ml-3 cursor-pointer"
+                          onClick={() => setEditTemplates(!editTemplates)}
+                        />
+                      ) : (
+                        <FaRegEdit
+                          className="text-lg text-gray-200 ml-3 cursor-pointer"
+                          onClick={() => setEditTemplates(!editTemplates)}
+                        />
+                      )}
                     </h4>
                     <button
                       onClick={() => {
@@ -135,7 +151,9 @@ const Overview = ({ params }) => {
                               data={e}
                               key={i}
                               idx={i}
-                              showActions={false}
+                              editTemplates={editTemplates}
+                              setEditTemplates={setEditTemplates}
+                              original_data={data}
                             />
                           );
                         })}
@@ -152,6 +170,85 @@ const Overview = ({ params }) => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const TemplateBlock = ({
+  data,
+  editTemplates,
+  setEditTemplates,
+  original_data,
+}) => {
+  const { agency_templates, getTemplates } = useContext(Context);
+
+  return (
+    <div
+      className="border border-gray-400/10 hover:border-gray-400/40 rounded-xl p-1 relative cursor-pointer hover:scale-105 transition-all"
+      onClick={() => {
+        window.open(data?.template_link, "__blank");
+      }}
+    >
+      {editTemplates && (
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className="absolute top-0 left-0 w-full h-full bg-red-800/10 flex items-center justify-center text-4xl"
+        >
+          <AiOutlineDelete
+            className="bg-gray-600/90 p-1.5 rounded-full cursor-pointer"
+            onClick={() => {
+              try {
+                axios
+                  .post(
+                    `${BACKEND_URI}/template/update`,
+                    {
+                      agency_id: original_data?.agency_id,
+                      template_ids: agency_templates
+                        ?.filter((e) => e?.id != data?.id)
+                        ?.map((e) => e?.id),
+                    },
+                    {
+                      headers: {
+                        Accept:
+                          "application/json, application/xml, text/plain, text/html, *.*",
+                        Authorization: `Bearer ${getCookie("token")}`,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  )
+                  .then((res) => {
+                    if (res.status) {
+                      toast.success("Template deleted successfully");
+                      setEditTemplates(false);
+                      getTemplates(original_data?.agency_id);
+                    }
+                  })
+                  .catch((err) => {
+                    console.error("Error creating user:", err);
+                    toast.error("An error occurred while creating the user");
+                  });
+              } catch (error) {
+                console.error("Unexpected error:", error);
+                toast.error("An unexpected error occurred");
+              }
+            }}
+          />
+        </div>
+      )}
+      {data?.template_image && (
+        <Image
+          src={data?.template_image}
+          alt={data?.template_image?.src}
+          width={1000}
+          height={1000}
+          className="rounded-md h-[20vh] object-cover p-1"
+        />
+      )}
+      <p className="text-center text-sm my-1 mx-auto py-1">
+        {data?.template_name}
+      </p>
     </div>
   );
 };

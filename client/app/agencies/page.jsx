@@ -97,7 +97,7 @@ const Overview = () => {
                   <CSVLink filename={"agencies.csv"} data={dataToExport}>
                     <button
                       onClick={() => {}}
-                      className="glass px-6 py-2 min-[1600px]:py-3 rounded-xl ml-4 text-sm min-[1600px]:text-base flex items-center gap-x-2 border border-gray-200/5"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 px-6 py-2 min-[1600px]:py-3 rounded-xl ml-4 text-sm min-[1600px]:text-base flex items-center gap-x-2 border border-gray-200/5"
                     >
                       <svg
                         width="24"

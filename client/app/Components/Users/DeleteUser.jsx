@@ -113,7 +113,7 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
             placeholder="Enter here"
             value={val}
             onChange={(e) => setVal(e.target.value)}
-            className="mb-4 glass outline-none text-sm min-[1600px]:text-lg px-4 py-2 w-full rounded-md"
+            className="mb-4 bg-gray-700/60 backdrop-blur-sm z-10 outline-none text-sm min-[1600px]:text-lg px-4 py-2 w-full rounded-md"
           />
           <div className="flex items-center gap-x-4 w-full text-sm min-[1600px]:text-base">
             <button

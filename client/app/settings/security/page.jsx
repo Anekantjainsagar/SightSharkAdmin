@@ -148,7 +148,7 @@ const Settings = () => {
                           type={showOriginalPassword ? "text" : "password"}
                           name="Password"
                           id="currentPass"
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full min-[1600px]:text-base text-sm"
                           placeholder="Your Current Password"
                           value={data?.oldPass}
                           onChange={(e) =>
@@ -171,14 +171,14 @@ const Settings = () => {
                         className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                       >
                         New Password
-                        <Required /> 
+                        <Required />
                       </label>
                       <div className="w-full relative mt-1">
                         <input
                           type={showNewPassword ? "text" : "password"}
                           name="Password"
                           id="newPass"
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full min-[1600px]:text-base text-sm"
                           placeholder="Your New Password"
                           value={data?.newPassword}
                           onChange={(e) =>
@@ -252,7 +252,7 @@ const Settings = () => {
                           type={showNewPasswordC ? "text" : "password"}
                           name="Password"
                           id="retypeNewPassword"
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md w-full min-[1600px]:text-base text-sm"
                           placeholder="Your Confirm New Password"
                           value={data?.reNewPassword}
                           onChange={(e) =>

@@ -108,7 +108,7 @@ const Settings = () => {
                       }}
                       type="text"
                       placeholder="Enter First Name"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -126,7 +126,7 @@ const Settings = () => {
                       }}
                       type="text"
                       placeholder="Enter Last Name"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -144,7 +144,7 @@ const Settings = () => {
                       }}
                       type="email"
                       placeholder="Enter Email"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -162,7 +162,7 @@ const Settings = () => {
                       }}
                       type="number"
                       placeholder="Enter Phone"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>{" "}
                   <div className="flex flex-col">
@@ -180,7 +180,7 @@ const Settings = () => {
                       }}
                       type="number"
                       placeholder="Enter Postal Code"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -198,7 +198,7 @@ const Settings = () => {
                       }}
                       type="country"
                       placeholder="Enter Country"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                 </div>

@@ -65,40 +65,35 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
               onClick={() => {
                 if (ids?.length > 0) {
                   try {
-                    try {
-                      axios
-                        .post(
-                          `${BACKEND_URI}/template/update`,
-                          {
-                            agency_id: original_data?.agency_id,
-                            template_ids: ids,
+                    axios
+                      .post(
+                        `${BACKEND_URI}/template/update`,
+                        {
+                          agency_id: original_data?.agency_id,
+                          template_ids: ids,
+                        },
+                        {
+                          headers: {
+                            Accept:
+                              "application/json, application/xml, text/plain, text/html, *.*",
+                            Authorization: `Bearer ${getCookie("token")}`,
+                            "Content-Type": "application/json",
                           },
-                          {
-                            headers: {
-                              Accept:
-                                "application/json, application/xml, text/plain, text/html, *.*",
-                              Authorization: `Bearer ${getCookie("token")}`,
-                              "Content-Type": "application/json",
-                            },
-                          }
-                        )
-                        .then((res) => {
-                          if (res.status) {
-                            toast.success("Template added successfully");
-                            setShowSubscribe(false);
-                            getTemplates(original_data?.agency_id);
-                          }
-                        })
-                        .catch((err) => {
-                          console.error("Error creating user:", err);
-                          toast.error(
-                            "An error occurred while creating the user"
-                          );
-                        });
-                    } catch (error) {
-                      console.error("Unexpected error:", error);
-                      toast.error("An unexpected error occurred");
-                    }
+                        }
+                      )
+                      .then((res) => {
+                        if (res.status) {
+                          toast.success("Template added successfully");
+                          setShowSubscribe(false);
+                          getTemplates(original_data?.agency_id);
+                        }
+                      })
+                      .catch((err) => {
+                        console.error("Error creating user:", err);
+                        toast.error(
+                          "An error occurred while creating the user"
+                        );
+                      });
                   } catch (error) {
                     console.error("Unexpected error:", error);
                     toast.error("An unexpected error occurred");

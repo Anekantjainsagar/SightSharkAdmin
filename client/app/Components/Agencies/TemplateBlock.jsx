@@ -36,12 +36,12 @@ const TemplateBlock = ({ data, showActions }) => {
               e.stopPropagation();
               setClicked(!clicked);
             }}
-            className="absolute right-2 top-2 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-800/50 transition-all text-gray-300 bg-gray-800"
+            className="absolute right-3.5 top-3.5 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-800/50 transition-all text-gray-300 bg-gray-800"
           />
         )}
         {clicked && (
           <div
-            className={`w-fit md:w-[9vw] absolute ${"right-2"} z-50 top-10 shadow-sm text-xs md:text-sm shadow-gray-200/30 bg-main rounded-md`}
+            className={`w-fit md:w-[9vw] absolute right-2 z-50 top-10 shadow-sm text-xs md:text-sm shadow-gray-200/30 bg-main rounded-md`}
           >
             {[
               {
@@ -77,7 +77,7 @@ const TemplateBlock = ({ data, showActions }) => {
             alt={data?.template_image?.src}
             width={1000}
             height={1000}
-            className="rounded-md h-[20vh] object-cover p-1"
+            className="rounded-xl h-[20vh] object-cover p-1"
           />
         )}
         <p className="text-center text-sm my-1 mx-auto py-1">

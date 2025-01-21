@@ -130,7 +130,7 @@ const AddMainTemplates = ({ showSubscribe, setShowSubscribe }) => {
                     title={
                       !file ? "Upload Template Image" : "Remove Template Image"
                     }
-                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 top-6 aspect-square cursor-pointer right-6 rounded-full"
+                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 top-0 aspect-square cursor-pointer right-0 rounded-full"
                   >
                     {file ? (
                       <AiOutlineClose className="text-base md:text-lg" />
@@ -143,7 +143,7 @@ const AddMainTemplates = ({ showSubscribe, setShowSubscribe }) => {
                     alt="Agency Img"
                     width={1000}
                     height={1000}
-                    className="w-[6vw] min-[1600px]:w-[15vw] aspect-square object-cover rounded-full border border-gray-100/10"
+                    className="w-[6vw] min-[1600px]:w-[5vw] aspect-square object-cover rounded-full border border-gray-100/10"
                     title={
                       !file ? "Upload Template Image" : "Remove Template Image"
                     }
@@ -235,7 +235,12 @@ const AddMainTemplates = ({ showSubscribe, setShowSubscribe }) => {
                           toast.success("Template added successfully");
                           setShowSubscribe(false);
                           getAllTemplates();
-                          setData({ template_name: "", template_link: "" });
+                          setData({
+                            template_name: "",
+                            template_link: "",
+                            template_image: "",
+                          });
+                          setFile("");
                         }
                       })
                       .catch((error) => {
@@ -373,7 +378,7 @@ export const UpdateMainTemplates = ({
                     title={
                       !file ? "Upload Template Image" : "Remove Template Image"
                     }
-                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 top-6 aspect-square cursor-pointer right-6 rounded-full"
+                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 top-0 aspect-square cursor-pointer right-0 rounded-full"
                   >
                     {file ? (
                       <AiOutlineClose className="text-base md:text-lg" />
@@ -386,7 +391,7 @@ export const UpdateMainTemplates = ({
                     alt="Agency Img"
                     width={1000}
                     height={1000}
-                    className="w-[6vw] min-[1600px]:w-[15vw] aspect-square object-cover rounded-full border border-gray-100/10"
+                    className="w-[6vw] min-[1600px]:w-[5vw] aspect-square object-cover rounded-full border border-gray-100/10"
                     title={
                       !file ? "Upload Template Image" : "Remove Template Image"
                     }

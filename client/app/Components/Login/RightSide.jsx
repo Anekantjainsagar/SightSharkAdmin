@@ -51,7 +51,7 @@ const RightSide = memo(() => {
         height={1000}
         className="absolute top-0 left-0 object-cover w-full h-full"
       />
-      <div className="p-[1.5vw] glass rounded-xl text-white text-lg min-[1600px]:text-[20px] w-full">
+      <div className="p-[1.5vw] bg-gray-700/60 backdrop-blur-sm z-10 rounded-xl text-white text-lg min-[1600px]:text-[20px] w-full">
         <Swiper
           slidesPerView={1}
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

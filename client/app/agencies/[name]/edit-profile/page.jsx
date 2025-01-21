@@ -234,7 +234,7 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Agency Name"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -252,7 +252,7 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Website"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -270,7 +270,7 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Location"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -320,7 +320,7 @@ const Overview = ({ params }) => {
                             }}
                             type="date"
                             placeholder="Enter deployment Period"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
@@ -338,7 +338,7 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter License Limit"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>{" "}
                         <div className="flex flex-col">
@@ -352,7 +352,7 @@ const Overview = ({ params }) => {
                             <select
                               name="status"
                               id="status"
-                              className="glass h-[45px] w-full outline-none border border-gray-500/5 px-4 py-2 pr-10 rounded-md min-[1600px]:text-base text-sm appearance-none"
+                              className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] w-full outline-none border border-gray-500/5 px-4 py-2 pr-10 rounded-md min-[1600px]:text-base text-sm appearance-none"
                               value={status}
                               onChange={(e) => setStatus(e.target.value)}
                             >
@@ -385,7 +385,7 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Comment"
-                            className="glass h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                       </div>
@@ -413,7 +413,7 @@ const Overview = ({ params }) => {
                           }}
                           type="text"
                           placeholder="Enter Name"
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                         />
                       </div>
                       <div className="flex flex-col">
@@ -437,7 +437,7 @@ const Overview = ({ params }) => {
                           }}
                           type="text"
                           placeholder="Enter Designation"
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                         />
                       </div>
                       <div className="flex flex-col">
@@ -461,7 +461,7 @@ const Overview = ({ params }) => {
                           }}
                           type="email"
                           placeholder="Enter Email Address"
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                         />
                       </div>
                       <div className="flex flex-col">
@@ -485,7 +485,7 @@ const Overview = ({ params }) => {
                           }}
                           type="number"
                           placeholder="Enter Phone no."
-                          className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                         />
                       </div>
                     </div>

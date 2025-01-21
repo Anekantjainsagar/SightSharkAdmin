@@ -318,7 +318,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   <select
                     name="access"
                     id="access"
-                    className="glass outline-none w-full border border-gray-500/5 min-[1600px]:h-[45px] px-4 py-2 pr-10 min-[1600px]:text-base text-sm rounded-md appearance-none"
+                    className="bg-[#898989]/15 outline-none w-full border border-gray-500/20 min-[1600px]:h-[45px] px-4 py-2 pr-10 min-[1600px]:text-base text-sm rounded-md appearance-none"
                     value={data?.access}
                     onChange={(e) => {
                       setData({ ...data, access: e.target.value });

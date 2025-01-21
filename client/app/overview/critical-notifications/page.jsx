@@ -40,7 +40,7 @@ const Alerts = () => {
               </div>
               <div className="gradient-line my-4"></div>
               <div className="h-[72vh] pr-5 overflow-y-auto small-scroller">
-                {criticalNotifications?.map((e, i) => {
+                {criticalNotifications?.notifications?.map((e, i) => {
                   return (
                     <Notify data={e} key={i} status={e?.type != "error"} />
                   );
