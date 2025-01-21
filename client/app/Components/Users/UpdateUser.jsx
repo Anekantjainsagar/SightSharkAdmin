@@ -243,13 +243,6 @@ const UpdateUser = ({ showSubscribe, setShowSubscribe, clickedUsers }) => {
                     className="w-[6vw] min-[1600px]:w-[5vw] aspect-square object-cover rounded-full"
                   />
                 </div>
-                {
-                  <p className="text-center mt-3 text-gray-300">
-                    {data?.profile?.name || (
-                      <span className="opacity-0">hell</span>
-                    )}
-                  </p>
-                }
                 {isDragging && (
                   <p className="absolute text-blue-500 mt-3">
                     Drop file to upload

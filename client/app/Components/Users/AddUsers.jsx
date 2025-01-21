@@ -240,13 +240,6 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                     }
                   />
                 </div>
-                {
-                  <p className="text-center mt-3 text-gray-300">
-                    {data?.profile?.name || (
-                      <span className="opacity-0">hell</span>
-                    )}
-                  </p>
-                }
                 {isDragging && (
                   <p className="absolute text-blue-500 mt-3">
                     Drop file to upload

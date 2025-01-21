@@ -36,7 +36,7 @@ const TemplateBlock = ({ data, showActions }) => {
               e.stopPropagation();
               setClicked(!clicked);
             }}
-            className="absolute right-2 top-2 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-200/20 transition-all text-gray-300"
+            className="absolute right-2 top-2 aspect-square rounded-full p-1.5 text-[28px] cursor-pointer hover:bg-gray-800/50 transition-all text-gray-300 bg-gray-800"
           />
         )}
         {clicked && (
