@@ -428,6 +428,7 @@ const Leftbar = () => {
 
 const LogoutBtn = () => {
   const history = useRouter();
+  const { setSearchTextAgency } = useContext(Context);
 
   return (
     <div
@@ -435,6 +436,7 @@ const LogoutBtn = () => {
       onClick={() => {
         Cookies.remove("token");
         history.push("/");
+        setSearchTextAgency("");
       }}
     >
       <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#D93F21]/10 to-[#D93F21]/20 w-9 min-[1600px]:w-12 aspect-square p-2">
@@ -461,6 +463,7 @@ const LogoutBtn = () => {
 
 const NewwBlock = ({ e, setShow, show }) => {
   const history = useRouter();
+  const { setSearchTextAgency } = useContext(Context);
 
   return (
     <div
@@ -471,6 +474,7 @@ const NewwBlock = ({ e, setShow, show }) => {
         } else {
           setShow(!show);
         }
+        setSearchTextAgency("");
       }}
     >
       <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-9 min-[1600px]:w-12 aspect-square p-2">
@@ -485,6 +489,7 @@ const Block = ({ e }) => {
   const pathname = usePathname();
   const history = useRouter();
   const [hover, setHover] = useState(false);
+  const { setSearchTextAgency } = useContext(Context);
 
   return (
     <div
@@ -498,6 +503,7 @@ const Block = ({ e }) => {
       onClick={() => {
         if (e?.route) {
           history.push(e?.route);
+          setSearchTextAgency("");
         }
       }}
     >

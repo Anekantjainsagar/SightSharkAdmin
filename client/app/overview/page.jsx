@@ -19,7 +19,6 @@ const Overview = () => {
     users,
   } = useContext(Context);
   const history = useRouter();
-  ` `;
   useEffect(() => {
     getActiveAgencies();
   }, []);

@@ -30,6 +30,9 @@ const State = (props) => {
   const [activeAgencies, setActiveAgencies] = useState(0);
   const [regions, setRegions] = useState([]);
   const [allTemplates, setAllTemplates] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredCriticals, setFilteredCriticals] = useState([]);
+  const [filteredAlerts, setFilteredAlerts] = useState([]);
 
   const password_params = [
     "hasUppercase",
@@ -145,7 +148,7 @@ const State = (props) => {
       try {
         axios
           .get(
-            `${BACKEND_URI}/critical_notification/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}`,
+            `${BACKEND_URI}/critical_notification/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}&search_string=${searchTextAgency}`,
             {
               headers: {
                 Authorization: `Bearer ${cookie}`,
@@ -185,6 +188,34 @@ const State = (props) => {
     }
   };
 
+  const getFilteredCriticalNotifications = (page = 1) => {
+    const cookie = getCookie("token");
+
+    if (cookie?.length > 5) {
+      try {
+        axios
+          .get(
+            `${BACKEND_URI}/critical_notification/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}&search_string=${searchTextAgency}`,
+            {
+              headers: {
+                Authorization: `Bearer ${cookie}`,
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            setFilteredCriticals(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const getAlerts = (page = 1) => {
     const cookie = getCookie("token");
 
@@ -192,7 +223,7 @@ const State = (props) => {
       try {
         axios
           .get(
-            `${BACKEND_URI}/alert/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}`,
+            `${BACKEND_URI}/alert/?unseen_only=${false}&order_by=${"created_at"}&page=${page}&page_size=${50}&search_string=${searchTextAgency}`,
             {
               headers: {
                 Authorization: `Bearer ${cookie}`,
@@ -203,6 +234,9 @@ const State = (props) => {
           )
           .then((res) => {
             setAlerts(res.data);
+            if (pathname == "/overview") {
+              setFilteredAlerts(res.data);
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -269,7 +303,7 @@ const State = (props) => {
               (page - 1) * limit
             }&limit=${limit}&sort_by=${order_by}&order=${
               type ? "asc" : "desc"
-            }`,
+            }&name=${searchTextAgency}`,
             {
               headers: {
                 Accept: "application/json",
@@ -280,6 +314,9 @@ const State = (props) => {
           )
           .then((res) => {
             if (res.data?.data?.length > 0) {
+              if (pathname == "/overview") {
+                setFilteredUsers(res.data);
+              }
               setUsers(res.data);
             }
           })
@@ -557,9 +594,23 @@ const State = (props) => {
   useEffect(() => {
     if (pathname == "/overview") {
       getFilteredAgencies();
+      getFilteredCriticalNotifications();
     }
     if (pathname?.includes("agencies")) {
       getAgencies();
+    }
+    if (
+      pathname?.includes("alerts") ||
+      pathname === "/overview/critical-notifications"
+    ) {
+      getCriticalNotifications();
+    }
+
+    if (pathname?.includes("alerts") || pathname == "/overview") {
+      getAlerts();
+    }
+    if (pathname?.includes("users") || pathname == "/overview") {
+      getUsers();
     }
     if (pathname == "/overview" || pathname?.includes("templates")) {
       getAllTemplates();
@@ -609,6 +660,9 @@ const State = (props) => {
         getCriticalNotifications,
         getAllTemplates,
         allTemplates,
+        filteredUsers,
+        filteredAlerts,
+        filteredCriticals,
       }}
     >
       {props.children}

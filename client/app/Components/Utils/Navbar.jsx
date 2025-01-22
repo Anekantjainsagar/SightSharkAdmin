@@ -12,8 +12,10 @@ const Navbar = () => {
     setSearchTextAgency,
     searchTextAgency,
     filteredAgencies,
-    setSearchTemplate,
     allTemplates,
+    filteredCriticals,
+    filteredUsers,
+    filteredAlerts,
   } = useContext(Context);
 
   return (
@@ -35,7 +37,11 @@ const Navbar = () => {
             className="outline-none text-sm w-full min-[1600px]:text-base border border-gray-200/5 px-6 bg-gray-700/60 backdrop-blur-sm z-10 py-2 min-[1600px]:py-3 rounded-lg pl-12 w-full"
           />
           {pathname === "/overview" && searchTextAgency && (
-            <div className="absolute right-0 top-16 w-[500px] bg-main rounded-md min-h-[15vh] z-20 overflow-y-auto p-2">
+            <div className="absolute right-0 top-16 w-[500px] bg-main rounded-md min-h-[15vh] max-h-[20vh] small-scroller z-20 overflow-y-auto px-2 pb-2">
+              <Title
+                text="Agencies"
+                condition={filteredAgencies?.data?.length > 0}
+              />
               {filteredAgencies?.data?.map((e, i) => {
                 return (
                   <div
@@ -56,6 +62,7 @@ const Navbar = () => {
                   </div>
                 );
               })}
+              <Title text="Templates" condition={allTemplates?.length > 0} />
               {allTemplates?.map((e, i) => {
                 return (
                   <div
@@ -66,11 +73,68 @@ const Navbar = () => {
                       setSearchTextAgency("");
                     }}
                   >
-                    <p className="w-5/12 break-words">{e?.template_name}</p>
+                    <p className="w-full break-words">{e?.template_name}</p>
                     {/* <p className="text-sm">{`/agencies/${e?.agency_name?.replaceAll(
                       " ",
                       "-"
                     )}`}</p> */}
+                  </div>
+                );
+              })}
+              <Title text="Users" condition={filteredUsers?.data?.length > 0} />
+              {filteredUsers?.data?.map((e, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md flex items-center justify-between"
+                    onClick={() => {
+                      history.push(`/users`);
+                      setSearchTextAgency("");
+                    }}
+                  >
+                    <p className="w-full break-words">
+                      {e?.first_name + " " + e?.last_name}
+                    </p>
+                    {/* <p className="text-sm">{`/agencies/${e?.agency_name?.replaceAll(
+                      " ",
+                      "-"
+                    )}`}</p> */}
+                  </div>
+                );
+              })}{" "}
+              <Title
+                text="Agencies"
+                condition={filteredAgencies?.data?.length > 0}
+              />
+              {filteredCriticals?.notifications?.map((e, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md flex items-center justify-between"
+                    onClick={() => {
+                      history.push(`/templates`);
+                      setSearchTextAgency("");
+                    }}
+                  >
+                    <p className="w-full break-words">{e?.message}</p>
+                  </div>
+                );
+              })}{" "}
+              <Title
+                text="Alerts"
+                condition={filteredAlerts?.alerts?.length > 0}
+              />
+              {filteredAlerts?.alerts?.map((e, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md flex items-center justify-between"
+                    onClick={() => {
+                      history.push(`/templates`);
+                      setSearchTextAgency("");
+                    }}
+                  >
+                    <p className="w-full break-words">{e?.message}</p>
                   </div>
                 );
               })}
@@ -79,6 +143,14 @@ const Navbar = () => {
         </form>
       </div>
     </div>
+  );
+};
+
+const Title = ({ text, condition }) => {
+  return (
+    condition && (
+      <p className="text-gray-200 px-2 py-0.5 text-sm mt-2">{text}</p>
+    )
   );
 };
 
