@@ -16,6 +16,7 @@ const Navbar = () => {
     filteredCriticals,
     filteredUsers,
     filteredAlerts,
+    platformsData,
   } = useContext(Context);
 
   return (
@@ -81,6 +82,28 @@ const Navbar = () => {
                   </div>
                 );
               })}
+              <Title
+                text="Data Sources"
+                condition={platformsData?.length > 0}
+              />
+              {platformsData?.map((e, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md flex items-center justify-between"
+                    onClick={() => {
+                      history.push(`/data-sources`);
+                      setSearchTextAgency("");
+                    }}
+                  >
+                    <p className="w-full break-words">{e?.agency_name}</p>
+                    {/* <p className="text-sm">{`/agencies/${e?.agency_name?.replaceAll(
+                      " ",
+                      "-"
+                    )}`}</p> */}
+                  </div>
+                );
+              })}
               <Title text="Users" condition={filteredUsers?.data?.length > 0} />
               {filteredUsers?.data?.map((e, i) => {
                 return (
@@ -103,8 +126,8 @@ const Navbar = () => {
                 );
               })}{" "}
               <Title
-                text="Agencies"
-                condition={filteredAgencies?.data?.length > 0}
+                text="Critical Notifications"
+                condition={filteredCriticals?.notifications?.length > 0}
               />
               {filteredCriticals?.notifications?.map((e, i) => {
                 return (

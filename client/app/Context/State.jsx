@@ -162,6 +162,9 @@ const State = (props) => {
           })
           .catch((err) => {
             console.log(err);
+            if (err.message?.includes("404")) {
+              setCriticalNotifications([]);
+            }
           });
       } catch (error) {
         console.log(error);
@@ -209,6 +212,9 @@ const State = (props) => {
           })
           .catch((err) => {
             console.log(err);
+            if (err.message?.includes("404")) {
+              setFilteredCriticals([]);
+            }
           });
       } catch (error) {
         console.log(error);
@@ -239,6 +245,9 @@ const State = (props) => {
             }
           })
           .catch((err) => {
+            if (err.message?.includes("404")) {
+              setFilteredAlerts([]);
+            }
             console.log(err);
           });
       } catch (error) {
@@ -272,18 +281,24 @@ const State = (props) => {
     if (cookie?.length > 5) {
       try {
         axios
-          .get(`${BACKEND_URI}/data-refresh/platform-by-agency`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${cookie}`,
-            },
-          })
+          .get(
+            `${BACKEND_URI}/data-refresh/platform-by-agency?agency_name=${searchTextAgency}`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie}`,
+              },
+            }
+          )
           .then((res) => {
             setPlatformsData(res.data.data);
           })
           .catch((err) => {
             console.log(err);
+            if (err.message?.includes("404")) {
+              setPlatformsData([]);
+            }
           });
       } catch (error) {
         console.log(error);
@@ -318,9 +333,16 @@ const State = (props) => {
                 setFilteredUsers(res.data);
               }
               setUsers(res.data);
+            } else {
+              setFilteredUsers([]);
+              setUsers([]);
             }
           })
           .catch((err) => {
+            if (err.message?.includes("404")) {
+              setFilteredUsers([]);
+              setUsers([]);
+            }
             console.log(err);
           });
       } catch (error) {
@@ -353,6 +375,8 @@ const State = (props) => {
           .then((res) => {
             if (res.data.data?.length > 0) {
               setAgencies(res.data);
+            } else {
+              setAgencies([]);
             }
           })
           .catch((err) => {
@@ -395,6 +419,8 @@ const State = (props) => {
           .then((res) => {
             if (res.data.data?.length > 0) {
               setFilteredAgencies(res.data);
+            } else {
+              setFilteredAgencies([]);
             }
           })
           .catch((err) => {
@@ -455,6 +481,9 @@ const State = (props) => {
             setAllTemplates(res.data);
           })
           .catch((err) => {
+            if (err.message?.includes("404")) {
+              setAllTemplates([]);
+            }
             console.log(err);
           });
       } catch (error) {
@@ -605,7 +634,9 @@ const State = (props) => {
     ) {
       getCriticalNotifications();
     }
-
+    if (pathname?.includes("data-sources") || pathname == "/overview") {
+      getDataSourcesDataFromAPI();
+    }
     if (pathname?.includes("alerts") || pathname == "/overview") {
       getAlerts();
     }
