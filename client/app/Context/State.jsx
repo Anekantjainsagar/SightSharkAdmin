@@ -1,11 +1,13 @@
-"use client";
+"use client"; // Mark this component as a Client Component
+
 import axios from "axios";
 import Context from "./Context";
 import { getCookie } from "cookies-next";
 import { BACKEND_URI } from "../utils/url";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import toast from "react-hot-toast";
+import { debounce } from "lodash"; // Import debounce directly
 
 const State = (props) => {
   const pathname = usePathname();
@@ -620,7 +622,7 @@ const State = (props) => {
     getDataSourcesDataFromAPI();
   }, [userData]);
 
-  useEffect(() => {
+  const callAPIs = () => {
     if (pathname == "/overview") {
       getFilteredAgencies();
       getFilteredCriticalNotifications();
@@ -646,7 +648,20 @@ const State = (props) => {
     if (pathname == "/overview" || pathname?.includes("templates")) {
       getAllTemplates();
     }
-  }, [searchTextAgency]);
+  };
+
+  const debouncedCallAPIs = useCallback(
+    debounce(() => {
+      callAPIs();
+    }, 600),
+    [searchTextAgency] 
+  );
+  useEffect(() => {
+    debouncedCallAPIs();
+    return () => {
+      debouncedCallAPIs.cancel(); 
+    };
+  }, [searchTextAgency, debouncedCallAPIs]);
 
   return (
     <Context.Provider
