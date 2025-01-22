@@ -304,7 +304,7 @@ const State = (props) => {
               (page - 1) * limit
             }&limit=${limit}&sort_by=${order_by}&order=${
               type ? "asc" : "desc"
-            }`,
+            }&agency_name=${searchTextAgency}`,
             {
               headers: {
                 Accept: "application/json",
@@ -338,7 +338,7 @@ const State = (props) => {
     let cookie = getCookie("token");
     let limit = agencies?.limit ? agencies?.limit : 7;
 
-    if (cookie?.length > 5) {
+    if (cookie?.length > 5 && !pathname?.includes("agencies")) {
       try {
         axios
           .get(
@@ -404,13 +404,16 @@ const State = (props) => {
     if (cookie?.length > 5) {
       try {
         axios
-          .get(`${BACKEND_URI}/templates/search?template_name=${""}`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${cookie}`,
-            },
-          })
+          .get(
+            `${BACKEND_URI}/templates/search?template_name=${searchTextAgency}`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie}`,
+              },
+            }
+          )
           .then((res) => {
             setAllTemplates(res.data);
           })
@@ -552,7 +555,15 @@ const State = (props) => {
   }, [userData]);
 
   useEffect(() => {
-    getFilteredAgencies();
+    if (pathname == "/overview") {
+      getFilteredAgencies();
+    }
+    if (pathname?.includes("agencies")) {
+      getAgencies();
+    }
+    if (pathname == "/overview" || pathname?.includes("templates")) {
+      getAllTemplates();
+    }
   }, [searchTextAgency]);
 
   return (
