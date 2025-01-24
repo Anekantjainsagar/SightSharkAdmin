@@ -135,7 +135,7 @@ const Navbar = () => {
                     key={i}
                     className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md flex items-center justify-between"
                     onClick={() => {
-                      history.push(`/templates`);
+                      history.push(`/alerts`);
                       setSearchTextAgency("");
                     }}
                   >
@@ -153,7 +153,7 @@ const Navbar = () => {
                     key={i}
                     className="hover:bg-gray-700/20 cursor-pointer px-2 py-1 rounded-md flex items-center justify-between"
                     onClick={() => {
-                      history.push(`/templates`);
+                      history.push(`/alerts`);
                       setSearchTextAgency("");
                     }}
                   >
