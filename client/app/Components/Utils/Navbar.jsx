@@ -35,10 +35,10 @@ const Navbar = () => {
             onChange={(e) => {
               setSearchTextAgency(e.target.value);
             }}
-            className="outline-none text-sm w-full min-[1600px]:text-base border border-gray-200/5 px-6 bg-gray-700/60 backdrop-blur-sm z-10 py-2 min-[1600px]:py-3 rounded-lg pl-12 w-full"
+            className="outline-none text-sm min-[1600px]:text-base border border-gray-200/5 px-6 bg-gray-700/60 backdrop-blur-sm z-10 py-2 min-[1600px]:py-3 rounded-lg pl-12 w-full"
           />
           {pathname === "/overview" && searchTextAgency && (
-            <div className="absolute right-0 top-16 w-[500px] bg-main rounded-md min-h-[15vh] max-h-[20vh] small-scroller z-20 overflow-y-auto px-2 pb-2">
+            <div className="absolute right-0 top-16 w-[500px] bg-main rounded-md min-h-[15vh] max-h-[20vh] small-scroller z-20 overflow-y-auto p-2">
               <Title
                 text="Agencies"
                 condition={filteredAgencies?.data?.length > 0}
@@ -63,6 +63,7 @@ const Navbar = () => {
                   </div>
                 );
               })}
+              {allTemplates?.length > 0 && <Line />}
               <Title text="Templates" condition={allTemplates?.length > 0} />
               {allTemplates?.map((e, i) => {
                 return (
@@ -81,7 +82,8 @@ const Navbar = () => {
                     )}`}</p> */}
                   </div>
                 );
-              })}
+              })}{" "}
+              {platformsData?.length > 0 && <Line />}
               <Title
                 text="Data Sources"
                 condition={platformsData?.length > 0}
@@ -103,7 +105,8 @@ const Navbar = () => {
                     )}`}</p> */}
                   </div>
                 );
-              })}
+              })}{" "}
+              {filteredUsers?.data?.length > 0 && <Line />}
               <Title text="Users" condition={filteredUsers?.data?.length > 0} />
               {filteredUsers?.data?.map((e, i) => {
                 return (
@@ -125,6 +128,7 @@ const Navbar = () => {
                   </div>
                 );
               })}{" "}
+              {filteredCriticals?.notifications?.length > 0 && <Line />}
               <Title
                 text="Critical Notifications"
                 condition={filteredCriticals?.notifications?.length > 0}
@@ -143,6 +147,7 @@ const Navbar = () => {
                   </div>
                 );
               })}{" "}
+              {filteredAlerts?.alerts?.length > 0 && <Line />}
               <Title
                 text="Alerts"
                 condition={filteredAlerts?.alerts?.length > 0}
@@ -171,10 +176,12 @@ const Navbar = () => {
 
 const Title = ({ text, condition }) => {
   return (
-    condition && (
-      <p className="text-gray-200 px-2 py-0.5 text-sm mt-2">{text}</p>
-    )
+    condition && <p className="text-gray-200 px-2 py-0.5 text-sm">{text}</p>
   );
+};
+
+const Line = () => {
+  return <div className="h-[1px] w-11/12 my-3 bg-gray-300/10 mx-auto"></div>;
 };
 
 export default Navbar;
