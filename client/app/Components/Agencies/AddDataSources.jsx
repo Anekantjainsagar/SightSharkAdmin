@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 import Context from "@/app/Context/Context";
@@ -26,6 +26,14 @@ const customStyles = {
   },
 };
 
+function formatName(input) {
+  return input
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
   let maxPage = 2;
   const {
@@ -33,6 +41,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
     setSelectedDataSources,
     selectedDataSources,
     agencyDatasources,
+    getAgencyDataSources,
   } = useContext(Context);
   const [checkedTables, setCheckedTables] = useState();
   const [search, setSearch] = useState("");
@@ -61,7 +70,6 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
@@ -73,7 +81,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
             size={40}
             onClick={closeModal}
             className="absolute top-2 right-2 px-2 cursor-pointer"
-          />{" "}
+          />
           <div className="flex items-center px-[10vw]">
             <div className="bg-newBlue w-[3vw] aspect-square rounded-full flex items-center justify-center text-[20px]">
               {page > 1 ? <IoMdCheckmark /> : "1"}
@@ -137,14 +145,11 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                               height={1000}
                               className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2 aspect-squre object-contain"
                             />
-                            <label
-                              htmlFor={e?.name}
-                              className="text-[13px] min-[1600px]:text-base cursor-pointer"
-                            >
-                              {e?.name}
-                            </label>
+                            <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+                              {formatName(e?.name)}
+                            </p>
                           </div>
-                          <div className="inline-flex items-start mr-1">
+                          <div className="inline-flex items-start mr-1 w-3/12 justify-end">
                             <label className="relative flex items-center cursor-pointer">
                               <input
                                 type="checkbox"
@@ -173,7 +178,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                                 checked={selectedDataSources?.find(
                                   (el) => el?.name == e?.name
                                 )}
-                                className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
+                                className="before:content[''] peer relative min-[1600px]:h-6 min-[1600px]:w-6 w-5 h-5 rounded-full cursor-pointer appearance-none border-2 border-gray-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
                               />
                               <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                                 <svg
@@ -224,11 +229,17 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                     ...item,
                     tables: checkedTables[item.name] || item.tables,
                   }));
+                  const difference = agencyDatasources.filter(
+                    (selected) =>
+                      !selectedDataSources.some(
+                        (agency) => agency.name === selected.name
+                      )
+                  );
                   const agencyId = original_data?.agency_id; // Make sure `original_data` is the correct variable for agency_id
 
                   if (combined?.length > 0 && agencyId) {
                     let cookie = getCookie("token");
-                    // Use Promise.all to send requests for each item in the combined array
+
                     Promise.all(
                       combined.map((item) => {
                         const platformName = item.name; // Assuming `item.name` represents the platform name
@@ -236,7 +247,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
 
                         // API call for each item
                         return axios.post(
-                          `${BACKEND_URI}/assign_script/add_tables?agency_id=${agencyId}&platform_name=${platformName}`,
+                          `${BACKEND_URI}/assign_script/update_tables?agency_id=${agencyId}&platform_name=${platformName}`,
                           { table_names: tableNames },
                           {
                             headers: {
@@ -248,10 +259,10 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                         );
                       })
                     )
-                      .then((responses) => {
-                        console.log("All tables added successfully", responses);
+                      .then(() => {
                         toast.success("Tables added successfully!");
                         setShowSubscribe(false);
+                        getAgencyDataSources(original_data?.agency_id);
                       })
                       .catch((error) => {
                         console.error("Error adding tables", error);
@@ -259,6 +270,42 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                       });
                   } else {
                     toast.error("Please select at least 1 data source");
+                  }
+                  if (difference?.length > 0 && agencyId) {
+                    let cookie = getCookie("token");
+
+                    Promise.all(
+                      difference.map((item) => {
+                        const platformName = item.name;
+
+                        return axios.post(
+                          `${BACKEND_URI}/assign_script/remove_platform?agency_id=${agencyId.trim()}&platform_name=${platformName.trim()}`,
+                          {},
+                          {
+                            headers: {
+                              Accept: "application/json",
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${cookie}`,
+                            },
+                          }
+                        );
+                      })
+                    )
+                      .then(() => {
+                        toast.success("Tables removed successfully!");
+                        setShowSubscribe(false);
+                        getAgencyDataSources(original_data?.agency_id);
+                      })
+                      .catch((error) => {
+                        if (error.response && error.response.status === 401) {
+                          toast.error(
+                            "Authentication failed. Please log in again."
+                          );
+                        } else {
+                          console.error("Error adding tables", error);
+                          toast.error("Error adding tables");
+                        }
+                      });
                   }
                 } else {
                   setPage(page + 1);
@@ -278,29 +325,6 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
 const Page2 = ({ checkedTables, setCheckedTables }) => {
   const { selectedDataSources } = useContext(Context);
 
-  const handleCheckboxChange = (sourceIndex, table, isChecked) => {
-    const platformName = selectedDataSources[sourceIndex].name;
-
-    setCheckedTables((prevCheckedTables) => {
-      // Clone the previous state
-      const newCheckedTables = { ...prevCheckedTables };
-
-      // Add or remove the table based on isChecked
-      if (isChecked) {
-        newCheckedTables[platformName] = [
-          ...newCheckedTables[platformName],
-          table,
-        ];
-      } else {
-        newCheckedTables[platformName] = newCheckedTables[platformName].filter(
-          (t) => t !== table
-        );
-      }
-
-      return newCheckedTables;
-    });
-  };
-
   useEffect(() => {
     if (Object?.keys(checkedTables)?.length == 0) {
       setCheckedTables(
@@ -316,78 +340,189 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
     <div className="px-[4vw] h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
       <div className="grid grid-cols-1 gap-3">
         {selectedDataSources?.map((e, i) => (
-          <div
+          <Block
+            e={e}
             key={i}
-            className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center"
-          >
-            <div className="flex flex-col items-center justify-center w-[30%]">
-              <img
-                src={e?.img_link}
-                alt={e?.name}
-                width={1000}
-                height={1000}
-                className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
-              />
-              <h6 className="mt-2 text-lg">{e?.name}</h6>
-            </div>
-            <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
-            <div className="w-[70%]">
-              <div className="flex justify-between items-center w-full px-4 py-1">
-                <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
-                  {e?.name}
-                </p>
-                <p>Track</p>
-              </div>
-              {checkedTables &&
-                e?.tables.map((table, index) => {
-                  const isChecked = checkedTables[e.name]?.includes(table);
-                  return (
-                    <div
-                      key={index}
-                      className="w-full flex justify-between items-center rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-400"
-                    >
-                      <label htmlFor={table} className="cursor-pointer">
-                        {table}
-                      </label>
-                      <div className="inline-flex items-start">
-                        <label className="relative flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
-                            id={table}
-                            onChange={(event) =>
-                              handleCheckboxChange(
-                                i,
-                                table,
-                                event.target.checked
-                              )
-                            }
-                          />
-                          <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-4 w-4"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              stroke="currentColor"
-                              strokeWidth="1"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              ></path>
-                            </svg>
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+            checkedTables={checkedTables}
+            setCheckedTables={setCheckedTables}
+            i={i}
+          />
         ))}
+      </div>
+    </div>
+  );
+};
+
+const Block = ({ e, checkedTables, setCheckedTables, i }) => {
+  const { selectedDataSources, datasources } = useContext(Context);
+
+  const handleCheckboxChange = (sourceIndex, table, isChecked) => {
+    const platformName = selectedDataSources[sourceIndex].name;
+
+    setCheckedTables((prevCheckedTables) => {
+      const newCheckedTables = { ...prevCheckedTables };
+
+      // Ensure newCheckedTables[platformName] is initialized as an array
+      if (!Array.isArray(newCheckedTables[platformName])) {
+        newCheckedTables[platformName] = [];
+      }
+
+      if (isChecked) {
+        newCheckedTables[platformName] = [
+          ...newCheckedTables[platformName],
+          table,
+        ];
+      } else {
+        newCheckedTables[platformName] = newCheckedTables[platformName].filter(
+          (t) => t !== table
+        );
+      }
+
+      return newCheckedTables;
+    });
+  };
+
+  return (
+    <div className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center w-[30%]">
+        <img
+          src={e?.img_link}
+          alt={e?.name}
+          width={1000}
+          height={1000}
+          className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
+        />
+        <h6 className="mt-2 text-lg">{formatName(e?.name)}</h6>
+      </div>
+      <div className="w-[1px] mx-5 h-full bg-gray-300/10"></div>
+      <div className="w-[70%]">
+        <div className="flex justify-between items-center w-full px-4 py-1">
+          <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
+            Track
+          </p>
+          <div className="inline-flex items-start">
+            <label className="relative flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                id={e?.name}
+                checked={
+                  checkedTables[e?.name]?.length ===
+                  datasources?.find((item) => item?.name === e?.name)?.tables
+                    ?.length
+                }
+                className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
+                onChange={(event) => {
+                  let platformName = e?.name;
+                  if (event?.target?.checked) {
+                    setCheckedTables((prevCheckedTables) => {
+                      const newCheckedTables = { ...prevCheckedTables };
+                      newCheckedTables[platformName] = datasources?.find(
+                        (item) => item?.name === e?.name
+                      )?.tables;
+                      return newCheckedTables;
+                    });
+                  } else {
+                    setCheckedTables((prevCheckedTables) => {
+                      let newCheckedTables = { ...prevCheckedTables };
+                      delete newCheckedTables[platformName];
+                      return newCheckedTables;
+                    });
+                  }
+                }}
+              />
+              <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+            </label>
+          </div>
+        </div>
+        {checkedTables &&
+          datasources &&
+          datasources
+            ?.find((item) => item?.name === e?.name)
+            ?.tables.map((table, index) => {
+              return (
+                <Row
+                  table={table}
+                  key={index}
+                  i={i}
+                  checkedTables={checkedTables}
+                  handleCheckboxChange={handleCheckboxChange}
+                  platformName={e?.name}
+                />
+              );
+            })}
+      </div>
+    </div>
+  );
+};
+
+const Row = ({
+  table,
+  i,
+  platformName,
+  checkedTables,
+  handleCheckboxChange,
+}) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    if (checkedTables) {
+      let checkIfTrue = checkedTables[platformName]?.includes(table);
+      if (checkIfTrue) {
+        setIsChecked(true);
+      } else {
+        setIsChecked(false);
+      }
+    }
+  }, [checkedTables]);
+
+  return (
+    <div className="w-full flex justify-between items-center rounded-md py-1.5 border border-gray-500/5 px-4 text-gray-400">
+      <label htmlFor={table} className="cursor-pointer">
+        {formatName(table)}
+      </label>
+      <div className="inline-flex items-start">
+        <label className="relative flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            className="peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all"
+            id={table}
+            onChange={(event) =>
+              handleCheckboxChange(i, table, event.target.checked)
+            }
+          />
+          <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="1"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </span>
+        </label>
       </div>
     </div>
   );

@@ -1,6 +1,18 @@
 import React, { memo } from "react";
 import IconCloud from "@/app/Components/Animations/Cloud";
 import Image from "next/image";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const RightSide = memo(() => {
   return (
@@ -39,11 +51,42 @@ const RightSide = memo(() => {
         height={1000}
         className="absolute top-0 left-0 object-cover w-full h-full"
       />
-      <div className="p-[1.5vw] glass rounded-xl text-xl min-[1600px]:text-[26px]">
-        <p className="text-white">
-          Today, we create innovative solutions to the challenges that consumers
-          face in both their everyday lives and events.
-        </p>
+      <div className="p-[1.5vw] bg-gray-700/60 backdrop-blur-sm z-10 rounded-xl text-white text-lg min-[1600px]:text-[20px] w-full">
+        <Swiper
+          slidesPerView={1}
+          modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+          loop={true}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+        >
+          {[
+            {
+              name: "Dolphin Analytics",
+              desc: "SightShark is an exceptional asset for companies seeking to enhance data presentation using Google Data Studio or other dashboards, consistently providing exceptional dashboard updates and improved visuals.",
+            },
+            {
+              name: "Top Line Media",
+              desc: "SightShark successfully created a complex Looker studio report, integrating various platforms and software, and successfully completed the project, recommending their services for future projects.",
+            },
+            {
+              name: "Proximo Spirits",
+              desc: "SightShark delivered excellent Tableau dashboards and I enjoyed working with them. They were quick to respond to messages, met all deadlines, and did a great job of interpreting our requirements.",
+            },
+          ].map((e, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <div className="w-full flex flex-col justify-end">
+                  <p className="text-white leading-[29px]">
+                    &quot;{e?.desc}&quot;
+                  </p>
+                  <span className="text-base mt-1 text-right">{e?.name}</span>
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
     </div>
   );

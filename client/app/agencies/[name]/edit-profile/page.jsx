@@ -6,16 +6,17 @@ import Image from "next/image";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
 import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
 import { BiPencil } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdKeyboardArrowDown } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 import DeleteAgency from "@/app/Components/Agencies/DeleteAgency";
 import Info from "@/app/Components/Login/Info";
-import { LuEye, LuEyeOff } from "react-icons/lu";
-import Context from "@/app/Context/Context";
 import { useRouter } from "next/navigation";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import Required from "@/app/Components/Utils/Required";
+import Context from "@/app/Context/Context";
+import axios from "axios";
 
 let databar = [
   "Agency Details",
@@ -28,13 +29,14 @@ const Overview = ({ params }) => {
   const [comment, setComment] = useState("");
   const [selected, setSelected] = useState("Agency Details");
   const [deleteAgency, setDeleteAgency] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [original_data, setOriginal_data] = useState();
+  const [file, setFile] = useState("");
   const [data, setData] = useState({
     name: "",
     profile: "",
     website: "",
     location: "",
-    warrenty: "",
+    warrenty: 3,
     deployment: "",
     license: "",
     keyContact: {
@@ -47,17 +49,19 @@ const Overview = ({ params }) => {
     dataSources: [],
     serviceAcc: { acc1: "", acc2: "" },
     agency_id: "",
+    project_id: "",
+    region: "",
+    profile_picture: "",
+    project_number: "",
+    onboarding_date: "",
   });
   const fileInputRef = React.useRef(null);
-  const fileInputRefAgent = React.useRef(null);
-  const { agencies, getAgencies } = useContext(Context);
+  const [serviceAcc1, setserviceAcc1] = useState();
+  const { agencies, getAgencies, regions } = useContext(Context);
   const { name } = params;
   const history = useRouter();
 
-  useEffect(() => {
-    let temp = agencies?.data?.find((e) => {
-      return e?.agency_name?.replaceAll(" ", "-") == name;
-    });
+  const setDetails = (temp) => {
     setData({
       name: temp?.agency_name,
       website: temp?.website,
@@ -66,6 +70,9 @@ const Overview = ({ params }) => {
       license: temp?.license_limit,
       deployment: temp?.deployment_date,
       agency_id: temp?.agency_id,
+      project_id: temp?.project_id,
+      region: temp?.region,
+      project_number: temp?.project_number,
       keyContact: {
         name: temp?.key_contact_name,
         designation: temp?.key_contact_designation,
@@ -76,20 +83,70 @@ const Overview = ({ params }) => {
         acc1: temp?.service_account_cloud,
         acc2: temp?.service_account_api,
       },
+      region: temp?.region,
+      onboarding_date: temp?.onboarding_date,
+      ...temp,
     });
+    setStatus(temp?.status);
+    setFile(temp?.profile_picture);
+  };
+
+  useEffect(() => {
+    let temp = agencies?.data?.find((e) => {
+      return e?.agency_name?.replaceAll(" ", "-") == name;
+    });
+    setOriginal_data(temp);
+    setDetails(temp);
   }, [name, agencies]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file.name);
+      setFile(URL.createObjectURL(file));
+      setData({ ...data, profile_picture: file });
+    } else {
+      console.log("No file selected");
     }
   };
 
-  const handleFileChangeAgent = (event) => {
+  const handleClearFile = () => {
+    setserviceAcc1(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setData({
+      ...data,
+      serviceAcc: {
+        ...data.serviceAcc,
+        acc1: "",
+      },
+    });
+  };
+
+  const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      console.log("Selected file:", file.name);
+    setserviceAcc1(file);
+    if (file && file.type === "application/json") {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          setData({
+            ...data,
+            serviceAcc: {
+              ...data.serviceAcc,
+              acc1: JSON.stringify(content),
+            },
+          });
+        } catch (error) {
+          console.error("Invalid JSON:", error);
+        }
+      };
+
+      reader.readAsText(file);
+    } else {
+      toast.error("Please upload a valid JSON file.");
     }
   };
 
@@ -110,7 +167,7 @@ const Overview = ({ params }) => {
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex flex-row-reverse items-start justify-between px-6">
-            <AgencyDetails data={data} />
+            <AgencyDetails data={original_data} />
             <div className="w-[69%] min-[1600px]:h-[82vh] h-fit">
               <AgencyDetailsTopbar name={name} />
               <div className="border border-gray-500/5 min-[1600px]:h-[83vh] h-fit w-full rounded-lg p-3 min-[1600px]:p-4 flex flex-col justify-between">
@@ -152,15 +209,11 @@ const Overview = ({ params }) => {
                             onChange={handleFileChangeProfile}
                           />
                           <Image
-                            src={
-                              data?.profile
-                                ? data?.profile
-                                : "/Agency/individual/logo.png"
-                            }
+                            src={file ? file : "/Agency/individual/logo.png"}
                             alt="Agency Img"
                             width={1000}
                             height={1000}
-                            className="rounded-full border border-gray-300/30"
+                            className="rounded-full aspect-square object-cover border border-gray-300/30"
                           />
                         </div>
                       </div>
@@ -168,7 +221,7 @@ const Overview = ({ params }) => {
                         <div className="flex flex-col">
                           <label
                             htmlFor="name"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Agency Name
                             <Required />
@@ -181,13 +234,13 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Agency Name"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
                           <label
                             htmlFor="website"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Website <Required />
                           </label>
@@ -199,13 +252,13 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Website"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
                           <label
                             htmlFor="location"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Location
                           </label>
@@ -217,52 +270,63 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Location"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
                           <label
-                            htmlFor="warrenty"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            htmlFor="warranty"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Warranty Period <Required />
                           </label>
-                          <input
-                            id="warrenty"
-                            value={data?.warrenty}
-                            onChange={(e) => {
-                              setData({ ...data, warrenty: e.target.value });
-                            }}
-                            type="text"
-                            placeholder="Enter Warranty Period"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
+                          <div className="relative w-full">
+                            <select
+                              value={data?.warrenty}
+                              onChange={(e) => {
+                                setData({ ...data, warrenty: e.target.value });
+                              }}
+                              className="bg-[#898989]/15 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 pr-10 rounded-md appearance-none"
+                            >
+                              {[3, 6, 9, 12, 15, 18, 21, 24].map((e, i) => {
+                                return (
+                                  <option value={e} key={i} className="bg-main">
+                                    {e} Months
+                                  </option>
+                                );
+                              })}
+                            </select>
+                            {/* Custom dropdown icon */}
+                            <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                              <MdKeyboardArrowDown />
+                            </span>
+                          </div>
                         </div>
                         <div className="flex flex-col">
                           <label
                             htmlFor="deployment"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
-                            Deployment Date <Required />
+                            Onboarding Date <Required />
                           </label>
                           <input
                             id="deployment"
-                            value={data?.deployment}
+                            value={data?.onboarding_date}
                             onChange={(e) => {
                               setData({
                                 ...data,
-                                deployment: e.target.value,
+                                onboarding_date: e.target.value,
                               });
                             }}
                             type="date"
                             placeholder="Enter deployment Period"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                         <div className="flex flex-col">
                           <label
                             htmlFor="license"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             License Limit
                           </label>
@@ -274,36 +338,42 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter License Limit"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>{" "}
                         <div className="flex flex-col">
                           <label
                             htmlFor="status"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Status
                           </label>
-                          <select
-                            name="status"
-                            id="status"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
-                          >
-                            {["Active", "Offline", "On Hold"].map((e, i) => {
-                              return (
-                                <option value={e} key={i} className="bg-main">
-                                  {e}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <div className="relative w-full">
+                            <select
+                              name="status"
+                              id="status"
+                              className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] w-full outline-none border border-gray-500/5 px-4 py-2 pr-10 rounded-md min-[1600px]:text-base text-sm appearance-none"
+                              value={status}
+                              onChange={(e) => setStatus(e.target.value)}
+                            >
+                              {["active", "offline", "hold"].map((e, i) => {
+                                return (
+                                  <option value={e} key={i} className="bg-main">
+                                    {e[0]?.toUpperCase() + e.slice(1)}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                            {/* Custom dropdown icon */}
+                            <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                              <MdKeyboardArrowDown />
+                            </span>
+                          </div>
                         </div>
                         <div className="flex flex-col">
                           <label
                             htmlFor="comment"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
+                            className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                           >
                             Comment
                           </label>
@@ -315,254 +385,244 @@ const Overview = ({ params }) => {
                             }}
                             type="text"
                             placeholder="Enter Comment"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                            className="bg-gray-700/60 backdrop-blur-sm z-10 h-[45px] outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
                           />
                         </div>
                       </div>
                     </div>
                   ) : selected === databar[1] ? (
-                    <div className="flex items-start justify-between mt-4 px-3">
-                      <div className="flex items-center w-1/12">
-                        <div className="relative flex items-center justify-center">
-                          <div
-                            onClick={() => {
-                              fileInputRefAgent.current.click();
-                            }}
-                            className="absolute bg-newBlue text-xl py-1.5 px-1.5 -bottom-1 cursor-pointer -right-1 rounded-full"
-                          >
-                            <BiPencil />
-                          </div>{" "}
-                          <input
-                            type="file"
-                            ref={fileInputRefAgent}
-                            style={{ display: "none" }}
-                            onChange={handleFileChangeAgent}
-                          />
-                          <Image
-                            src={
-                              data?.keyContact?.profile
-                                ? data?.keyContact?.profile
-                                : "/Agency/individual/agent.png"
-                            }
-                            alt="Agency Img"
-                            width={1000}
-                            height={1000}
-                            className="rounded-full border border-gray-300/30"
-                          />
-                        </div>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-6 mt-4 px-3">
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="namekey"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                        >
+                          Name
+                        </label>
+                        <input
+                          id="namekey"
+                          value={data?.keyContact?.name}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                name: e.target.value,
+                              },
+                            });
+                          }}
+                          type="text"
+                          placeholder="Enter Name"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
                       </div>
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-6 w-11/12 pl-[2vw]">
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="namekey"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Name
-                          </label>
-                          <input
-                            id="namekey"
-                            value={data?.keyContact?.name}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  name: e.target.value,
-                                },
-                              });
-                            }}
-                            type="text"
-                            placeholder="Enter Name"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="designation"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Designation
-                          </label>
-                          <input
-                            id="designation"
-                            value={data?.keyContact?.designation}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  designation: e.target.value,
-                                },
-                              });
-                            }}
-                            type="text"
-                            placeholder="Enter Designation"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="email"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Email Address
-                          </label>
-                          <input
-                            id="email"
-                            value={data?.keyContact?.email}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  email: e.target.value,
-                                },
-                              });
-                            }}
-                            type="email"
-                            placeholder="Enter Email Address"
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="phone"
-                            className="mb-1.5 min-[1600px]:text-base text-sm"
-                          >
-                            Phone no.
-                          </label>
-                          <input
-                            id="phone"
-                            value={data?.keyContact?.phone}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                keyContact: {
-                                  ...data?.keyContact,
-                                  phone: e.target.value,
-                                },
-                              });
-                            }}
-                            type="number"
-                            placeholder="Enter Phone no."
-                            className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
-                          />
-                        </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="designation"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                        >
+                          Designation
+                        </label>
+                        <input
+                          id="designation"
+                          value={data?.keyContact?.designation}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                designation: e.target.value,
+                              },
+                            });
+                          }}
+                          type="text"
+                          placeholder="Enter Designation"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="email"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                        >
+                          Email Address
+                        </label>
+                        <input
+                          id="email"
+                          value={data?.keyContact?.email}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                email: e.target.value,
+                              },
+                            });
+                          }}
+                          type="email"
+                          placeholder="Enter Email Address"
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="phone"
+                          className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                        >
+                          Phone no.
+                        </label>
+                        <input
+                          id="phone"
+                          value={data?.keyContact?.phone}
+                          onChange={(e) => {
+                            setData({
+                              ...data,
+                              keyContact: {
+                                ...data?.keyContact,
+                                phone: e.target.value,
+                              },
+                            });
+                          }}
+                          type="number"
+                          placeholder="Enter Phone no."
+                          className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md min-[1600px]:text-base text-sm"
+                        />
                       </div>
                     </div>
                   ) : (
                     <div className="flex flex-col items-start justify-between mt-4 px-3">
-                      <div className="w-full mb-5">
-                        <div className="flex flex-col mb-5">
-                          <label
-                            htmlFor="switchAcc1"
-                            className="mb-1.5 text-base flex items-center"
-                          >
-                            Service Account 1<Info />
-                          </label>
-                          <textarea
-                            id="switchAcc1"
-                            value={data?.serviceAcc?.acc1}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                serviceAcc: {
-                                  ...data?.serviceAcc,
-                                  acc1: e.target.value,
-                                },
-                              });
-                            }}
-                            rows={2}
-                            placeholder="Service Account 1"
-                            className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                          ></textarea>
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="switchAcc2"
-                            className="mb-1.5 text-base flex items-center"
-                          >
-                            Service Account 2 <Info />
-                          </label>
-                          <textarea
-                            id="switchAcc2"
-                            value={data?.serviceAcc?.acc2}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                serviceAcc: {
-                                  ...data?.serviceAcc,
-                                  acc2: e.target.value,
-                                },
-                              });
-                            }}
-                            rows={2}
-                            placeholder="Service Account 2"
-                            className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 rounded-md"
-                          ></textarea>
-                        </div>
-                      </div>{" "}
-                      <div className="grid grid-cols-2 w-full gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="emailKey"
-                            className="mb-1.5 text-sm min-[1600px]:text-base"
-                          >
-                            Email
-                          </label>
-                          <input
-                            id="emailKey"
-                            value={data?.credentials?.email}
-                            onChange={(e) => {
-                              setData({
-                                ...data,
-                                credentials: {
-                                  ...data?.credentials,
-                                  email: e.target.value,
-                                },
-                              });
-                            }}
-                            type="text"
-                            placeholder="Enter Email"
-                            className="bg-[#898989]/15 outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="passwordKey"
-                            className="mb-1.5 text-sm min-[1600px]:text-base"
-                          >
-                            Password
-                          </label>
-                          <div className="w-full relative">
+                      <div className="w-full">
+                        <div className="grid grid-cols-2 gap-x-6 min-[1600px]:gap-x-8 gap-y-4 min-[1600px]:gap-y-6">
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="project_number"
+                              className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                            >
+                              Project Number
+                              <Required />
+                            </label>
                             <input
-                              type={showPassword ? "text" : "password"}
-                              id="passwordKey"
-                              value={data?.credentials?.password}
+                              id="project_number"
+                              value={data?.project_number}
                               onChange={(e) => {
                                 setData({
                                   ...data,
-                                  credentials: {
-                                    ...data?.credentials,
-                                    password: e.target.value,
-                                  },
+                                  project_number: e.target.value,
                                 });
                               }}
-                              placeholder="Enter Password"
-                              className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                              type="text"
+                              placeholder="Enter Project Number"
+                              className="bg-[#898989]/15 outline-none border border-gray-500/20 h-[45px] text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
                             />
-                            <div
-                              className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setShowPassword(!showPassword);
-                              }}
+                          </div>
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="project_id"
+                              className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                             >
-                              {showPassword ? <LuEye /> : <LuEyeOff />}
+                              Project ID
+                              <Required />
+                            </label>
+                            <input
+                              id="project_id"
+                              value={data?.project_id}
+                              onChange={(e) => {
+                                setData({
+                                  ...data,
+                                  project_id: e.target.value,
+                                });
+                              }}
+                              type="text"
+                              placeholder="Enter Project ID"
+                              className="bg-[#898989]/15 outline-none h-[45px] border border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 rounded-md"
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="region"
+                              className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                            >
+                              Region <Required />
+                            </label>
+                            <div className="relative w-full">
+                              <select
+                                value={data?.region}
+                                onChange={(e) => {
+                                  setData({ ...data, region: e.target.value });
+                                }}
+                                className="bg-[#898989]/15 leading-5 w-full outline-none border h-[45px] border-gray-500/20 text-sm min-[1600px]:text-base px-4 py-2 pr-10 rounded-md appearance-none"
+                              >
+                                {regions.map((e, i) => {
+                                  return (
+                                    <option
+                                      value={e?.region_name}
+                                      key={i}
+                                      className="bg-main"
+                                    >
+                                      {e?.region_name}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                              {/* Custom dropdown icon */}
+                              <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                                <MdKeyboardArrowDown />
+                              </span>
                             </div>
                           </div>
+                        </div>{" "}
+                        <div className="flex items-center justify-between mt-8">
+                          <label
+                            htmlFor="switchAcc1"
+                            className="mb-1.5 text-base flex items-center whitespace-nowrap"
+                          >
+                            Service Account
+                            <Info
+                              text="Add the service account with the following permission-"
+                              values={[
+                                "Artifact Registry Administrator",
+                                "Artifact Registry Writer",
+                                "Cloud Build Connection Admin",
+                                "Cloud Build Editor",
+                                "Cloud Run Admin",
+                                "Cloud Scheduler Admin",
+                                "Cloud SQL Admin",
+                                "Logging Admin",
+                                "Pub/Sub Admin",
+                                "Secret Manager Admin",
+                                "Service Account User",
+                                "Service Usage Admin",
+                                "Source Repository Reader",
+                                "Storage Admin",
+                                "Viewer",
+                              ]}
+                              placement={"bottom"}
+                            />
+                          </label>
+                          <div className="flex items-center">
+                            {/* Custom File Input */}
+                            <label
+                              className={`border border-gray-300/20 py-1 px-5 rounded-md cursor-pointer`}
+                            >
+                              {/* Show file name or "Replace file" */}
+                              {serviceAcc1 ? serviceAcc1.name : "Replace file"}
+                              <input
+                                type="file"
+                                onChange={handleFileUpload}
+                                ref={fileInputRef}
+                                style={{ display: "none" }} // Hide the input
+                              />
+                            </label>
+
+                            {serviceAcc1 && (
+                              <AiOutlineClose
+                                className="text-lg cursor-pointer ml-2"
+                                onClick={handleClearFile}
+                              />
+                            )}
+                          </div>
                         </div>
-                      </div>{" "}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -580,7 +640,8 @@ const Overview = ({ params }) => {
                     <button
                       className={`bg-[#898989]/15 min-[1600px]:font-semibold min-[1600px]:px-8 px-5 py-2 min-[1600px]:text-base text-sm rounded-xl min-[1600px]:rounded-xl ml-4`}
                       onClick={() => {
-                        history.push(`/agencies/`);
+                        setDetails(original_data);
+                        toast.success("Changes Discarded");
                       }}
                     >
                       Discard
@@ -596,11 +657,13 @@ const Overview = ({ params }) => {
                           data?.keyContact?.email
                         ) {
                           const queryParams = new URLSearchParams({
-                            agency_name: data?.name,
+                            status: status,
+                            agency_name: data?.name.trim(),
                             website: data?.website,
                             location: data?.location,
                             warranty_period: parseInt(data?.warrenty),
                             deployment_date: data?.deployment,
+                            onboarding_date: data?.onboarding_date,
                             license_limit: data?.license,
                             key_contact_name: data?.keyContact?.name,
                             key_contact_designation:
@@ -608,29 +671,54 @@ const Overview = ({ params }) => {
                             key_contact_email_address: data?.keyContact?.email,
                             key_contact_phone: data?.keyContact?.phone,
                             service_account_cloud: data?.serviceAcc?.acc1,
-                            service_account_api: data?.serviceAcc?.acc2,
+                            project_number: data?.project_number,
+                            project_id: data?.project_id,
+                            region: data?.region,
+                            // ...data,
                           }).toString();
 
+                          const formData = new FormData();
+                          formData.append(
+                            "profile_picture",
+                            data?.profile_picture ? data?.profile_picture : ""
+                          );
+                          formData.append(
+                            "profile_picture_filename",
+                            data?.profile_picture?.name
+                              ? data?.profile_picture?.name
+                              : ""
+                          );
+                          formData.append(
+                            "profile_picture_content_type",
+                            data?.profile_picture?.type
+                              ? data?.profile_picture?.type
+                              : ""
+                          );
+
                           try {
-                            fetch(
-                              `${BACKEND_URI}/agency/update/${data?.agency_id}?${queryParams}`,
-                              {
-                                headers: {
-                                  Accept:
-                                    "application/json, application/xml, text/plain, text/html, *.*",
-                                  Authorization: `Bearer ${getCookie("token")}`,
-                                },
-                                method: "PUT",
-                              }
-                            )
+                            axios
+                              .put(
+                                `${BACKEND_URI}/agency/update/${data?.agency_id}?${queryParams}`,
+                                formData,
+                                {
+                                  headers: {
+                                    Accept:
+                                      "application/json, application/xml, text/plain, text/html, *.*",
+                                    Authorization: `Bearer ${getCookie(
+                                      "token"
+                                    )}`,
+                                  },
+                                }
+                              )
                               .then((res) => {
-                                return res.json();
-                              })
-                              .then((res) => {
-                                if (res.msg) {
+                                if (res.data.msg) {
                                   getAgencies();
                                   toast.success("Agency updated successfully");
-                                  history.push("/agencies");
+                                  history.push(
+                                    `/agencies/${data?.name
+                                      .trim()
+                                      ?.replaceAll(" ", "-")}/edit-profile`
+                                  );
                                 }
                                 if (res.detail) {
                                   toast.error(res.detail);

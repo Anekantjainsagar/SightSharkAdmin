@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
 import AgencySmallBlock from "@/app/Components/Agencies/AgencySmallBlock";
@@ -10,8 +10,18 @@ import { useRouter } from "next/navigation";
 import Context from "../Context/Context";
 
 const Overview = () => {
-  const { agencies } = useContext(Context);
+  const {
+    datasources,
+    agencies,
+    criticalNotifications,
+    activeAgencies,
+    getActiveAgencies,
+    users,
+  } = useContext(Context);
   const history = useRouter();
+  useEffect(() => {
+    getActiveAgencies();
+  }, []);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -27,22 +37,22 @@ const Overview = () => {
               {[
                 {
                   name: "Total Agencies",
-                  value: agencies?.total_count,
+                  value: agencies?.total_count || 0,
                   img: "/Overview/Icons/total.png",
                 },
                 {
                   name: "Active Agencies",
-                  value: agencies?.total_count,
+                  value: activeAgencies || 0,
                   img: "/Overview/Icons/active.png",
                 },
                 {
-                  name: "Dashboard Views",
-                  value: 5,
+                  name: "Data Sources",
+                  value: datasources?.length || 0,
                   img: "/Overview/Icons/dashboard.png",
                 },
                 {
-                  name: "Satisfaction Score",
-                  value: 25,
+                  name: "Total Users",
+                  value: users?.total_count || 0,
                   img: "/Overview/Icons/satisfaction.png",
                 },
               ].map((e, i) => {
@@ -74,31 +84,6 @@ const Overview = () => {
               <h3 className="mainText20">Agencies</h3>
               <div className="mt-4 border border-gray-200/5 rounded-2xl">
                 <div className="grid bg-[#030021]/40 py-3.5 px-7 agencySmallBlockGrid items-center rounded-2xl">
-                  <div className="inline-flex items-start">
-                    <label className="relative flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        className="before:content[''] peer relative h-6 w-6 rounded-md cursor-pointer appearance-none border-2 border-[#343745] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-16 before:w-16 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:bg-gray-800 checked:before:bg-gray-800 hover:before:opacity-10"
-                        id="check"
-                      />
-                      <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          stroke="currentColor"
-                          strokeWidth="1"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                      </span>
-                    </label>
-                  </div>
                   {[
                     "Agency Name",
                     "Status",
@@ -134,7 +119,7 @@ const Overview = () => {
                 <p
                   className="text-white text-sm min-[1600px]:text-base flex items-center cursor-pointer"
                   onClick={() => {
-                    history.push("/overview/critical-notification");
+                    history.push("/overview/critical-notifications");
                   }}
                 >
                   View All
@@ -143,9 +128,11 @@ const Overview = () => {
               </div>
               <div className="gradient-line my-4"></div>
               <div className="h-[15vh] overflow-y-auto small-scroller">
-                <Notify status={true} />
-                <Notify status={false} />
-                <Notify status={true} />
+                {criticalNotifications?.notifications?.map((e, i) => {
+                  return (
+                    <Notify data={e} key={i} status={e?.type != "error"} />
+                  );
+                })}
               </div>
             </div>
           </div>

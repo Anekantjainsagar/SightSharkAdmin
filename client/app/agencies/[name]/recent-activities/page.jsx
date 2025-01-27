@@ -1,16 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import AgencyDetails from "@/app/Components/Agencies/AgencyDetails";
-import AgencyDetailsTopbar from "@/app/Components/Agencies/AgencyDetailsTopbar";
-import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { AiOutlineClose } from "react-icons/ai";
+import { useContext, useEffect, useState } from "react";
+import Context from "@/app/Context/Context";
 
-const RecentActivites = () => {
+const RecentActivites = ({ params }) => {
+  const [original_data, setOriginal_data] = useState();
+  const { agencies } = useContext(Context);
+  const { name } = params;
   const history = useRouter();
+
+  useEffect(() => {
+    let temp = agencies?.data?.find((e) => {
+      return e?.agency_name?.replaceAll(" ", "-") == name;
+    });
+    setOriginal_data(temp);
+  }, [name, agencies]);
 
   return (
     <div className="flex items-start h-[100vh]">
@@ -22,7 +30,7 @@ const RecentActivites = () => {
         <div className="absolute backdrop-blur-3xl top-0 left-0 w-full h-full px-5 overflow-y-auto">
           <Navbar />
           <div className="text-white w-full rounded-lg flex flex-row-reverse items-start justify-between">
-            <AgencyDetails />
+            <AgencyDetails data={original_data} />
             <div className="w-[69%]">
               <div className="border border-gray-500/5 h-[88vh] w-full rounded-lg p-4">
                 <div className="bg-[#171C2A]/40 p-4 rounded-2xl border border-gray-500/5 h-full">
@@ -32,7 +40,7 @@ const RecentActivites = () => {
                     </h4>
                     <p
                       className="text-white flex items-center cursor-pointer text-xl"
-                      onClick={() => history.push("/agencies/alpha-solutions")}
+                      onClick={() => history.push(`/agencies/${name}`)}
                     >
                       <AiOutlineClose />
                     </p>

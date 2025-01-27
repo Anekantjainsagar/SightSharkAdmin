@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Modal from "react-modal";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { getCookie } from "cookies-next";
 import { BACKEND_URI } from "@/app/utils/url";
 import Context from "@/app/Context/Context";
@@ -29,7 +29,7 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
   }
 
   const deleteUser = () => {
-    if (val == `${data?.first_name} ${data?.last_name}`) {
+    if (val.trim() == `${data?.first_name.trim()} ${data?.last_name.trim()}`) {
       try {
         fetch(`${BACKEND_URI}/user/delete/${data?.id}`, {
           method: "DELETE",
@@ -68,7 +68,6 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
@@ -114,7 +113,7 @@ const DeleteUser = ({ showSubscribe, setShowSubscribe, data }) => {
             placeholder="Enter here"
             value={val}
             onChange={(e) => setVal(e.target.value)}
-            className="mb-4 glass outline-none text-sm min-[1600px]:text-lg px-4 py-2 w-full rounded-md"
+            className="mb-4 bg-gray-700/60 backdrop-blur-sm z-10 outline-none text-sm min-[1600px]:text-lg px-4 py-2 w-full rounded-md"
           />
           <div className="flex items-center gap-x-4 w-full text-sm min-[1600px]:text-base">
             <button

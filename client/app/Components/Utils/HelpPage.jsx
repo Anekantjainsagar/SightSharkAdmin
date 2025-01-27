@@ -1,11 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -22,14 +19,12 @@ const customStyles = {
 };
 
 const HelpPage = ({ showSubscribe, setShowSubscribe }) => {
-  const history = useRouter();
   function closeModal() {
     setShowSubscribe(false);
   }
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
@@ -60,7 +55,7 @@ const HelpPage = ({ showSubscribe, setShowSubscribe }) => {
           <button
             className={`bg-newBlue w-full py-2 rounded-lg text-sm min-[1600px]:text-base text-center`}
             onClick={() => {
-              window.navigator.clipboard.writeText("info@prowiz.io");
+              window.navigator.clipboard.writeText("support@sightshark.com");
               window.open(
                 "https://mail.google.com/mail/u/0/#inbox?compose=CllgCJvqrzHxdSbzTnJJBXPfCsstgGRGnmLrfzcjZFXvQKpdJcpmlSFFLjRjSGkdzXWrwfdDhbB",
                 "__blank"
@@ -68,7 +63,7 @@ const HelpPage = ({ showSubscribe, setShowSubscribe }) => {
               setShowSubscribe(!showSubscribe);
             }}
           >
-            info@prowiz.io
+            support@sightshark.com
           </button>{" "}
         </div>
       </Modal>

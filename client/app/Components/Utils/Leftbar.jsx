@@ -1,15 +1,16 @@
 "use client";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CiGrid41, CiSettings, CiWallet } from "react-icons/ci";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { IoNewspaperOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
 import HelpPage from "@/app/Components/Utils/HelpPage";
+import Context from "@/app/Context/Context";
 
 const Leftbar = () => {
-  const history = useRouter();
+  const { criticalNotificationsLength, alertsLength } = useContext(Context);
   const [show, setShow] = useState(false);
   let mainRoutes = [
     {
@@ -134,6 +135,74 @@ const Leftbar = () => {
       ],
     },
     {
+      title: "Data Sources",
+      icon: <IoNewspaperOutline className="text-2xl" key={"4"} />,
+      route: "/data-sources",
+      temp_icon: [
+        <svg
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          key={500}
+        >
+          <path
+            d="M5.28905 13.6318L12.2782 2.64879C12.5468 2.22677 13.2 2.417 13.2 2.91722V10.7002C13.2 10.7554 13.2448 10.8002 13.3 10.8002H18.2397C18.6442 10.8002 18.8813 11.2555 18.6493 11.5869L11.7097 21.5007C11.4293 21.9012 10.8 21.7029 10.8 21.214V14.5002C10.8 14.445 10.7553 14.4002 10.7 14.4002H5.71089C5.31634 14.4002 5.07723 13.9646 5.28905 13.6318Z"
+            stroke="white"
+            strokeWidth="2"
+          />
+        </svg>,
+        <svg
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          key={501}
+        >
+          <path
+            d="M5.28905 13.6318L12.2782 2.64879C12.5468 2.22677 13.2 2.417 13.2 2.91722V10.7002C13.2 10.7554 13.2448 10.8002 13.3 10.8002H18.2397C18.6442 10.8002 18.8813 11.2555 18.6493 11.5869L11.7097 21.5007C11.4293 21.9012 10.8 21.7029 10.8 21.214V14.5002C10.8 14.445 10.7553 14.4002 10.7 14.4002H5.71089C5.31634 14.4002 5.07723 13.9646 5.28905 13.6318Z"
+            stroke="#888"
+            strokeWidth="2"
+          />
+        </svg>,
+      ],
+    },
+    {
+      title: "Templates",
+      icon: <IoNewspaperOutline className="text-2xl" key={"5"} />,
+      route: "/templates",
+      temp_icon: [
+        <svg
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          key={500001}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 13.125L4 7C4 4.79086 5.79086 3 8 3L14.125 3M10 21L16.75 21C17.9926 21 19 19.9926 19 18.75L19 9C19 7.75736 17.9926 6.75 16.75 6.75L10 6.75C8.75736 6.75 7.75 7.75736 7.75 9L7.75 18.75C7.75 19.9926 8.75736 21 10 21Z"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>,
+        <svg
+          className="w-4 min-[1600px]:w-6 h-4 min-[1600px]:h-6"
+          viewBox="0 0 24 24"
+          key={500002}
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 13.125L4 7C4 4.79086 5.79086 3 8 3L14.125 3M10 21L16.75 21C17.9926 21 19 19.9926 19 18.75L19 9C19 7.75736 17.9926 6.75 16.75 6.75L10 6.75C8.75736 6.75 7.75 7.75736 7.75 9L7.75 18.75C7.75 19.9926 8.75736 21 10 21Z"
+            stroke="#888"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>,
+      ],
+    },
+    {
       title: "Users",
       icon: <CiWallet className="text-2xl" />,
       route: "/users",
@@ -173,6 +242,45 @@ const Leftbar = () => {
     },
   ];
   let settingRoutes = [
+    {
+      title: `Alerts (${criticalNotificationsLength + alertsLength})`,
+      route: "/alerts",
+      icon: <IoIosHelpCircleOutline className="text-2xl" />,
+      temp_icon: [
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          key={502}
+        >
+          <path
+            d="M12 12.9V8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z"
+            stroke="#eed202"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>,
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          key={503}
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 12.9V8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z"
+            stroke="#eed202"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>,
+      ],
+    },
     {
       title: "Settings",
       icon: <CiSettings className="text-2xl" />,
@@ -214,14 +322,14 @@ const Leftbar = () => {
           <path
             d="M9.39504 19.3711L9.97949 20.6856C10.1532 21.0768 10.4368 21.4093 10.7957 21.6426C11.1547 21.8759 11.5736 22.0001 12.0017 22C12.4298 22.0001 12.8488 21.8759 13.2077 21.6426C13.5667 21.4093 13.8502 21.0768 14.0239 20.6856L14.6084 19.3711C14.8164 18.9047 15.1664 18.5159 15.6084 18.26C16.0532 18.0034 16.5677 17.8941 17.0784 17.9478L18.5084 18.1C18.934 18.145 19.3636 18.0656 19.7451 17.8713C20.1265 17.6771 20.4434 17.3763 20.6573 17.0056C20.8714 16.635 20.9735 16.2103 20.951 15.7829C20.9285 15.3555 20.7825 14.9438 20.5306 14.5978L19.6839 13.4344C19.3825 13.0171 19.2214 12.5148 19.2239 12C19.2238 11.4866 19.3864 10.9864 19.6884 10.5711L20.535 9.40778C20.7869 9.06175 20.933 8.65007 20.9554 8.22267C20.9779 7.79528 20.8759 7.37054 20.6617 7C20.4478 6.62923 20.1309 6.32849 19.7495 6.13423C19.3681 5.93997 18.9385 5.86053 18.5128 5.90556L17.0828 6.05778C16.5722 6.11141 16.0576 6.00212 15.6128 5.74556C15.1699 5.48825 14.8199 5.09736 14.6128 4.62889L14.0239 3.31444C13.8502 2.92317 13.5667 2.59072 13.2077 2.3574C12.8488 2.12408 12.4298 1.99993 12.0017 2C11.5736 1.99993 11.1547 2.12408 10.7957 2.3574C10.4368 2.59072 10.1532 2.92317 9.97949 3.31444L9.39504 4.62889C9.18797 5.09736 8.83792 5.48825 8.39504 5.74556C7.95026 6.00212 7.43571 6.11141 6.92504 6.05778L5.4906 5.90556C5.06493 5.86053 4.63534 5.93997 4.25391 6.13423C3.87249 6.32849 3.55561 6.62923 3.34171 7C3.12753 7.37054 3.02549 7.79528 3.04798 8.22267C3.07046 8.65007 3.2165 9.06175 3.46838 9.40778L4.31504 10.5711C4.61698 10.9864 4.77958 11.4866 4.77949 12C4.77958 12.5134 4.61698 13.0137 4.31504 13.4289L3.46838 14.5922C3.2165 14.9382 3.07046 15.3499 3.04798 15.7773C3.02549 16.2047 3.12753 16.6295 3.34171 17C3.55582 17.3706 3.87274 17.6712 4.25411 17.8654C4.63548 18.0596 5.06496 18.1392 5.4906 18.0944L6.9206 17.9422C7.43127 17.8886 7.94581 17.9979 8.3906 18.2544C8.83513 18.511 9.18681 18.902 9.39504 19.3711Z"
             strokeOpacity="0.64"
-            stroke="white"
+            stroke="#F2F1EF"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M11.9999 15C13.6568 15 14.9999 13.6569 14.9999 12C14.9999 10.3431 13.6568 9 11.9999 9C10.3431 9 8.99992 10.3431 8.99992 12C8.99992 13.6569 10.3431 15 11.9999 15Z"
-            stroke="white"
+            stroke="#F2F1EF"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeOpacity="0.64"
@@ -245,7 +353,7 @@ const Leftbar = () => {
         >
           <path
             d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13M12 17H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-            stroke="white"
+            stroke="#F2F1EF"
             strokeOpacity="0.64"
             strokeWidth="1.5"
             strokeLinecap="round"
@@ -262,7 +370,7 @@ const Leftbar = () => {
         >
           <path
             d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13M12 17H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-            stroke="white"
+            stroke="#F2F1EF"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -274,11 +382,13 @@ const Leftbar = () => {
   ];
 
   return (
-    <div className="bg-main w-[15%] text-white h-full relative border-r border-r-white/20">
+    <div className="bg-main w-[15%] text-white h-full relative z-20 border-r border-r-white/20">
       <HelpPage showSubscribe={show} setShowSubscribe={setShow} />
       <div className="w-[120px] h-[100px] rounded-full bg-[#1664FF]/40 absolute left-[-2vw] top-[15vh]"></div>
       <div className="w-[60px] h-[50px] rounded-full bg-[#1664FF]/50 absolute right-2 bottom-[1vh]"></div>
-      <div className="w-full h-full absolute top-0 left-0 py-5 flex flex-col items-center justify-between backdrop-blur-3xl z-10">
+      <div className="w-full h-full absolute top-0 left-0 py-5 flex flex-col items-center justify-between backdrop-blur-3xl z-[inherit]">
+        {" "}
+        {/* Use `z-[inherit]` */}
         <div className="w-10/12 h-full flex flex-col items-center justify-between pb-0 min-[1600px]:pb-6">
           <div className="w-full">
             <div className="flex items-center">
@@ -318,6 +428,7 @@ const Leftbar = () => {
 
 const LogoutBtn = () => {
   const history = useRouter();
+  const { setSearchTextAgency } = useContext(Context);
 
   return (
     <div
@@ -325,6 +436,7 @@ const LogoutBtn = () => {
       onClick={() => {
         Cookies.remove("token");
         history.push("/");
+        setSearchTextAgency("");
       }}
     >
       <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#D93F21]/10 to-[#D93F21]/20 w-9 min-[1600px]:w-12 aspect-square p-2">
@@ -351,6 +463,7 @@ const LogoutBtn = () => {
 
 const NewwBlock = ({ e, setShow, show }) => {
   const history = useRouter();
+  const { setSearchTextAgency } = useContext(Context);
 
   return (
     <div
@@ -361,6 +474,7 @@ const NewwBlock = ({ e, setShow, show }) => {
         } else {
           setShow(!show);
         }
+        setSearchTextAgency("");
       }}
     >
       <div className="flex rounded-lg items-center justify-center bg-gradient-to-b from-[#1664FF]/10 to-[#1664FF]/20 w-9 min-[1600px]:w-12 aspect-square p-2">
@@ -375,6 +489,7 @@ const Block = ({ e }) => {
   const pathname = usePathname();
   const history = useRouter();
   const [hover, setHover] = useState(false);
+  const { setSearchTextAgency } = useContext(Context);
 
   return (
     <div
@@ -388,6 +503,7 @@ const Block = ({ e }) => {
       onClick={() => {
         if (e?.route) {
           history.push(e?.route);
+          setSearchTextAgency("");
         }
       }}
     >

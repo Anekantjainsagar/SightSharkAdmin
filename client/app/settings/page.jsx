@@ -54,7 +54,7 @@ const Settings = () => {
           })
           .then((res) => {
             if (res.msg) {
-              toast.success("Super Admin updated successfully");
+              toast.success("Profile updated successfully");
               checkToken();
             }
             if (res.detail) {
@@ -96,7 +96,7 @@ const Settings = () => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="firstName"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       First Name
                     </label>
@@ -108,13 +108,13 @@ const Settings = () => {
                       }}
                       type="text"
                       placeholder="Enter First Name"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label
                       htmlFor="lastName"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Last Name
                     </label>
@@ -126,13 +126,13 @@ const Settings = () => {
                       }}
                       type="text"
                       placeholder="Enter Last Name"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label
                       htmlFor="email"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Email
                     </label>
@@ -144,13 +144,13 @@ const Settings = () => {
                       }}
                       type="email"
                       placeholder="Enter Email"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label
                       htmlFor="phone"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Phone
                     </label>
@@ -162,13 +162,13 @@ const Settings = () => {
                       }}
                       type="number"
                       placeholder="Enter Phone"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>{" "}
                   <div className="flex flex-col">
                     <label
                       htmlFor="postal"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Postal Code
                     </label>
@@ -180,13 +180,13 @@ const Settings = () => {
                       }}
                       type="number"
                       placeholder="Enter Postal Code"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label
                       htmlFor="country"
-                      className="mb-1.5 text-sm min-[1600px]:text-base"
+                      className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                     >
                       Country
                     </label>
@@ -198,7 +198,7 @@ const Settings = () => {
                       }}
                       type="country"
                       placeholder="Enter Country"
-                      className="glass outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
+                      className="bg-gray-700/60 backdrop-blur-sm z-10 outline-none border border-gray-500/5 px-4 py-2 rounded-md text-sm min-[1600px]:text-base"
                     />
                   </div>
                 </div>
@@ -207,7 +207,12 @@ const Settings = () => {
                 <button
                   className={`bg-[#898989]/15 font-semibold min-[1600px]:w-[160px] w-[120px] min-[1600px]:py-3 py-2 min-[1600px]:text-base text-sm rounded-xl ml-4`}
                   onClick={() => {
-                    history.push("/overview");
+                    setData({
+                      firstName: userData?.first_name,
+                      lastName: userData?.last_name,
+                      ...userData,
+                    });
+                    toast.success("Changes Discarded");
                   }}
                 >
                   Discard

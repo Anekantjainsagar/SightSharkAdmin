@@ -1,14 +1,15 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Required from "../Utils/Required";
 import { BACKEND_URI } from "@/app/utils/url";
 import { getCookie } from "cookies-next";
 import Context from "@/app/Context/Context";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const customStyles = {
   overlay: { zIndex: 50 },
@@ -27,15 +28,18 @@ const customStyles = {
 
 const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
   let maxPage = 1;
-  const { setUsers, users } = useContext(Context);
+  const fileInputRef = React.useRef(null);
+  const { userData, getUsers } = useContext(Context);
   const [showPassword, setShowPassword] = useState(false);
   const [page, setPage] = useState(1);
   const [file, setFile] = useState();
+  const [availableRoles, setAvailableRoles] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    access: "guest",
+    access: "",
     profile: "",
     phone: "",
     postal_code: "",
@@ -43,16 +47,61 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
     password: "",
     profile: "",
   });
-  const fileInputRef = React.useRef(null);
+
+  useEffect(() => {
+    if (userData?.role == "superadmin") {
+      setAvailableRoles(["admin", "guest"]);
+      setData({ ...data, access: "admin" });
+    } else if (userData?.role == "admin") {
+      setAvailableRoles(["guest"]);
+      setData({ ...data, access: "guest" });
+    } else if (userData?.role == "owner") {
+      setAvailableRoles(["superadmin", "admin", "guest"]);
+      setData({ ...data, access: "superadmin" });
+    }
+  }, [userData]);
 
   const handleFileChangeProfile = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file);
       setFile(URL.createObjectURL(file));
       setData({ ...data, profile: file }); // Update `data` state with the selected file
     } else {
       console.log("No file selected");
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile) {
+      handleFileChangeProfile({ target: { files: [droppedFile] } });
+    }
+  };
+
+  const handlePaste = (e) => {
+    const clipboardItem = e.clipboardData.items[0];
+    if (clipboardItem && clipboardItem.type.startsWith("image")) {
+      const pastedFile = clipboardItem.getAsFile();
+      handleFileChangeProfile({ target: { files: [pastedFile] } });
+    }
+  };
+
+  const handleClearProfile = () => {
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      setData({ ...data, profile: "" });
     }
   };
 
@@ -67,13 +116,12 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
       data?.email &&
       data?.password &&
       data?.access
-    ) { 
-      // Construct URL with all non-file fields as query parameters
+    ) {
       const queryParams = new URLSearchParams({
-        email: data?.email,
-        password: data?.password,
-        first_name: data?.firstName,
-        last_name: data?.lastName,
+        email: data?.email.trim(),
+        password: data?.password.trim(),
+        first_name: data?.firstName.trim(),
+        last_name: data?.lastName.trim(),
         phone: data?.phone || "",
         postal_code: data?.postal_code || "",
         role: data?.access || "admin",
@@ -82,15 +130,14 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
       }).toString();
 
       let formdata = new FormData();
-      // Handle profile picture file upload
       if (data?.profile instanceof File || data?.profile instanceof Blob) {
-        formdata.append("file_content", data?.profile); // The file itself
-        formdata.append("filename", data?.profile.name); // The filename
-        formdata.append("content_type", data?.profile.type); // The MIME type
+        formdata.append("profile_picture", data?.profile);
+        formdata.append("profile_picture_filename", data?.profile.name);
+        formdata.append("profile_picture_content_type", data?.profile.type);
       } else {
-        console.log(
-          "Profile picture is not a valid file or blob, skipping upload."
-        );
+        formdata.append("profile_picture", "");
+        formdata.append("profile_picture_filename", "");
+        formdata.append("profile_picture_content_type", "");
       }
 
       try {
@@ -101,15 +148,14 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
             Authorization: `Bearer ${getCookie("token")}`,
           },
           method: "POST",
-          body: formdata, // Send the form data with the profile picture
+          body: formdata,
         })
           .then((res) => res.json())
           .then((res) => {
-            console.log(res);
             if (res.msg) {
               toast.success("User created successfully");
               closeModal();
-              setUsers({ ...users, data: [...users.data, res.data] });
+              getUsers();
             } else if (res.detail) {
               toast.error(res.detail);
             }
@@ -129,7 +175,6 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
 
   return (
     <div className="z-50">
-      <Toaster />
       <Modal
         isOpen={showSubscribe}
         onRequestCl2ose={closeModal}
@@ -142,40 +187,71 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
             onClick={closeModal}
             className="absolute top-2 right-2 px-2 cursor-pointer"
           />
-          <div className="mb-5 text-center">
-            <h1 className="mainLogoSize font-semibold">User Details</h1>
-          </div>
+          <h1 className="mainLogoSize font-semibold text-center mb-5">
+            User Details
+          </h1>
           <div className="h-fit px-[8vw] w-full">
-            <div className="flex items-center justify-center mb-6">
-              <div className="relative">
+            <div className="flex items-center justify-center mb-2">
+              <div
+                className={`relative flex w-full flex-col items-center justify-center mb-3 md:mb-4 ${
+                  isDragging
+                    ? "border-2 border-dashed border-blue-500 bg-black/30 cursor-pointer"
+                    : ""
+                }`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onPaste={handlePaste}
+              >
                 <input
                   type="file"
                   ref={fileInputRef}
                   style={{ display: "none" }}
                   onChange={handleFileChangeProfile}
                 />
-                <div
-                  onClick={() => {
-                    fileInputRef.current.click();
-                  }}
-                  className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 bottom-0 min-[1600px]:-bottom-2 cursor-pointer right-0 min-[1600px]:-right-2 rounded-full"
-                >
-                  +
+                <div className="relative">
+                  <div
+                    onClick={() => {
+                      if (file) {
+                        handleClearProfile();
+                      } else {
+                        fileInputRef.current.click();
+                      }
+                    }}
+                    title={
+                      !file ? "Upload User Profile" : "Remove User Profile"
+                    }
+                    className="absolute bg-newBlue flex items-center justify-center text-2xl px-2 -top-1 aspect-square cursor-pointer right-0 rounded-full"
+                  >
+                    {file ? (
+                      <AiOutlineClose className="text-base md:text-[13px]" />
+                    ) : (
+                      "+"
+                    )}
+                  </div>
+                  <Image
+                    src={file ? file : "/Agency/temp_logo.png"}
+                    alt="Agency Img"
+                    width={1000}
+                    height={1000}
+                    className="w-[6vw] min-[1600px]:w-[5vw] aspect-square object-cover rounded-full"
+                    title={
+                      !file ? "Upload User Profile" : "Remove User Profile"
+                    }
+                  />
                 </div>
-                <Image
-                  src={file ? file : "/Agency/temp_logo.png"}
-                  alt="Agency Img"
-                  width={1000}
-                  height={1000}
-                  className="w-[6vw] min-[1600px]:w-[4vw] rounded-full"
-                />
+                {isDragging && (
+                  <p className="absolute text-blue-500 mt-3">
+                    Drop file to upload
+                  </p>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-4">
               <div className="flex flex-col">
                 <label
                   htmlFor="name"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   First Name
                   <Required />
@@ -194,7 +270,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="lastName"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Last Name
                   <Required />
@@ -207,13 +283,13 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Last Name"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>
               <div className="flex flex-col">
                 <label
                   htmlFor="email"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Email
                   <Required />
@@ -226,37 +302,47 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Email"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>{" "}
               <div className="flex flex-col">
-                <label htmlFor="access" className="mb-1.5">
+                <label
+                  htmlFor="access"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
+                >
                   Access
                   <Required />
                 </label>
-                <select
-                  name="access"
-                  id="access"
-                  className="glass outline-none border border-gray-500/5 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
-                  value={data?.access}
-                  onChange={(e) => {
-                    setData({ ...data, access: e.target.value });
-                  }}
-                >
-                  {["admin", "superadmin", "guest"].map((e, i) => {
-                    return (
-                      <option value={e} key={i} className="bg-main">
-                        {e}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>{" "}
+
+                <div className="relative w-full">
+                  <select
+                    name="access"
+                    id="access"
+                    className="bg-[#898989]/15 outline-none w-full border border-gray-500/20 min-[1600px]:h-[45px] px-4 py-2 pr-10 min-[1600px]:text-base text-sm rounded-md appearance-none"
+                    value={data?.access}
+                    onChange={(e) => {
+                      setData({ ...data, access: e.target.value });
+                    }}
+                  >
+                    {availableRoles.map((e, i) => {
+                      return (
+                        <option value={e} key={i} className="bg-main">
+                          {e[0]?.toUpperCase() + e.slice(1)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {/* Custom dropdown icon */}
+                  <span className="absolute right-3 top-1/2 text-2xl -translate-y-1/2 pointer-events-none">
+                    <MdKeyboardArrowDown />
+                  </span>
+                </div>
+              </div>
               <div className="flex flex-col">
                 {" "}
                 <label
                   htmlFor="password"
-                  className="text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Password <Required />
                 </label>
@@ -269,7 +355,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                       setData({ ...data, password: e.target.value });
                     }}
                     placeholder="Enter Password"
-                    className="bg-[#898989]/15 w-full outline-none border border-gray-500/20 px-4 py-2 rounded-md"
+                    className="bg-[#898989]/15 w-full outline-none min-[1600px]:h-[45px] border border-gray-500/20 px-4 py-2 rounded-md"
                   />
                   <div
                     className="absolute top-1/2 -translate-y-1/2 text-white/80 right-5 text-lg min-[1600px]:text-xl cursor-pointer"
@@ -285,7 +371,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="phone"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Phone
                 </label>
@@ -297,13 +383,13 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Phone"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>{" "}
               <div className="flex flex-col">
                 <label
                   htmlFor="postal_code"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Postal Code
                 </label>
@@ -315,13 +401,13 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Postal Code"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>
               <div className="flex flex-col">
                 <label
                   htmlFor="country"
-                  className="mb-1.5 text-sm min-[1600px]:text-base"
+                  className="mb-1.5 text-sm min-[1600px]:text-base w-fit relative"
                 >
                   Country
                 </label>
@@ -333,7 +419,7 @@ const AddUsers = ({ showSubscribe, setShowSubscribe }) => {
                   }}
                   type="text"
                   placeholder="Enter Country"
-                  className="bg-[#898989]/15 outline-none border border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
+                  className="bg-[#898989]/15 outline-none border min-[1600px]:h-[45px] border-gray-500/20 px-4 py-2 min-[1600px]:text-base text-sm rounded-md"
                 />
               </div>
             </div>
