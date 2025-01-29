@@ -41,18 +41,24 @@ const TemplatePage = () => {
               </div>
             </div>
             <div className="overflow-y-auto mt-5 p-4 h-[78vh] gap-4 bg-[#171C2A]/20 rounded-2xl small-scroller border border-gray-500/10">
-              <div className="grid grid-cols-4 gap-4">
-                {allTemplates?.map((e, i) => {
-                  return (
-                    <TemplateBlock
-                      data={e}
-                      key={i}
-                      idx={i}
-                      showActions={true}
-                    />
-                  );
-                })}
-              </div>
+              {allTemplates?.length == 0 ? (
+                <div className="flex items-center justify-center w-full text-gray-400">
+                  No Templates Available
+                </div>
+              ) : (
+                <div className="grid grid-cols-4 gap-4">
+                  {allTemplates?.map((e, i) => {
+                    return (
+                      <TemplateBlock
+                        data={e}
+                        key={i}
+                        idx={i}
+                        showActions={true}
+                      />
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>

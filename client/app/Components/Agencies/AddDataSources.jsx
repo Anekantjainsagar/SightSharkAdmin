@@ -21,7 +21,7 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     backgroundColor: "transparent",
-    width: "70vw",
+    width: "65vw",
     border: "none",
   },
 };
@@ -84,9 +84,9 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
             <AiOutlineClose
               size={40}
               onClick={closeModal}
-              className="absolute -top-10 -right-3 px-2 text-lg text-main cursor-pointer z-50"
+              className="absolute right-2 top-2 px-1.5 text-lg text-white/60 cursor-pointer z-50"
             />
-            <div className="w-[24%] flex items-start pl-10 py-10 bg-main">
+            <div className="w-[24%] flex items-start pl-10 py-10 bg-main rounded-lg">
               <div className="flex flex-col items-center justify-between h-[20vh]">
                 {[1, 2].map((e, i, arr) => {
                   return (
@@ -123,7 +123,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                 })}
               </div>
             </div>
-            <div className="w-[76%] p-10 flex flex-col items-start justify-between relative z-50">
+            <div className="w-[76%] px-10 pb-10 pt-14 flex flex-col items-start justify-between relative z-40">
               {page == 1 ? (
                 <div className="h-[45vh] min-[1600px]:h-[40vh] overflow-y-auto overflow-x-hidden small-scroller w-full">
                   <div className="relative flex items-center w-[350px] min-[1600px]:w-[456px]">
@@ -153,21 +153,21 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                         return (
                           <div
                             key={i}
-                            className="flex items-center justify-between border border-gray-300/30 px-3 py-3 rounded-full"
+                            className="flex items-center justify-between border border-gray-300/30 p-3 rounded-full"
                           >
-                            <div className="flex items-center">
+                            <div className="flex items-center w-full">
                               <Image
                                 src={e?.img_link}
                                 alt={e?.img_link?.src}
                                 width={1000}
                                 height={1000}
-                                className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2 aspect-squre object-contain"
+                                className="min-[1600px]:w-8 min-[1600px]:h-8 w-6 h-6 mr-2.5 aspect-squre object-contain"
                               />
                               <p className="text-[13px] min-[1600px]:text-base cursor-pointer">
                                 {formatName(e?.name)}
                               </p>
                             </div>
-                            <div className="inline-flex items-start mr-1 w-3/12 justify-end">
+                            <div className="inline-flex items-start mr-0.5 w-3/12 justify-end">
                               <label className="relative flex items-center cursor-pointer">
                                 <input
                                   type="checkbox"
@@ -360,17 +360,23 @@ const Page2 = ({ checkedTables, setCheckedTables }) => {
 
   return (
     <div className="h-[45vh] min-[1600px]:h-[40vh] pb-5 overflow-y-auto small-scroller w-full">
-      <div className="grid grid-cols-1 gap-3">
-        {selectedDataSources?.map((e, i) => (
-          <Block
-            e={e}
-            key={i}
-            checkedTables={checkedTables}
-            setCheckedTables={setCheckedTables}
-            i={i}
-          />
-        ))}
-      </div>
+      {selectedDataSources?.length == 0 ? (
+        <div className="flex items-center justify-center w-full text-gray-400">
+          No Data Sources Selected
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-3">
+          {selectedDataSources?.map((e, i) => (
+            <Block
+              e={e}
+              key={i}
+              checkedTables={checkedTables}
+              setCheckedTables={setCheckedTables}
+              i={i}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -405,20 +411,20 @@ const Block = ({ e, checkedTables, setCheckedTables, i }) => {
   };
 
   return (
-    <div className="border border-gray-300/10 p-2 rounded-lg flex items-center justify-center">
-      <div className="flex gap-x-2 items-center w-[22%] px-2">
+    <div className="border border-gray-300/10 p-2 rounded-lg flex flex-col items-center justify-center">
+      <div className="gap-x-2 px-2 flex items-center justify-start w-full">
         <img
           src={e?.img_link}
           alt={e?.name}
           width={1000}
           height={1000}
-          className="min-[1600px]:w-12 min-[1600px]:h-12 w-6 h-6 mr-2 aspect-square object-contain"
+          className="min-[1600px]:w-9 min-[1600px]:h-9 w-4 h-4 mr-2 aspect-square object-contain"
         />
         <p>{formatName(e?.name)}</p>
       </div>
-      <div className="w-[1px] h-full bg-gray-300/10"></div>
-      <div className="w-[78%] flex flex-wrap">
-        <div className="w-fit flex items-center gap-x-3 rounded-md py-2 px-3 text-gray-200">
+      <div className="w-full h-[1px] bg-gray-300/10 my-3"></div>
+      <div className="grid grid-cols-3 w-full gap-1">
+        <div className="flex items-start gap-x-2.5 w-full rounded-md p-2 text-gray-200">
           <div className="inline-flex items-start">
             <label className="relative flex items-center cursor-pointer">
               <input
@@ -511,7 +517,7 @@ const Row = ({
   }, [checkedTables]);
 
   return (
-    <div className="w-fit flex items-center gap-x-3 rounded-md py-2 px-3 text-gray-200">
+    <div className="flex items-start gap-x-2.5 w-full rounded-md p-2 text-gray-200">
       <div className="inline-flex items-start">
         <label className="relative flex items-center cursor-pointer">
           <input
@@ -542,7 +548,7 @@ const Row = ({
         </label>
       </div>
       <label htmlFor={table} className="cursor-pointer">
-        {formatName(table)}
+        {formatName(table)?.replaceAll("Ga4", "GA4")}
       </label>
     </div>
   );

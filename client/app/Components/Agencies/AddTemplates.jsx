@@ -54,11 +54,19 @@ const AddTemplates = ({ showSubscribe, setShowSubscribe, original_data }) => {
             Select Templates
           </h1>
           <div className="px-[3vw] py-2 h-[50vh] w-[70vw] overflow-y-auto small-scroller">
-            <div className="grid grid-cols-3 h-fit gap-5">
-              {allTemplates?.map((data, i) => {
-                return <Block key={i} data={data} ids={ids} setIds={setIds} />;
-              })}
-            </div>
+            {allTemplates ? (
+              <div className="flex items-center justify-center w-full text-gray-400">
+                No Templates Available
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 h-fit gap-5">
+                {allTemplates?.map((data, i) => {
+                  return (
+                    <Block key={i} data={data} ids={ids} setIds={setIds} />
+                  );
+                })}
+              </div>
+            )}
           </div>
           <div className="border-t border-t-gray-100/30 px-[5vw] w-full flex items-center justify-end py-6 mt-10 text-[15px] min-[1600px]:text-lg">
             <button

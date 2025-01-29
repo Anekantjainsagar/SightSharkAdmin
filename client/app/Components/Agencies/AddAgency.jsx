@@ -25,7 +25,7 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     backgroundColor: "transparent",
-    width: "70vw",
+    width: "65vw",
     border: "none",
   },
 };
@@ -82,7 +82,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
         deployment_date: data?.deployment || "",
         license_limit: parseInt(data?.license),
         current_number_of_clients: data?.currentClients || 1,
-        email_address: data?.keyContact?.email || "",
+        email_address: data?.credentials?.email || "",
         password: data?.credentials?.password || "",
         key_contact_name: data?.keyContact?.name,
         key_contact_designation: data?.keyContact?.designation,
@@ -260,9 +260,9 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
             <AiOutlineClose
               size={40}
               onClick={closeModal}
-              className="absolute -top-10 -right-3 px-2 text-lg text-main cursor-pointer z-50"
+              className="absolute right-2 top-2 px-1.5 text-lg text-white/60 cursor-pointer z-50"
             />
-            <div className="w-[24%] flex items-start pl-10 py-10 bg-main">
+            <div className="w-[24%] rounded-lg flex items-start pl-10 py-10 bg-main">
               <div className="flex flex-col items-center justify-between h-full">
                 {[1, 2, 3, 4].map((e, i, arr) => {
                   return (
@@ -304,7 +304,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
                 })}
               </div>
             </div>
-            <div className="w-[76%] p-10 flex flex-col items-start justify-between relative z-50">
+            <div className="w-[76%] px-10 pb-10 pt-14 flex flex-col items-start justify-between relative z-40">
               <div className="w-full">
                 {page === 1 ? (
                   <div className="w-full">

@@ -72,34 +72,48 @@ const DataSources = () => {
               <div></div>
             </div>
             <div className="overflow-y-auto mt-5 h-[78vh] rounded-2xl small-scroller">
-              {platformsData?.map((e, i) => {
-                return (
-                  e?.platforms?.length > 0 && (
-                    <div
-                      key={i}
-                      className="border px-6 py-5 mb-10 rounded-2xl border-gray-200/5 bg-[#171C2A]/20"
-                    >
-                      <div className="flex items-center justify-between">
-                        <h5 className="text-2xl">{e?.agency_name}</h5>
-                        <button
-                          onClick={() => {
-                            refreshByAgencyId(e?.agency_id, e?.platforms);
-                          }}
-                          className="bg-newBlue text-white flex items-center gap-x-2 rounded-lg px-6 py-3"
-                        >
-                          <TfiReload />
-                          Refresh All
-                        </button>
+              {platformsData?.filter((e) => {
+                if (e?.platforms) {
+                  return e;
+                }
+              })?.length == 0 ? (
+                <div className="flex items-center justify-center w-full text-gray-400">
+                  No Data Sources Available
+                </div>
+              ) : (
+                platformsData
+                  ?.filter((e) => {
+                    if (e?.platforms) {
+                      return e;
+                    }
+                  })
+                  ?.map((e, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="border px-6 py-5 mb-10 rounded-2xl border-gray-200/5 bg-[#171C2A]/20"
+                      >
+                        <div className="flex items-center justify-between">
+                          <h5 className="text-2xl">{e?.agency_name}</h5>
+                          <button
+                            onClick={() => {
+                              refreshByAgencyId(e?.agency_id, e?.platforms);
+                            }}
+                            className="bg-newBlue text-white flex items-center gap-x-2 rounded-lg px-6 py-3"
+                          >
+                            <TfiReload />
+                            Refresh All
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-7 gap-8 mt-5">
+                          {e?.platforms?.map((data, i) => {
+                            return <Block key={i} e={data} data={e} />;
+                          })}
+                        </div>
                       </div>
-                      <div className="grid grid-cols-7 gap-8 mt-5">
-                        {e?.platforms?.map((data, i) => {
-                          return <Block key={i} e={data} data={e} />;
-                        })}
-                      </div>
-                    </div>
-                  )
-                );
-              })}{" "}
+                    );
+                  })
+              )}{" "}
             </div>
           </div>
         </div>
