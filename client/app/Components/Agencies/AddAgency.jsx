@@ -262,7 +262,7 @@ const AddAgency = ({ showSubscribe, setShowSubscribe }) => {
               onClick={closeModal}
               className="absolute -top-10 -right-3 px-2 text-lg text-main cursor-pointer z-50"
             />
-            <div className="w-[24%] flex items-start pl-10 py-10 bg-gray-600/30">
+            <div className="w-[24%] flex items-start pl-10 py-10 bg-main">
               <div className="flex flex-col items-center justify-between h-full">
                 {[1, 2, 3, 4].map((e, i, arr) => {
                   return (

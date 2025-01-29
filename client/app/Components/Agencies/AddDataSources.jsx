@@ -86,7 +86,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
               onClick={closeModal}
               className="absolute -top-10 -right-3 px-2 text-lg text-main cursor-pointer z-50"
             />
-            <div className="w-[24%] flex items-start pl-10 py-10 bg-gray-600/30">
+            <div className="w-[24%] flex items-start pl-10 py-10 bg-main">
               <div className="flex flex-col items-center justify-between h-[20vh]">
                 {[1, 2].map((e, i, arr) => {
                   return (
