@@ -429,7 +429,7 @@ const Block = ({ e, checkedTables, setCheckedTables, i }) => {
             <label className="relative flex items-center cursor-pointer">
               <input
                 type="checkbox"
-                id={e?.name}
+                id={`${e?.name}_source`}
                 checked={
                   checkedTables[e?.name]?.length ===
                   datasources?.find((item) => item?.name === e?.name)?.tables
