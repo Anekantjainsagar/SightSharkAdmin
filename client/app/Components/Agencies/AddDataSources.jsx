@@ -171,7 +171,7 @@ const AddDataSouces = ({ showSubscribe, setShowSubscribe, original_data }) => {
                               <label className="relative flex items-center cursor-pointer">
                                 <input
                                   type="checkbox"
-                                  id={e?.name}
+                                  id={`${e?.name}_source`}
                                   onChange={(e) => {
                                     let name = e?.target?.id;
 
