@@ -1,13 +1,13 @@
 "use client";
+import AgencySmallBlock from "@/app/Components/Agencies/AgencySmallBlock";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import Notify from "@/app/Components/Overview/Notify";
 import React, { useContext, useEffect } from "react";
 import Leftbar from "@/app/Components/Utils/Leftbar";
 import Navbar from "@/app/Components/Utils/Navbar";
-import AgencySmallBlock from "@/app/Components/Agencies/AgencySmallBlock";
-import Image from "next/image";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import Notify from "@/app/Components/Overview/Notify";
 import { useRouter } from "next/navigation";
 import Context from "../Context/Context";
+import Image from "next/image";
 
 const Overview = () => {
   const {
@@ -81,7 +81,7 @@ const Overview = () => {
               })}
             </div>
             <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-4 min-[1600px]:mt-6">
-              <h3 className="mainText20">Agencies</h3>
+              <h3 className="text-lg min-[1600px]:text-[20px]">Agencies</h3>
               <div className="mt-4 border border-gray-200/5 rounded-2xl">
                 <div className="grid bg-[#030021]/40 py-3.5 px-7 agencySmallBlockGrid items-center rounded-2xl">
                   {[
@@ -104,7 +104,7 @@ const Overview = () => {
                     );
                   })}
                 </div>
-                <div className="h-[26vh] overflow-y-auto small-scroller">
+                <div className="min-[1600px]:h-[26vh] h-[24vh] overflow-y-auto small-scroller">
                   {agencies?.data?.slice(0, 10)?.map((e, i) => {
                     return (
                       <AgencySmallBlock data={e} key={i} status={"Active"} />
@@ -115,7 +115,9 @@ const Overview = () => {
             </div>
             <div className="text-white w-full rounded-xl p-4 bg-[#171C2A]/20 border border-gray-500/5 mt-4 min-[1600px]:mt-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-[20px]">Critical Notifications</h3>{" "}
+                <h3 className="text-lg min-[1600px]:text-[20px]">
+                  Critical Notifications
+                </h3>{" "}
                 <p
                   className="text-white text-sm min-[1600px]:text-base flex items-center cursor-pointer"
                   onClick={() => {

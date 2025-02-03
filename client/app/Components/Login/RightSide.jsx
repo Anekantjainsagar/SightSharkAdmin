@@ -16,7 +16,7 @@ import "swiper/css/scrollbar";
 
 const RightSide = memo(() => {
   return (
-    <div className="w-5/12 relative p-[3vw] flex flex-col items-center justify-between bg-gradient-to-br from-gradientMain/50 from-[50%] to-black/50 h-full">
+    <div className="w-5/12 relative p-[3vw] hidden md:flex flex-col items-center justify-between bg-gradient-to-br from-gradientMain/50 from-[50%] to-black/50 h-full">
       <div className="w-11/12 flex items-center justify-center min-[1600px]:mt-0 mt-10">
         <IconCloud
           iconSlugs={[
@@ -51,7 +51,7 @@ const RightSide = memo(() => {
         height={1000}
         className="absolute top-0 left-0 object-cover w-full h-full"
       />
-      <div className="p-[1.5vw] bg-gray-700/60 backdrop-blur-sm z-10 rounded-xl text-white text-lg min-[1600px]:text-[20px] w-full">
+      <div className="p-[1.5vw] glass rounded-xl text-white text-lg min-[1600px]:text-[20px] w-full">
         <Swiper
           slidesPerView={1}
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

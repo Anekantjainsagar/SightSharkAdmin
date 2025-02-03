@@ -32,7 +32,7 @@ const Alerts = () => {
                   Critical Notifications
                 </h3>
                 <AiOutlineClose
-                  className="text-2xl cursor-pointer"
+                  className="min-[1600px]:text-2xl text-lg cursor-pointer"
                   onClick={() => {
                     history.push("/overview");
                   }}
